@@ -1,6 +1,6 @@
 = inkrail CLI 设计书
 弥澄亮 <t103ooooo@stu.mju.edu.cn>
-v0.1, 2026-05
+v0.1.0, 2026-05
 :doctype: book
 :toc: left
 :toclevels: 3

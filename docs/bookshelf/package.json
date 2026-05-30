@@ -1,7 +1,7 @@
 {
-  "name": "asciidoc-multi-book-workspace",
+  "name": "inkrail-bookshelf",
   "version": "0.1.0",
-  "description": "A GitHub template for maintaining multiple independent AsciiDoc books in one pnpm / Asciidoctor workspace.",
+  "description": "AsciiDoc bookshelf workspace for the inkrail CLI design documentation.",
   "private": true,
   "license": "Apache-2.0",
   "author": {
@@ -11,12 +11,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MichengLiang/asciidoc-multi-book-workspace.git"
+    "url": "git+https://github.com/MichengLiang/inkrail.git",
+    "directory": "docs/bookshelf"
   },
   "bugs": {
-    "url": "https://github.com/MichengLiang/asciidoc-multi-book-workspace/issues"
+    "url": "https://github.com/MichengLiang/inkrail/issues"
   },
-  "homepage": "https://michengliang.github.io/asciidoc-multi-book-workspace/",
+  "homepage": "https://michengliang.github.io/inkrail/",
   "type": "module",
   "keywords": [
     "asciidoc",
@@ -24,13 +25,16 @@
     "documentation",
     "books",
     "multi-book",
-    "template",
+    "inkrail",
+    "cli",
+    "rdf",
+    "sparql",
     "github-pages",
     "static-site"
   ],
   "packageManager": "pnpm@10.33.0",
   "engines": {
-    "node": ">=20.19.0"
+    "node": ">=24.0.0"
   },
   "scripts": {
     "test": "node --test",

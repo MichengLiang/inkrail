@@ -1,0 +1,48 @@
+{
+  "name": "inkrail",
+  "version": "0.1.0",
+  "description": "inkrail CLI design specification package.",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "弥澄亮",
+    "email": "t103ooooo@stu.mju.edu.cn",
+    "url": "https://github.com/MichengLiang"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MichengLiang/inkrail.git",
+    "directory": "packages/inkrail"
+  },
+  "bugs": {
+    "url": "https://github.com/MichengLiang/inkrail/issues"
+  },
+  "homepage": "https://michengliang.github.io/inkrail/",
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "README.md"
+  ],
+  "sideEffects": false,
+  "keywords": [
+    "asciidoc",
+    "bookshelf",
+    "rdf",
+    "sparql",
+    "oxigraph",
+    "cli",
+    "documentation",
+    "specification"
+  ],
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "pack:check": "npm pack --dry-run"
+  }
+}

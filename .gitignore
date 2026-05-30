@@ -1,0 +1,12 @@
+node_modules/
+build/
+coverage/
+dist/
+playwright-report/
+test-results/
+tmp/
+*.tgz
+
+docs/bookshelf/node_modules/
+docs/bookshelf/build/
+docs/bookshelf/tmp/

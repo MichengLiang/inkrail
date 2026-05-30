@@ -1,6 +1,6 @@
-= AsciiDoc 多书工作区
-作者 <author@example.com>
-v0.1, 2026-05
+= inkrail 书架
+弥澄亮 <t103ooooo@stu.mju.edu.cn>
+v0.1.0, 2026-05
 :toc: left
 :toclevels: 2
 :icons: font
