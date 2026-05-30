@@ -1,7 +1,7 @@
 [#audit-actions]
 == 审计动作
 
-审计动作暴露书稿结构事实。审计结果提供作者判断入口，不自动给出内容评价。
+审计动作来自 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#quality-audit-queries[查询工作流指南的质量审计查询]。它们暴露书稿结构事实。审计结果提供作者判断入口，不自动给出内容评价。
 
 重复 address label：
 

@@ -1,7 +1,7 @@
 [#degree-and-neighborhood-actions]
 == Degree 与邻域动作
 
-Degree 动作统计 heading 在 xref 网络中的连接数量。
+Degree 动作来自 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#xref-degree-queries[查询工作流指南的引用入度与出度查询]。它们统计 heading 在 xref 网络中的连接数量。
 
 出度：
 
@@ -73,7 +73,7 @@ inkrail degree external-out --scope <label>
 source sourceHeadline externalOutDegree
 ----
 
-邻域动作读取一个 heading 周围的局部 xref 网络。
+邻域动作来自 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#xref-neighborhood-queries[查询工作流指南的交叉引用邻域查询]。它们读取一个 heading 周围的局部 xref 网络。
 
 [source,bash]
 ----

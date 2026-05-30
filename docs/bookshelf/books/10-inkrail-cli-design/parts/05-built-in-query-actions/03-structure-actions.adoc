@@ -1,7 +1,7 @@
 [#structure-actions]
 == 结构范围动作
 
-结构范围动作读取 heading 之间的父子和兄弟关系。
+结构范围动作来自 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#structural-scope-queries[查询工作流指南的结构范围查询]。它读取 heading 之间的父子和兄弟关系。
 
 直接子标题：
 

@@ -7,6 +7,8 @@ README 不展开全部内置查询语句。完整查询动作由本设计书和�
 
 用户指南承担回源边界说明。查询结果中的 `path`、`start` 和 `end` 指向聚合 adoc。修改原始拆分书稿时，作者使用 headline、raw、selector 或附近文本在源书稿目录内搜索。
 
+回源边界说明应链接 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#reading-and-editing-loop[RDF 投影查询工作流的阅读与修改闭环]。该链接提供聚合 adoc 行号、原始书稿搜索回退和修改后刷新之间的完整关系。
+
 该回源说明不进入每次命令输出。命令输出只提供查询结果字段、刷新事件和错误诊断。
 
 用户指南还应说明：

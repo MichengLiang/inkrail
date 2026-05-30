@@ -1,7 +1,7 @@
 [#xref-actions]
 == 交叉引用动作
 
-交叉引用动作读取 `aat:XrefEdge` 边证据。
+交叉引用动作来自 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#xref-edge-queries[查询工作流指南的交叉引用边查询]。它们读取 `aat:XrefEdge` 边证据。
 
 发出的交叉引用：
 
