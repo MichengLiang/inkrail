@@ -1,0 +1,4 @@
+[#lower-opening]
+== 下册开篇
+
+下册延续 xref:{upper-book}#upper-core-model[上册核心模型]，并进入实践讨论。

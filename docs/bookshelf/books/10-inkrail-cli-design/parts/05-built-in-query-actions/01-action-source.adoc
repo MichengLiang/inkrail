@@ -1,0 +1,20 @@
+[#source-action]
+== 来源确认动作
+
+来源确认动作验证当前 TTL 来自哪个聚合 adoc。
+
+[source,bash]
+----
+inkrail source
+----
+
+输出变量：
+
+[source,text]
+----
+path digest
+----
+
+`path` 是 RDF 投影中的 `aat:relativePath`。`digest` 是投影记录的 source digest。该动作应在跨项目查询和异常结果审查时使用。
+
+`inkrail source --print-query` 输出来源确认 SPARQL，不执行查询。

@@ -1,0 +1,42 @@
+[#standard-bookshelf-template]
+== 标准书架模板
+
+`inkrail` 集成的标准书架是 `asciidoc-multi-book-workspace` 模板。该模板是 book-first 的 AsciiDoc 多书工作区。
+
+标准书架源目录包含：
+
+[source,text]
+----
+catalog.adoc
+books/
+shared/
+scripts/
+test/
+package.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
+README.md
+DESIGN.adoc
+----
+
+每本书位于 `books/<book-id>/`，并以 `book.adoc` 作为唯一入口。`catalog.adoc` 是书架网页入口和书目导航。`shared/` 只保存跨书共享属性和共享图片。单书图片保留在 `books/<book-id>/assets/images/`。单书示例代码保留在对应书内。
+
+标准书架提供以下构建命令：
+
+[source,text]
+----
+pnpm run build:adoc
+pnpm run build
+pnpm run check:contract
+pnpm run check:samples
+----
+
+`build:adoc` 展开 `catalog.adoc` 和每本书的 `book.adoc`，并写入 `build/adoc/`。该命令会先删除旧的 `build/adoc`，再生成当前书架的聚合 adoc。
+
+`build` 生成 HTML、复制资源、写根 `index.html`、检查 HTML 本地资源，并运行通用工作区合同检查。HTML 发布不是 `inkrail query` 的前置条件。
+
+`check:contract` 验证当前 `catalog.adoc`、现存 book、`:doctype: book` 和跨书 xref。该检查适合复制模板后的普通工作区。
+
+`check:samples` 验证模板本体的七本样本书覆盖要求。该检查属于模板维护，不属于 `inkrail` 项目查询前置条件。
+
+`inkrail` 的标准 profile 只依赖标准书架的可复用契约：`catalog.adoc`、`books/<book-id>/book.adoc`、`build/adoc/books/<book-id>.adoc` 和 `pnpm run build:adoc`。

@@ -1,0 +1,27 @@
+[#decision-table]
+== 结构选择表
+
+[cols="1,2,2", options="header"]
+|===
+|场景 |推荐样本 |判断标准
+
+|学习完整 book 结构
+|xref:../00-book-anatomy/book.adoc[完整书籍结构标本]
+|需要看到前置、正文、分部和后置结构的位置。
+
+|新增普通书
+|xref:../01-starter-book/book.adoc[日常独立单书]
+|需要低负担复制起点。
+
+|同一本书内部有第一部、第二部
+|xref:../02-multipart-monograph/book.adoc[长书分部]
+|仍然是一个入口和一个连续 book。
+
+|技术书包含图表和代码片段
+|xref:../03-technical-book-workflow/book.adoc[技术书工作流]
+|需要资源边界、图表和代码 include。
+
+|上册下册独立发布
+|xref:../05-upper-volume/book.adoc[上册] 与 xref:../06-lower-volume/book.adoc[下册]
+|每册有自己的入口、前言、参考资料和构建产物。
+|===

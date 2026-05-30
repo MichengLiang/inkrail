@@ -1,0 +1,76 @@
+[#structure-actions]
+== 结构范围动作
+
+结构范围动作读取 heading 之间的父子和兄弟关系。
+
+直接子标题：
+
+[source,bash]
+----
+inkrail structure children --label <label>
+----
+
+输出变量：
+
+[source,text]
+----
+child childHeadline start end
+----
+
+递归后代：
+
+[source,bash]
+----
+inkrail structure descendants --label <label>
+----
+
+输出变量：
+
+[source,text]
+----
+descendant level headline start end
+----
+
+包含根节点的子树：
+
+[source,bash]
+----
+inkrail structure subtree --label <label>
+----
+
+输出变量：
+
+[source,text]
+----
+node level headline start end
+----
+
+父标题反查：
+
+[source,bash]
+----
+inkrail structure parent --label <label>
+----
+
+输出变量：
+
+[source,text]
+----
+parent parentHeadline parentStart
+----
+
+前一个同父兄弟：
+
+[source,bash]
+----
+inkrail structure previous-sibling --label <label>
+----
+
+输出变量：
+
+[source,text]
+----
+headingHeadline previousHeadline start
+----
+
+结构范围动作按 `start` 或指南指定字段排序。结构范围提供阅读边界，不替代 xref 脉络。

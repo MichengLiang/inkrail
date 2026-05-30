@@ -1,0 +1,49 @@
+[#query-modes]
+== 查询模式
+
+`inkrail` 有三种运行模式。
+
+=== Project mode
+
+Project mode 通过 `.inkrail/config.toml` 解析项目、书架和书本。
+
+[source,bash]
+----
+inkrail query --book 10-inkrail-cli-design --file query.sparql
+inkrail xrefs unbound --book 10-inkrail-cli-design
+----
+
+Project mode 在查询前执行 xref:refresh-state-machine[刷新状态机]。只有 RDF12 TTL 新鲜时，查询才执行。
+
+=== TTL-only mode
+
+TTL-only mode 直接查询用户提供的 Turtle 文件。
+
+[source,bash]
+----
+inkrail query --ttl path/to/book.adoc.ttl --file query.sparql
+----
+
+TTL-only mode 不查找 `.inkrail/config.toml`，不计算 source fingerprint，不刷新聚合 adoc，不判断 project freshness。该模式只声明给定 TTL 已被加载并查询。
+
+=== Single-file projection mode
+
+Single-file projection mode 读取一个 adoc 文件并生成指定 RDF 投影。
+
+[source,bash]
+----
+inkrail project path/to/file.adoc --format rdf12 --out path/to/file.adoc.ttl
+inkrail project path/to/file.adoc --format rdf12-json-ld --out path/to/file.adoc.jsonld
+----
+
+该模式不写项目状态。它服务临时实验和单文件分析。
+
+=== Book selection
+
+Project mode 按以下顺序解析目标书：
+
+1. 命令行 `--book <book-id>`。
+2. `project.default_book`。
+3. 项目只登记一本书时的唯一书。
+
+项目登记多本书且没有命令行 `--book` 或 `default_book` 时，命令失败并返回 `BOOK_REQUIRED`。

@@ -1,0 +1,31 @@
+[#problem-world]
+== 问题世界
+
+AsciiDoc 多书书架由 `catalog.adoc`、`books/`、`shared/`、`scripts/`、`test/` 和构建产物组成。每本书拥有自己的 `books/<book-id>/book.adoc`、章节顺序、资源边界和网页产物。
+
+标准书架的 `build:adoc` 命令把每本书的 include 图展开为单文件 adoc。单书聚合文件位于：
+
+[source,text]
+----
+build/adoc/books/<book-id>.adoc
+----
+
+`asciidoc-abundant-tree` 能读取一个聚合 adoc，并输出 RDF 1.2 标题投影图。`rdf12` 输出是 Turtle 文件，`rdf12-json-ld` 输出是 JSON-LD 文件。Turtle 文件可以被 Oxigraph 加载并执行 SPARQL 查询。
+
+作者当前需要反复执行以下动作：
+
+* 构建聚合 adoc。
+* 生成 RDF12 TTL。
+* 验证或加载 TTL。
+* 执行 SPARQL 查询。
+* 根据查询结果读取聚合 adoc。
+* 使用 headline、selector、raw 片段或附近文本定位原始拆分书稿。
+* 修改源书稿后重新执行上述链条。
+
+该链条的主要摩擦不是单个命令难写，而是状态分散。书本选择存在于作者记忆中。聚合 adoc 位于 build 目录。TTL 位于聚合 adoc 旁边。查询语句来自工作流指南。新鲜度判断由作者手动承担。构建、投影和查询的错误语义来自不同工具。
+
+该链条的主要风险是 stale projection。旧 TTL 仍然可能是合法 Turtle，查询引擎仍然可以返回结果，但这些结果对应旧书稿事实。项目模式下，stale projection 不能作为当前书稿查询依据。
+
+当前 RDF 投影的回源坐标指向聚合 adoc。`aat:relativePath`、`aat:startLine` 和 `aat:endLine` 不直接指向原始章节文件。原始章节定位需要在源书稿目录内使用 headline、raw、selector 或附近文本进行搜索。
+
+`inkrail` 介入的问题世界是本地书稿查询闭环。它不改变 AsciiDoc 源书稿，不替代 HTML 发布，不解释 payload 内部业务语义，也不把聚合 adoc 行号伪装成原始源文件坐标。

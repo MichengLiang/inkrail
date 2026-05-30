@@ -1,0 +1,1040 @@
+= AsciiDoc 多书工作区样本体系重设计
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectnumlevels: 3
+:idprefix:
+:idseparator: -
+:source-highlighter: rouge
+
+[abstract]
+== 摘要
+
+本文定义 `asciidoc-multi-book-workspace` 的样本书体系、目录边界、公共文档职责、构建检查和验收标准。本文面向后续实现者，使其在不依赖口头讨论的情况下完成模板重构。
+
+本文的设计对象是一个 book-first 的 AsciiDoc 多书工作区模板。该模板展示如何在一个共享 Node / Asciidoctor 环境下维护多本独立 book，为每本书生成独立网页，并生成每本书的 include 展开后单文件 ADOC。
+
+本文不把当前历史上的 5 本样本书数量作为约束。样本书数量由书籍组织场景的等价类覆盖决定。
+
+== 1. 文档定位
+
+=== 1.1 目标读者
+
+本文的目标读者是后续实现者、模板维护者和需要审查本模板设计边界的协作者。
+
+后续实现者使用本文确定目标目录、样本书内容、公共文档职责、脚本检查和验收标准。模板维护者使用本文判断新增样本书、共享资源、脚本检查或 README 文字是否具有进入当前模板的资格。
+
+=== 1.2 当前对象边界
+
+当前对象是 `asciidoc-multi-book-workspace` 模板。该模板负责以下能力：
+
+* 在一个工作区内维护多本独立 AsciiDoc book。
+* 使用一个根 `package.json` 固定共享构建依赖。
+* 使用 `catalog.adoc` 作为多书网页入口。
+* 保持每本书自己的 `book.adoc`、章节顺序、资源边界和构建产物。
+* 支持书内引用、跨书引用、共享属性、共享图片、图表块和单书代码片段示例。
+* 生成网页产物和每本书的展开后单文件 ADOC。
+* 用测试和检查脚本验证工作区约定。
+
+更大规模的工作区增长路径作为参考手册中的说明材料处理，不进入当前根目录结构。
+
+=== 1.3 与 README、catalog 和实施计划的关系
+
+本文是重设计规格。它规定目标状态和判断标准。
+
+`README.md` 是工作区定位说明。它说明模板存在理由、目录结构、构建命令、输出位置和维护规则。
+
+`catalog.adoc` 是读者导航入口。它帮助读者根据自己的写作目标定位到对应样本书。
+
+实施计划是执行顺序说明。它应在本文确认后单独编写，并以本文的目标结构和验收标准为约束。
+
+=== 1.4 术语
+
+样本书:: 位于 `books/<book-id>/` 下的一本独立 AsciiDoc book。每本样本书必须有自己的 `book.adoc`。
+
+书籍边界:: 一本 book 对标题、属性、章节顺序、资源、前置内容、后置内容和构建产物承担责任的范围。
+
+等价类代表:: 用一本或一组样本书代表一类常见书籍组织场景。类内变体不逐一建样本。
+
+公共契约:: README、catalog、样本书和脚本对使用者提供的可依赖承诺。
+
+合同检查:: 对工作区源文件契约进行静态检查的脚本行为，包括书目一致性、doctype、xref、anchor 和样本覆盖。
+
+== 2. 当前状态与重设计动机
+
+=== 2.1 当前模板事实
+
+当前模板已经具备可工作的工程骨架：
+
+* 根目录包含 `catalog.adoc`、`books/`、`shared/`、`scripts/`、`test/`、`package.json` 和 `README.md`。
+* `books/` 下存在 5 本样本书。
+* 每本样本书都有自己的 `book.adoc`。
+* 脚本支持展开 ADOC、逐本构建 HTML、复制资源、注入书库首页链接和检查 HTML 本地资源。
+* 测试覆盖构建计划、ADOC 输出、资源复制、首页链接注入和 HTML 本地资源检查。
+
+当前模板的脚本和测试可以继续作为重设计基础。
+
+=== 2.2 当前样本体系问题
+
+当前 5 本样本书是历史形成的样本集合，不是由书籍组织场景推导出的覆盖体系。
+
+当前样本体系存在以下问题：
+
+* 样本数量被历史状态隐含固定，未说明每本书的不可替代角色。
+* 第一本书同时展示普通单书、part、图表、附录和书目，复制起点与结构标本混在一起。
+* 完整 AsciiDoc book 结构没有被集中展示。
+* 参考手册更像模式提示清单，尚未形成查阅型书籍样本。
+* 上册与下册样本存在，但分卷发布与单书 part 的对照关系不够强。
+* README 与 catalog 的职责边界不够明确。
+
+=== 2.3 重设计目标
+
+重设计目标是将样本书从功能点散列改为书籍边界等价类代表。
+
+本文借用等价类测试的思想：不枚举所有可能的书籍形态，而是将常见书籍组织问题划分为若干行为等价的场景，每个场景用一本或一组最小样本书代表。
+
+每本样本书必须满足以下条件：
+
+* 代表一种明确的书籍组织场景。
+* 服务一个或多个明确 actor 的行动。
+* 展示的结构特性与该场景存在必要关系。
+* 内容足够短，能够被读者整体把握。
+* 内容不是空占位，而是与该书结构职责一致的最小真实文本。
+* 能被构建和检查脚本纳入工作区契约。
+
+== 3. Actor 与行动轨迹
+
+=== 3.1 新作者
+
+新作者想新增一本普通 AsciiDoc book。他需要一个可以复制的起点，而不是一个包含所有结构特性的完整标本。
+
+行动轨迹：
+
+* 打开 `catalog.adoc` 生成的书库首页。
+* 选择“复制一个普通单书起点”。
+* 进入 `01-starter-book`。
+* 按该书目录结构创建自己的 `books/<id>/`。
+* 修改书名、章节、图片和参考资料。
+* 运行测试和构建命令。
+
+该 actor 需要 `01-starter-book` 保持简单。
+
+=== 3.2 完整结构学习者
+
+完整结构学习者想知道一本正规 AsciiDoc book 可以包含哪些结构位置。他需要完整结构标本，而不是日常复制模板。
+
+行动轨迹：
+
+* 打开 `catalog.adoc` 生成的书库首页。
+* 选择“认识完整书籍结构”。
+* 阅读 `00-book-anatomy`。
+* 对照前置内容、正文、分部、后置内容和索引位置。
+* 回到 `01-starter-book` 或其他样本选择可复制结构。
+
+该 actor 需要 `00-book-anatomy` 集中展示完整结构。
+
+=== 3.3 长书作者
+
+长书作者正在写同一本书中的第一部、第二部、第三部。他需要区分单书内部 part 与独立分卷 book。
+
+行动轨迹：
+
+* 在 catalog 的选择表中定位“同一本书内部有第一部、第二部”。
+* 阅读 `02-multipart-monograph`。
+* 识别 `= Part`、`[partintro]`、part 下 chapter 和 book-level backmatter 的关系。
+* 不把同一本书内部的大分部拆成多个 book。
+
+该 actor 需要 `02-multipart-monograph` 专门展示 part。
+
+=== 3.4 技术书作者
+
+技术书作者需要在书中维护图表、代码片段、共享属性和图片资源。他的主要摩擦是手写代码块容易失真、图表资源可能断链、共享资源边界容易混乱。
+
+行动轨迹：
+
+* 在 catalog 中选择“写带代码、图表、共享资源的技术书”。
+* 阅读 `03-technical-book-workflow`。
+* 学习单书 `examples/`、单书 `assets/images/`、工作区 `shared/images/` 和 `shared/attributes.adoc` 的边界。
+* 使用 include 引入书内示例代码。
+* 运行构建和资源检查命令。
+
+该 actor 需要 `03-technical-book-workflow` 展示工程化写作样本。
+
+=== 3.5 参考手册作者
+
+参考手册作者需要组织查阅型内容。他关心决策表、路径规则、术语定义、引用模式和增长路径，而不是连续叙事。
+
+行动轨迹：
+
+* 在 catalog 中选择“查结构选择、术语和写法模式”。
+* 阅读 `04-reference-manual`。
+* 使用表格、定义列表、术语表和模式说明解决当前判断。
+* 依据参考手册判断是否新增样本书、资源或目录。
+
+该 actor 需要 `04-reference-manual` 成为真正的查阅型 book。
+
+=== 3.6 分卷作者
+
+分卷作者需要组织上册和下册。上册与下册需要独立入口、独立构建和跨卷引用。
+
+行动轨迹：
+
+* 在 catalog 中先区分“单书内部 part”和“独立分卷 book”。
+* 阅读 `02-multipart-monograph` 理解单书 part。
+* 阅读 `05-upper-volume` 和 `06-lower-volume` 理解独立分卷。
+* 在下册中通过跨书 xref 引用上册稳定 anchor。
+* 保持两本书各自的 `book.adoc` 和构建产物。
+
+该 actor 需要 `05-upper-volume` 与 `06-lower-volume` 成组展示。
+
+=== 3.7 工作区维护者
+
+工作区维护者需要新增样本、调整共享资源、维护构建脚本和审查文档承诺。他需要判断规则和验收标准。
+
+行动轨迹：
+
+* 阅读本文确定当前对象边界。
+* 修改样本书、README、catalog、脚本或测试。
+* 使用合同检查脚本确认书目、doctype、xref 和样本覆盖。
+* 运行测试与构建。
+* 只在设计理由成立时新增根目录结构或样本书。
+
+该 actor 需要本文、README、catalog 和测试共同提供稳定约束。
+
+== 4. 设计原则
+
+=== 4.1 样本按等价类组织
+
+样本书按书籍组织场景划分。一本样本书只有在代表新的场景等价类时才具有新增资格。
+
+语法特性不能单独授权一本新书。语法特性应进入最能代表其使用场景的样本书。
+
+=== 4.2 完整结构与复制起点分离
+
+`00-book-anatomy` 展示完整书籍结构。它允许包含较多前置、正文和后置结构。
+
+`01-starter-book` 是日常复制起点。它必须保持常用、低负担和易改写。
+
+实现者不得把 `00-book-anatomy` 的完整结构扩散到 `01-starter-book`。
+
+=== 4.3 当前目录只承诺当前结构
+
+进入源目录树的目录必须被当前样本书、公共文档或脚本消费。
+
+根级 `shared/` 不预设没有当前消费者的共享片段目录。单书代码片段归属于对应书内 `examples/`。只有当同一片段被多本书实际引用，且维护责任属于工作区时，后续设计才能提升到 `shared/`。
+
+=== 4.4 README 与 catalog 分工
+
+`README.md` 说明模板定位、目录结构、构建命令、输出位置和维护规则。
+
+`catalog.adoc` 维护七本样本书的读者导航。README 不展开七本样本书的详细介绍，只指向 `catalog.adoc`。
+
+=== 4.5 公共承诺必须可验证
+
+README、catalog 和样本书中的公共承诺必须能由以下至少一种方式支撑：
+
+* 源文件结构。
+* 构建产物。
+* 脚本行为。
+* 测试或检查脚本。
+* 明确的参考手册规则。
+
+不能被当前工具链支撑的表现不得写成当前模板承诺。
+
+== 5. 目标工作区结构
+
+=== 5.1 根目录结构
+
+目标源目录结构如下：
+
+[source,text]
+----
+asciidoc-multi-book-workspace/
+├── README.md
+├── DESIGN.adoc
+├── catalog.adoc
+├── package.json
+├── pnpm-lock.yaml
+├── books/
+│   ├── 00-book-anatomy/
+│   ├── 01-starter-book/
+│   ├── 02-multipart-monograph/
+│   ├── 03-technical-book-workflow/
+│   ├── 04-reference-manual/
+│   ├── 05-upper-volume/
+│   └── 06-lower-volume/
+├── shared/
+│   ├── attributes.adoc
+│   └── images/
+├── scripts/
+└── test/
+----
+
+`build/` 是生成物目录，不属于目标源目录结构。
+
+=== 5.2 资源边界
+
+每本书自己的图片放在 `books/<book-id>/assets/images/`。
+
+被 catalog 或多本书共同引用的图片放在 `shared/images/`。
+
+每本书自己的代码片段放在该书内部。`03-technical-book-workflow` 使用 `books/03-technical-book-workflow/examples/` 展示单书代码 include。
+
+`shared/attributes.adoc` 只放跨书共享属性。单书属性应保留在对应 `book.adoc` 中。
+
+=== 5.3 构建产物边界
+
+展开后的单文件 ADOC 输出到：
+
+[source,text]
+----
+build/adoc/catalog.adoc
+build/adoc/books/00-book-anatomy.adoc
+build/adoc/books/01-starter-book.adoc
+build/adoc/books/02-multipart-monograph.adoc
+build/adoc/books/03-technical-book-workflow.adoc
+build/adoc/books/04-reference-manual.adoc
+build/adoc/books/05-upper-volume.adoc
+build/adoc/books/06-lower-volume.adoc
+----
+
+网页输出到：
+
+[source,text]
+----
+build/html/catalog.html
+build/html/books/00-book-anatomy/book.html
+build/html/books/01-starter-book/book.html
+build/html/books/02-multipart-monograph/book.html
+build/html/books/03-technical-book-workflow/book.html
+build/html/books/04-reference-manual/book.html
+build/html/books/05-upper-volume/book.html
+build/html/books/06-lower-volume/book.html
+----
+
+=== 5.4 共同 book header 规则
+
+每本样本书的 `book.adoc` 必须使用同一组基础属性。实现者可在单书中追加该书专用属性，但不得删除基础属性。
+
+[source,asciidoc]
+----
+= 书名
+作者 <author@example.com>
+v0.1, 2026-05
+:doctype: book
+:toc: left
+:toclevels: 3
+:sectnums:
+:icons: font
+:experimental:
+:idprefix:
+:idseparator: -
+----
+
+需要共享工作区属性的书在 header 后引入：
+
+[source,asciidoc]
+----
+\include::../../shared/attributes.adoc[]
+----
+
+单书属性写在对应 `book.adoc`。例如下册的上册引用属性写在 `books/06-lower-volume/book.adoc`：
+
+[source,asciidoc]
+----
+:upper-book: ../05-upper-volume/book.adoc
+----
+
+=== 5.5 文件命名规则
+
+目录名使用小写英文、数字和连字符。数字前缀表示读者学习顺序。
+
+章节文件使用两位数字前缀和英文短名，例如 `01-opening.adoc`。part intro 文件使用 `_partintro.adoc`，表示该文件不是独立 chapter。
+
+被其他书引用的章节必须使用显式 anchor。只在本书内部临时存在的标题可以使用自动 ID。
+
+== 6. 样本书体系
+
+=== 6.1 覆盖矩阵
+
+[cols="1,2,3,3", options="header"]
+|===
+|样本 |代表等价类 |主要 actor |必须展示
+
+|`00-book-anatomy`
+|完整书籍结构标本
+|完整结构学习者
+|前置特殊章节、part、partintro、chapter、section、discrete、appendix、glossary、bibliography、index
+
+|`01-starter-book`
+|日常独立单书
+|新作者
+|普通 book 入口、preface、chapter、appendix、bibliography、本书图片、稳定 anchor
+
+|`02-multipart-monograph`
+|同一本书内部的长书分部
+|长书作者
+|多个 part、partintro、part 下 chapter、book-level backmatter
+
+|`03-technical-book-workflow`
+|技术书工程化写作
+|技术书作者
+|shared attributes、shared image、book-private image、图表块、书内代码 include
+
+|`04-reference-manual`
+|查阅型参考手册
+|参考手册作者、维护者
+|决策表、路径规则、xref 模式、definition list、discrete、glossary、增长路径文章
+
+|`05-upper-volume`
+|独立分卷的上册
+|分卷作者
+|独立 book 入口、上册稳定 anchor、独立前言与参考资料
+
+|`06-lower-volume`
+|独立分卷的下册
+|分卷作者
+|独立 book 入口、对上册的跨书 xref、独立前言与参考资料
+|===
+
+=== 6.2 `00-book-anatomy`
+
+==== 身份
+
+`00-book-anatomy` 是完整书籍结构标本。它集中展示 AsciiDoc book 的核心结构位置。
+
+该样本不得作为日常复制起点。catalog 必须明确它是结构标本。
+
+==== 必须展示的结构
+
+该书必须展示：
+
+* document header。
+* `[abstract]`。
+* `[colophon]`。
+* `[dedication]`。
+* `[preface]`。
+* `[acknowledgments]`。
+* 两个或更多 part。
+* `[partintro]`。
+* chapter。
+* section。
+* `[discrete]`。
+* `[appendix]`。
+* `[glossary]`。
+* `[bibliography]`。
+* `[index]`。
+* 正文中的 index term。
+
+==== 目标文件结构
+
+[source,text]
+----
+books/00-book-anatomy/
+├── book.adoc
+├── frontmatter/
+│   ├── abstract.adoc
+│   ├── colophon.adoc
+│   ├── dedication.adoc
+│   ├── preface.adoc
+│   └── acknowledgments.adoc
+├── parts/
+│   ├── 01-front-structure/
+│   │   ├── _partintro.adoc
+│   │   └── 01-frontmatter-map.adoc
+│   └── 02-body-structure/
+│       ├── _partintro.adoc
+│       └── 01-body-map.adoc
+└── backmatter/
+    ├── appendix-a.adoc
+    ├── glossary.adoc
+    ├── bibliography.adoc
+    └── index.adoc
+----
+
+==== 章节职责
+
+`frontmatter/abstract.adoc` 说明该标本书覆盖的结构范围。
+
+`frontmatter/colophon.adoc` 展示版本说明和来源说明的结构位置。
+
+`frontmatter/dedication.adoc` 展示献辞结构位置，内容保持一到两句。
+
+`frontmatter/preface.adoc` 说明如何阅读该结构标本。
+
+`frontmatter/acknowledgments.adoc` 展示致谢结构位置，内容保持简短。
+
+`parts/01-front-structure/01-frontmatter-map.adoc` 说明前置结构如何进入 `book.adoc`。
+
+`parts/02-body-structure/01-body-map.adoc` 说明 part、chapter、section、discrete heading 的关系。
+
+`backmatter/appendix-a.adoc` 提供结构速查表。
+
+`backmatter/glossary.adoc` 使用 definition list 定义 book、part、chapter、section、appendix、glossary、bibliography、index。
+
+`backmatter/bibliography.adoc` 引用官方 AsciiDoc 文档。
+
+`backmatter/index.adoc` 展示索引 section 的书稿位置。
+
+==== 验收点
+
+合同检查必须确认该书包含完整结构样本要求中的所有 special section style。
+
+=== 6.3 `01-starter-book`
+
+==== 身份
+
+`01-starter-book` 是日常独立单书起点。它展示新增一本普通 book 时应复制的最小稳定结构。
+
+该样本不得包含 part、完整前置特殊章节集合或技术书代码片段。
+
+==== 目标文件结构
+
+[source,text]
+----
+books/01-starter-book/
+├── book.adoc
+├── frontmatter/
+│   └── preface.adoc
+├── chapters/
+│   ├── 01-opening.adoc
+│   └── 02-main-flow.adoc
+├── backmatter/
+│   ├── appendix-a.adoc
+│   └── bibliography.adoc
+└── assets/
+    └── images/
+        └── starter-map.svg
+----
+
+==== 必须展示的结构
+
+该书必须展示：
+
+* `:doctype: book`。
+* `include::../../shared/attributes.adoc[]`。
+* `[preface]`。
+* 普通 chapter。
+* 本书私有图片。
+* `[appendix]`。
+* `[bibliography]`。
+* 至少一个显式 anchor，例如 `[#starter-book-boundary]`。
+
+==== 章节职责
+
+`chapters/01-opening.adoc` 说明单书入口和书籍边界。
+
+`chapters/02-main-flow.adoc` 说明普通章节如何由 `book.adoc` 排序。
+
+`backmatter/appendix-a.adoc` 给出新增普通书的最小文件清单。
+
+==== 验收点
+
+合同检查必须确认该书不包含 level 0 part 标题。该书的图片引用必须指向书内 `assets/images/`。
+
+=== 6.4 `02-multipart-monograph`
+
+==== 身份
+
+`02-multipart-monograph` 展示同一本 book 内部的长书分部。它代表“第一部、第二部、第三部仍属于同一本书”的场景。
+
+该样本与 `05-upper-volume`、`06-lower-volume` 形成边界对照。
+
+==== 目标文件结构
+
+[source,text]
+----
+books/02-multipart-monograph/
+├── book.adoc
+├── parts/
+│   ├── 01-domain/
+│   │   ├── _partintro.adoc
+│   │   ├── 01-problem-world.adoc
+│   │   └── 02-boundary.adoc
+│   └── 02-specification/
+│       ├── _partintro.adoc
+│       ├── 01-book-contract.adoc
+│       └── 02-verification.adoc
+└── backmatter/
+    ├── appendix-a.adoc
+    └── bibliography.adoc
+----
+
+==== 必须展示的结构
+
+该书必须展示：
+
+* 两个 level 0 part。
+* 每个 part 后的 `[partintro]`。
+* 每个 part 下至少一个 chapter。
+* book-level appendix。
+* book-level bibliography。
+
+==== 必须存在的 anchor
+
+该书必须包含：
+
+* `[#multipart-book-boundary]`。
+* `[#partintro-example]`。
+
+==== 验收点
+
+合同检查必须确认该书至少包含两个 part 和两个 `[partintro]`。
+
+=== 6.5 `03-technical-book-workflow`
+
+==== 身份
+
+`03-technical-book-workflow` 展示技术书工程化写作。它代表有代码、图表、共享属性和资源检查的 book。
+
+该书的代码片段属于该书内部资源，不进入根级 `shared/`。
+
+==== 目标文件结构
+
+[source,text]
+----
+books/03-technical-book-workflow/
+├── book.adoc
+├── frontmatter/
+│   └── preface.adoc
+├── chapters/
+│   ├── 01-build-flow.adoc
+│   ├── 02-diagrams.adoc
+│   └── 03-code-includes.adoc
+├── examples/
+│   └── minimal-tool.mjs
+├── assets/
+│   └── images/
+│       └── technical-flow.svg
+└── backmatter/
+    └── bibliography.adoc
+----
+
+==== 必须展示的结构
+
+该书必须展示：
+
+* `include::../../shared/attributes.adoc[]`。
+* 对 `../../shared/images/workspace-map.svg` 的共享图片引用。
+* 对 `assets/images/technical-flow.svg` 的本书私有图片引用。
+* 至少一个 Mermaid 或 PlantUML 图表块。
+* 对 `examples/minimal-tool.mjs` 的 tag include。
+
+`examples/minimal-tool.mjs` 使用 JS，因为当前工作区构建与测试环境已经由 Node / pnpm 驱动。
+
+==== 代码片段规则
+
+示例代码必须包含 include tag：
+
+[source,js]
+----
+// tag::main[]
+export function describeBook(id) {
+  return `book:${id}`;
+}
+// end::main[]
+----
+
+书稿中的 include 必须按章节文件位置书写相对路径。例如 `chapters/03-code-includes.adoc` 引用该片段时使用：
+
+[source,asciidoc]
+....
+[source,js]
+----
+\include::../examples/minimal-tool.mjs[tag=main]
+----
+....
+
+==== 验收点
+
+合同检查必须确认该书存在图表块和外部代码 include。HTML 本地资源检查必须通过。
+
+=== 6.6 `04-reference-manual`
+
+==== 身份
+
+`04-reference-manual` 是查阅型参考手册。它代表决策表、术语、路径规则和增长路径说明的组织方式。
+
+该书不应写成连续教程。
+
+==== 目标文件结构
+
+[source,text]
+----
+books/04-reference-manual/
+├── book.adoc
+├── frontmatter/
+│   └── preface.adoc
+├── chapters/
+│   ├── 01-decision-table.adoc
+│   ├── 02-path-rules.adoc
+│   ├── 03-xref-patterns.adoc
+│   └── 04-growth-paths.adoc
+└── backmatter/
+    ├── glossary.adoc
+    └── bibliography.adoc
+----
+
+==== 必须展示的结构
+
+该书必须展示：
+
+* 表格。
+* definition list。
+* `[discrete]`。
+* `[glossary]`。
+* `[bibliography]`。
+* 对其他样本书的 xref。
+
+==== 章节职责
+
+`chapters/01-decision-table.adoc` 提供单书、part、独立分卷、技术书和参考手册的选择表。
+
+`chapters/02-path-rules.adoc` 定义 `books/<id>/`、`assets/images/`、`shared/images/`、`examples/` 和 `build/` 的路径规则。
+
+`chapters/03-xref-patterns.adoc` 展示书内 xref、跨书 xref 和稳定 anchor 规则。
+
+`chapters/04-growth-paths.adoc` 说明当工作区规模增长时应如何判断是否引入更复杂编排。该章节只记录判断条件，不要求当前根目录创建未来结构。
+
+==== 验收点
+
+合同检查必须确认该书包含表格、definition list、`[discrete]`、`[glossary]` 和对其他样本书的 xref。
+
+=== 6.7 `05-upper-volume`
+
+==== 身份
+
+`05-upper-volume` 是独立分卷的上册样本。它代表“上册有独立入口、独立前言、独立参考资料和可被下册引用的稳定 anchor”的场景。
+
+==== 目标文件结构
+
+[source,text]
+----
+books/05-upper-volume/
+├── book.adoc
+├── frontmatter/
+│   └── preface.adoc
+├── chapters/
+│   ├── 01-upper-opening.adoc
+│   └── 02-upper-core-model.adoc
+└── backmatter/
+    └── bibliography.adoc
+----
+
+==== 必须存在的 anchor
+
+`chapters/02-upper-core-model.adoc` 必须包含：
+
+[source,asciidoc]
+----
+[#upper-core-model]
+== 上册核心模型
+----
+
+==== 验收点
+
+合同检查必须确认 `#upper-core-model` 存在。
+
+=== 6.8 `06-lower-volume`
+
+==== 身份
+
+`06-lower-volume` 是独立分卷的下册样本。它代表“下册独立构建，同时引用上册稳定内容”的场景。
+
+==== 目标文件结构
+
+[source,text]
+----
+books/06-lower-volume/
+├── book.adoc
+├── frontmatter/
+│   └── preface.adoc
+├── chapters/
+│   ├── 01-lower-opening.adoc
+│   └── 02-cross-volume-practice.adoc
+└── backmatter/
+    └── bibliography.adoc
+----
+
+==== 必须展示的结构
+
+`book.adoc` 必须定义：
+
+[source,asciidoc]
+----
+:upper-book: ../05-upper-volume/book.adoc
+----
+
+正文必须引用：
+
+[source,asciidoc]
+----
+xref:{upper-book}#upper-core-model[上册核心模型]
+----
+
+==== 验收点
+
+合同检查必须确认下册引用上册 `#upper-core-model`。HTML 本地资源检查必须通过。
+
+== 7. README 规格
+
+`README.md` 是工作区定位说明。它不承担七本样本书的详细导航职责。
+
+README 必须包含以下章节：
+
+* 标题。
+* 定位。
+* 目录结构。
+* 样本书导航入口。
+* 资源边界。
+* 构建与检查。
+* 输出产物。
+* 新增一本书的维护步骤。
+* 参考资料。
+
+README 的样本书入口只保留对 `catalog.adoc` 的指向：
+
+[source,markdown]
+----
+样本书导航由 `catalog.adoc` 维护。构建后从 `build/html/catalog.html` 进入网页书库。
+----
+
+README 的资源边界必须说明：
+
+* 单书图片放 `books/<book-id>/assets/images/`。
+* 被 catalog 或多本书共同引用的图片放 `shared/images/`。
+* 单书示例代码放对应书内，例如 `books/03-technical-book-workflow/examples/`。
+* 根级 `shared/` 不预设没有当前消费者的共享片段目录。
+
+README 的维护步骤必须说明新增一本普通书时至少执行：
+
+* 创建 `books/<book-id>/book.adoc`。
+* 在 `catalog.adoc` 中增加导航项。
+* 运行 `pnpm run test`。
+* 运行 `pnpm run build`。
+
+== 8. `catalog.adoc` 规格
+
+`catalog.adoc` 是样本书导航入口。它面向读者的选择动作。
+
+catalog 必须包含以下章节：
+
+* 标题和简短说明。
+* 按目标选择。
+* 样本书。
+* 工作区地图。
+* 书籍边界速判。
+
+“按目标选择”必须使用表格表达：
+
+[source,asciidoc]
+----
+[cols="1,2,3", options="header"]
+|===
+|如果你想... |先看 |原因
+
+|认识一本完整 AsciiDoc book 的结构位置
+|xref:books/00-book-anatomy/book.adoc[00 完整书籍结构标本]
+|它集中展示前置、正文、分部和后置结构。
+
+|复制一个普通单书起点
+|xref:books/01-starter-book/book.adoc[01 日常独立单书]
+|它保持最常用、最少负担的 book 结构。
+
+|在同一本书里组织第一部、第二部
+|xref:books/02-multipart-monograph/book.adoc[02 长书分部]
+|它展示 book doctype 下的 part 与 partintro。
+
+|写带代码、图表、共享资源的技术书
+|xref:books/03-technical-book-workflow/book.adoc[03 技术书工作流]
+|它展示资源边界、图表和构建检查。
+
+|查结构选择、术语和写法模式
+|xref:books/04-reference-manual/book.adoc[04 参考手册]
+|它是查阅型书，而不是线性教程。
+
+|组织可独立发布的上册和下册
+|xref:books/05-upper-volume/book.adoc[05 上册] 与 xref:books/06-lower-volume/book.adoc[06 下册]
+|它们展示分卷作为独立 book 的关系。
+|===
+----
+
+catalog 是唯一维护七本样本书导航的位置。README 只链接 catalog。
+
+== 9. 脚本与测试规格
+
+=== 9.1 保留脚本
+
+以下脚本继续保留：
+
+* `scripts/build-adoc.mjs`。
+* `scripts/build-books.mjs`。
+* `scripts/copy-assets.mjs`。
+* `scripts/add-home-links.mjs`。
+* `scripts/check-html-local-resources.mjs`。
+
+这些脚本需要适配 7 本样本书，但不改变其核心职责。
+
+=== 9.2 合同检查脚本分层
+
+合同检查分为通用工作区合同检查和样本体系合同检查。
+
+通用工作区合同检查脚本：
+
+[source,text]
+----
+scripts/check-workspace-contract.mjs
+----
+
+该脚本负责检查可复用工作区源文件契约：
+
+* `catalog.adoc` 链接的 book 是否都存在。
+* `books/` 下存在的 book 是否都被 `catalog.adoc` 链接。
+* 每个 `books/<id>/book.adoc` 是否声明 `:doctype: book`。
+* 跨书 xref 的目标文件是否存在。
+* 跨书 xref 指向的显式 anchor 是否存在。
+
+该脚本不得要求七本样本书继续存在。复制模板并删除部分样本书后，只要 `catalog.adoc` 与现存 book 一致，该脚本仍应可用。
+
+样本体系合同检查脚本：
+
+[source,text]
+----
+scripts/check-sample-contract.mjs
+----
+
+该脚本负责检查 `DESIGN.adoc` 规定的七本样本书覆盖要求。该脚本用于维护本样本体系，不作为复制后用户工作区的默认构建条件。
+
+==== 解析口径
+
+通用合同检查脚本按以下口径解释源文件：
+
+* book 列表来自 `books/` 下包含 `book.adoc` 的一级目录。
+* catalog 书目来自 `catalog.adoc` 中形如 `xref:books/<book-id>/book.adoc[...]` 的链接。
+* book header 检查只读取 `books/<book-id>/book.adoc`。
+* 显式 anchor 检查匹配 `[#anchor-id]`。
+* 跨书 xref 检查识别 `xref:` 中指向 `../<book-id>/book.adoc` 或 `books/<book-id>/book.adoc` 的目标。
+
+样本体系合同检查脚本按以下口径解释源文件：
+
+* 样本覆盖检查只对当前存在的样本书目录生效。
+* part 检查只读取对应 `book.adoc`，并统计 document title 后继续出现的 level 0 标题行。匹配形式为 `^=\\s+`，但首行 document title 不计入 part。
+* special section style 检查读取该书目录下所有 `.adoc` 文件。
+* 样本资源检查只验证 `DESIGN.adoc` 明确要求的当前样本资源。
+
+两个合同检查脚本不得扫描工作区外路径。
+
+新增测试：
+
+[source,text]
+----
+test/check-workspace-contract.test.mjs
+----
+
+=== 9.3 样本覆盖检查表
+
+样本体系合同检查脚本必须至少覆盖以下规则：
+
+[cols="1,3", options="header"]
+|===
+|样本 |必须检查
+
+|`00-book-anatomy`
+|包含 `[abstract]`、`[colophon]`、`[dedication]`、`[preface]`、`[acknowledgments]`、`[partintro]`、`[appendix]`、`[glossary]`、`[bibliography]`、`[index]`
+
+|`01-starter-book`
+|包含 `[preface]`、`[appendix]`、`[bibliography]`；不包含 level 0 part
+
+|`02-multipart-monograph`
+|至少两个 level 0 part；至少两个 `[partintro]`
+
+|`03-technical-book-workflow`
+|至少一个图表块；至少一个外部代码 include；包含书内 `examples/`
+
+|`04-reference-manual`
+|包含表格、definition list、`[discrete]`、`[glossary]`、对其他样本书的 xref
+
+|`05-upper-volume`
+|包含显式 anchor `upper-core-model`
+
+|`06-lower-volume`
+|定义 `:upper-book:`；引用 `xref:{upper-book}#upper-core-model`
+|===
+
+=== 9.4 package scripts
+
+`package.json` 应包含通用合同检查命令：
+
+[source,json]
+----
+"check:contract": "node scripts/check-workspace-contract.mjs"
+----
+
+`package.json` 应包含样本体系合同检查命令：
+
+[source,json]
+----
+"check:samples": "node scripts/check-sample-contract.mjs"
+----
+
+`package.json` 应包含组合检查命令：
+
+[source,json]
+----
+"check:all": "pnpm run check:contract && pnpm run check:samples"
+----
+
+`test` 脚本继续运行 Node 测试。`build` 脚本应运行通用合同检查，不运行样本体系合同检查。推荐顺序：
+
+[source,json]
+----
+"build": "pnpm run build:adoc && pnpm run build:catalog && pnpm run build:books && pnpm run copy:assets && pnpm run enhance:html && pnpm run check:html && pnpm run check:contract"
+----
+
+== 10. 迁移步骤
+
+实施者应按以下顺序从当前模板迁移到目标状态：
+
+1. 保留并阅读当前 `scripts/` 与 `test/`。
+2. 新建 `DESIGN.adoc`。
+3. 新建 `books/00-book-anatomy/`。
+4. 将当前普通单书边界内容重写为 `books/01-starter-book/`。
+5. 将当前 part 相关内容重写为 `books/02-multipart-monograph/`。
+6. 将当前构建、图表、共享资源内容重写为 `books/03-technical-book-workflow/`。
+7. 将当前参考手册内容扩展为 `books/04-reference-manual/`。
+8. 将当前上册与下册样本重写为 `books/05-upper-volume/` 与 `books/06-lower-volume/`。
+9. 重写 `catalog.adoc`。
+10. 收束 `README.md`。
+11. 新增 `scripts/check-workspace-contract.mjs` 和对应测试。
+12. 更新 `package.json`。
+13. 运行 `pnpm run test`。
+14. 运行 `pnpm run build`。
+
+实施计划负责选择具体文件移动命令。本文只规定目标状态和约束。
+
+== 11. 验收标准
+
+重构完成必须满足以下标准：
+
+* `pnpm run test` 通过。
+* `pnpm run build` 通过。
+* `build/html/catalog.html` 存在。
+* 7 本样本书各自生成 `build/html/books/<book-id>/book.html`。
+* `build/adoc/books/` 下生成 7 本展开后 ADOC。
+* HTML 本地资源检查不报告缺失。
+* 工作区合同检查不报告错误。
+* README 只说明样本书导航入口，不展开七本书详细介绍。
+* catalog 能按读者目标引导到 7 本样本书。
+* `00-book-anatomy` 覆盖完整书籍结构样本。
+* `01-starter-book` 保持日常复制起点，不包含 part。
+* `02-multipart-monograph` 与 `05-upper-volume` / `06-lower-volume` 的边界对照清楚。
+* `03-technical-book-workflow` 的示例代码位于书内 `examples/`。
+* 根目录没有未被当前样本消费的未来结构目录。
+
+== 12. 参考资料
+
+* Asciidoctor Docs, Book Parts: https://docs.asciidoctor.org/asciidoc/latest/sections/parts/
+* Asciidoctor Docs, Section Styles for Articles and Books: https://docs.asciidoctor.org/asciidoc/latest/sections/styles/
+* Asciidoctor Docs, Include Directive: https://docs.asciidoctor.org/asciidoc/latest/directives/include/
+* Asciidoctor Docs, Document to Document Cross References: https://docs.asciidoctor.org/asciidoc/latest/macros/inter-document-xref/
+* Antora Docs, Page Xrefs and Resource IDs: https://docs.antora.org/antora/latest/page/xref/

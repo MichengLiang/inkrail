@@ -1,0 +1,9 @@
+== 前言
+
+本书按设计判断的依赖顺序组织。读者应先阅读 xref:artifact-identity[人工制品身份] 和 xref:problem-world[问题世界]，再阅读书架配置、投影新鲜度、查询契约和内置查询动作。
+
+本书依赖三个既有事实来源。AsciiDoc 多书书架的标准结构来自 `asciidoc-multi-book-workspace` 模板。AsciiDoc 到 RDF 1.2 的标题投影来自 `asciidoc-abundant-tree`。查询动作集合来自《AsciiDoc 书稿 RDF 投影与 ARQ 查询教程》中的工作流指南。
+
+本书不复制查询教程。查询教程定义作者可以提出哪些结构问题；本书定义 `inkrail` 如何把这些动作放入一个带项目记忆和新鲜度约束的 CLI。
+
+本书不规定文件修改顺序、提交顺序或实现步骤。实现计划应以本书的配置契约、命令契约、状态机和测试契约为输入另行编写。

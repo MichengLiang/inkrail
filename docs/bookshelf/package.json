@@ -1,0 +1,56 @@
+{
+  "name": "asciidoc-multi-book-workspace",
+  "version": "0.1.0",
+  "description": "A GitHub template for maintaining multiple independent AsciiDoc books in one pnpm / Asciidoctor workspace.",
+  "private": true,
+  "license": "Apache-2.0",
+  "author": {
+    "name": "弥澄亮",
+    "email": "t103ooooo@stu.mju.edu.cn",
+    "url": "https://github.com/MichengLiang"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MichengLiang/asciidoc-multi-book-workspace.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MichengLiang/asciidoc-multi-book-workspace/issues"
+  },
+  "homepage": "https://michengliang.github.io/asciidoc-multi-book-workspace/",
+  "type": "module",
+  "keywords": [
+    "asciidoc",
+    "asciidoctor",
+    "documentation",
+    "books",
+    "multi-book",
+    "template",
+    "github-pages",
+    "static-site"
+  ],
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "test": "node --test",
+    "build:adoc": "node scripts/build-adoc.mjs",
+    "build:catalog": "asciidoctor catalog.adoc -D build/html",
+    "build:books": "node scripts/build-books.mjs",
+    "copy:assets": "node scripts/copy-assets.mjs",
+    "enhance:html": "node scripts/add-home-links.mjs build/html",
+    "write:index": "node scripts/write-root-index.mjs build/html",
+    "check:html": "node scripts/check-html-local-resources.mjs build/html",
+    "check:contract": "node scripts/check-workspace-contract.mjs",
+    "check:samples": "node scripts/check-sample-contract.mjs",
+    "check:all": "pnpm run check:contract && pnpm run check:samples",
+    "build": "pnpm run build:adoc && pnpm run build:catalog && pnpm run build:books && pnpm run copy:assets && pnpm run enhance:html && pnpm run write:index && pnpm run check:html && pnpm run check:contract",
+    "check": "pnpm run test && pnpm run build && pnpm run check:samples",
+    "clean": "rm -rf build"
+  },
+  "devDependencies": {
+    "@asciidoctor/reducer": "1.1.2",
+    "asciidoctor": "2.2.9",
+    "asciidoctor-kroki": "0.18.1"
+  }
+}

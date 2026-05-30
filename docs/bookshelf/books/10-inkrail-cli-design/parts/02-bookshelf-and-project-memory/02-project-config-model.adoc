@@ -1,0 +1,51 @@
+[#project-config-model]
+== 项目配置模型
+
+项目记忆由 `.inkrail/config.toml` 表达。项目根通过显式 `--project <path>` 或从当前目录向上查找 `.inkrail/config.toml` 解析。
+
+标准书架的最小配置如下：
+
+[source,toml]
+----
+[project]
+default_book = "10-inkrail-cli-design"
+
+[[bookshelves]]
+id = "docs"
+root = "docs/bookshelf"
+profile = "inkrail-asciidoc-multi-book"
+
+[[books]]
+id = "10-inkrail-cli-design"
+bookshelf = "docs"
+----
+
+`project.default_book` 指定项目模式下未传 `--book` 时使用的书本。项目存在多本书且没有 `default_book` 时，查询命令必须要求用户指定 `--book`。
+
+`bookshelves.id` 是书架标识。该标识必须是 CLI identifier。`bookshelves.root` 是相对项目根的 POSIX 路径，不允许绝对路径、反斜杠和 `..` 路径穿越。
+
+`bookshelves.profile` 决定路径推导规则。`inkrail-asciidoc-multi-book` 是标准书架 profile。`custom` 是非标准书架 profile。
+
+`books.id` 是 `books/<book-id>/` 的目录名。标准 profile 下，`bookshelf` 与 `id` 唯一决定书本入口、聚合 adoc、RDF12 TTL、RDF12 JSON-LD、HTML 产物和观察范围。
+
+custom profile 必须完整声明路径：
+
+[source,toml]
+----
+[[bookshelves]]
+id = "custom-docs"
+root = "docs"
+profile = "custom"
+build_adoc_command = "pnpm run build:adoc"
+
+[[books]]
+id = "manual"
+bookshelf = "custom-docs"
+book_entry = "books/manual/book.adoc"
+aggregate_adoc = "build/adoc/books/manual.adoc"
+rdf12_ttl = "build/adoc/books/manual.adoc.ttl"
+rdf12_jsonld = "build/adoc/books/manual.adoc.jsonld"
+watch = ["books/manual/**/*.adoc", "shared/**/*.adoc"]
+----
+
+标准 profile 避免用户重复声明模板已经确定的路径。custom profile 避免 `inkrail` 对非标准书架作无根据推断。两者之间不存在半自动配置层。

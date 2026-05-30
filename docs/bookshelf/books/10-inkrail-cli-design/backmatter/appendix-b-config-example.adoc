@@ -1,0 +1,55 @@
+= 配置示例
+
+标准书架配置：
+
+[source,toml]
+----
+[project]
+default_book = "10-inkrail-cli-design"
+
+[[bookshelves]]
+id = "docs"
+root = "docs/bookshelf"
+profile = "inkrail-asciidoc-multi-book"
+
+[[books]]
+id = "10-inkrail-cli-design"
+bookshelf = "docs"
+----
+
+custom 书架配置：
+
+[source,toml]
+----
+[project]
+default_book = "manual"
+
+[[bookshelves]]
+id = "custom-docs"
+root = "docs"
+profile = "custom"
+build_adoc_command = "pnpm run build:adoc"
+
+[[books]]
+id = "manual"
+bookshelf = "custom-docs"
+book_entry = "books/manual/book.adoc"
+aggregate_adoc = "build/adoc/books/manual.adoc"
+rdf12_ttl = "build/adoc/books/manual.adoc.ttl"
+rdf12_jsonld = "build/adoc/books/manual.adoc.jsonld"
+watch = [
+  "books/manual/**/*.adoc",
+  "shared/**/*.adoc"
+]
+----
+
+标准 profile 的推导路径：
+
+[source,text]
+----
+book_entry       books/<book-id>/book.adoc
+aggregate_adoc   build/adoc/books/<book-id>.adoc
+rdf12_ttl        build/adoc/books/<book-id>.adoc.ttl
+rdf12_jsonld     build/adoc/books/<book-id>.adoc.jsonld
+html             build/html/books/<book-id>/book.html
+----

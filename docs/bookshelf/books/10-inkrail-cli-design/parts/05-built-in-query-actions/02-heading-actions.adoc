@@ -1,0 +1,79 @@
+[#heading-actions]
+== 标题动作
+
+标题动作来自工作流指南中的标题定位、标题切片和 label 空间检查。
+
+目录骨架：
+
+[source,bash]
+----
+inkrail outline
+inkrail outline --levels 2
+----
+
+输出变量：
+
+[source,text]
+----
+level headline start end
+----
+
+按 address label 定位：
+
+[source,bash]
+----
+inkrail heading locate --label <label>
+----
+
+输出变量：
+
+[source,text]
+----
+heading headline path start end
+----
+
+按 headline 定位：
+
+[source,bash]
+----
+inkrail heading locate --headline <headline>
+----
+
+输出变量：
+
+[source,text]
+----
+heading headline path start end label generated
+----
+
+headline 可以重复。该命令保留多行结果，不自动选择第一行。
+
+读取标题自身 raw：
+
+[source,bash]
+----
+inkrail heading raw --label <label>
+----
+
+输出变量：
+
+[source,text]
+----
+headline path start end raw
+----
+
+label 空间检查：
+
+[source,bash]
+----
+inkrail labels
+----
+
+输出变量：
+
+[source,text]
+----
+heading headline label generated start
+----
+
+标题动作按 `start` 排序。排序是查询契约的一部分。

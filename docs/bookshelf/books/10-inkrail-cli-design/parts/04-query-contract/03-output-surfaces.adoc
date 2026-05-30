@@ -1,0 +1,65 @@
+[#output-surfaces]
+== 输出表面
+
+`inkrail` 只有两类查询输出表面：pretty 和 JSON。
+
+Pretty 是终端读者表面。它使用数据库式表格，字段名直接使用 SPARQL 变量名。
+
+[source,text]
+----
+sourceHeadline  selector  targetHeadline  path  start  col  raw
+----
+
+Pretty 输出写入 stdout。刷新事件、诊断和错误写入 stderr。stdout 不混入教学文本或进度事件。
+
+JSON 是机器、脚本和大语言模型表面。JSON 输出使用 envelope，保留模式、书本、投影、查询种类、变量名和 rows。
+
+[source,json]
+----
+{
+  "ok": true,
+  "data": {
+    "mode": "project",
+    "book": {
+      "id": "10-inkrail-cli-design",
+      "bookshelf": "docs"
+    },
+    "projection": {
+      "format": "rdf12",
+      "path": "docs/bookshelf/build/adoc/books/10-inkrail-cli-design.adoc.ttl",
+      "freshness": "fresh"
+    },
+    "query": {
+      "kind": "select",
+      "variables": ["sourceHeadline", "selector", "targetHeadline"]
+    },
+    "rows": []
+  }
+}
+----
+
+JSON row value 必须保留 RDF term 结构。Literal 示例：
+
+[source,json]
+----
+{
+  "termType": "Literal",
+  "value": "工作流对象",
+  "datatype": "http://www.w3.org/2001/XMLSchema#string",
+  "language": ""
+}
+----
+
+NamedNode 示例：
+
+[source,json]
+----
+{
+  "termType": "NamedNode",
+  "value": "urn:aat:doc:example#heading-l17-o0"
+}
+----
+
+Triple term 或 quad term 必须结构化表示，不能只输出字符串。`rdf:reifies ?relation` 查询会返回 triple term；该对象结构属于机器输出契约。
+
+`inkrail` 当前不设计 Markdown、AsciiDoc、CSV、TSV 或 JSON Lines 输出。新增导出格式需要新的消费者动作和验证方式。

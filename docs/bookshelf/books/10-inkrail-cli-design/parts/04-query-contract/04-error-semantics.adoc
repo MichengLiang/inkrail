@@ -1,0 +1,67 @@
+[#error-semantics]
+== 错误语义
+
+错误码是恢复动作的索引。`inkrail` 使用稳定错误码区分配置、书架、构建、投影、加载和查询失败。
+
+[cols="1,3,3", options="header"]
+|===
+|错误码 |含义 |恢复动作
+
+|`BOOK_REQUIRED`
+|项目无法解析唯一目标书。
+|传入 `--book` 或设置 `project.default_book`。
+
+|`BOOK_NOT_FOUND`
+|指定 book 未登记或标准书架中不存在对应 `book.adoc`。
+|检查 `[[books]]` 或书架 `books/<book-id>/book.adoc`。
+
+|`BOOK_CONFIG_INVALID`
+|book 配置路径、profile 或字段不合法。
+|修正 `.inkrail/config.toml`。
+
+|`WORKSPACE_NOT_FOUND`
+|书架根目录不存在。
+|检查 `bookshelves.root`。
+
+|`BOOK_ENTRY_NOT_FOUND`
+|书本入口不存在。
+|创建或修正 `books/<book-id>/book.adoc`。
+
+|`AGGREGATE_NOT_FOUND`
+|构建后目标聚合 adoc 仍不存在。
+|检查 `build_adoc_command` 和标准路径推导。
+
+|`BUILD_FAILED`
+|`build_adoc_command` 执行失败。
+|修复 AsciiDoc 源、依赖或书架构建环境。
+
+|`PROJECTION_FAILED`
+|聚合 adoc 到 RDF 投影失败。
+|检查聚合 adoc、投影器版本和 projection options。
+
+|`TTL_READ_FAILED`
+|TTL 文件无法读取。
+|检查文件权限和路径。
+
+|`TTL_LOAD_FAILED`
+|Oxigraph 无法加载 TTL。
+|重新投影或检查 Turtle 语法。
+
+|`QUERY_READ_FAILED`
+|查询文本无法读取。
+|检查 `--file`、stdin 或命令参数。
+
+|`QUERY_FAILED`
+|SPARQL 执行失败。
+|修正查询语句或查询能力假设。
+
+|`STALE_PROJECTION`
+|项目模式检测到过期投影且无法刷新。
+|修复构建或投影失败原因；不能使用旧 TTL 继续查询。
+
+|`TOOL_NOT_FOUND`
+|外部命令缺失。
+|安装依赖或修正配置命令。
+|===
+
+成功 JSON 写 stdout。失败 JSON 写 stderr。pretty 模式失败时，stderr 输出错误码、错误消息和必要 details，不输出 stack trace。

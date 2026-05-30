@@ -1,0 +1,18 @@
+= 附录 A：结构速查
+
+[cols="1,2", options="header"]
+|===
+|写法 |含义
+
+|`= 书名`
+|document title。
+
+|`= 第一部`
+|book doctype 中的 part。
+
+|`== 章`
+|chapter。
+
+|`=== 节`
+|section。
+|===

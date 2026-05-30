@@ -1,0 +1,14 @@
+= 参考资料
+
+* [[[simon-artificial]]] Herbert A. Simon, _The Sciences of the Artificial_, 1969.
+* [[[zave-jackson]]] Pamela Zave and Michael Jackson, “Four Dark Corners of Requirements Engineering”, _ACM Transactions on Software Engineering and Methodology_, 1997.
+* [[[hevner-dsr]]] Alan R. Hevner, Salvatore T. March, Jinsoo Park, and Sudha Ram, “Design Science in Information Systems Research”, _MIS Quarterly_, 2004.
+* [[[asciidoc-multi-book-workspace]]] MichengLiang, _asciidoc-multi-book-workspace_, https://github.com/MichengLiang/asciidoc-multi-book-workspace
+* [[[asciidoc-abundant-tree]]] MichengLiang, _asciidoc-abundant-tree_, https://github.com/MichengLiang/asciidoc-abundant-tree
+* [[[rdf12-concepts]]] W3C, _RDF 1.2 Concepts and Abstract Data Model_, https://www.w3.org/TR/rdf12-concepts/
+* [[[rdf12-turtle]]] W3C, _RDF 1.2 Turtle_, https://www.w3.org/TR/rdf12-turtle/
+* [[[sparql12-query]]] W3C, _SPARQL 1.2 Query Language_, https://www.w3.org/TR/sparql12-query/
+* [[[asciidoctor-parts]]] Asciidoctor Docs, _Book Parts_, https://docs.asciidoctor.org/asciidoc/latest/sections/parts/
+* [[[asciidoctor-include]]] Asciidoctor Docs, _Include Directive_, https://docs.asciidoctor.org/asciidoc/latest/directives/include/
+* [[[asciidoctor-xref]]] Asciidoctor Docs, _Document to Document Cross References_, https://docs.asciidoctor.org/asciidoc/latest/macros/inter-document-xref/
+* [[[oxigraph]]] Oxigraph, https://oxigraph.org/

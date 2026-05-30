@@ -1,0 +1,23 @@
+[#design-coordinates]
+== 设计坐标
+
+本书使用需求工程中的关系式描述 `inkrail` 的判断结构：
+
+[source,text]
+----
+Domain ∧ Specification ⊨ Requirements
+----
+
+Domain 是当前书稿世界中的事实。它包括标准多书书架结构、聚合 adoc 产物、RDF12 投影、Oxigraph 本地查询能力、单本书查询边界和聚合文件回源限制。
+
+Requirements 是作者希望达到的状态。作者需要用较少路径记忆和较少刷新心智负担，对当前书稿事实发起结构查询，并得到可回源、可审计、可重复的结果。
+
+Specification 是 `inkrail` 能直接控制的规约。它包括项目配置、书本选择、标准 profile 路径推导、投影刷新状态机、SPARQL 查询执行、pretty 输出、JSON 输出和错误语义。
+
+`inkrail` 不能直接改变源书稿世界。它只能通过可控规约把当前书稿事实投影为可查询对象，并阻止过期投影进入当前查询。
+
+项目记忆对应 bounded rationality 的工程处理。作者不应在每次查询时重新记忆书架根、book id、聚合 adoc、TTL 路径和刷新条件。`inkrail` 用 `.inkrail/config.toml` 与 `.inkrail/state/` 把这些状态外化为可检查对象。
+
+投影概念用于区分对象和表面。TTL、JSON-LD、pretty 表格、JSON envelope 都是投影。投影服务不同消费者，但投影不能替代人工制品本体。`inkrail` 的本体是书架、书本、构建产物、投影状态和查询契约之间的受控关系。
+
+无项目模式是期权式准备。`query --ttl` 和 `project <file.adoc>` 保留临时实验能力，但它们不扩大项目模式的公共契约。无项目模式不判断项目新鲜度，也不声称给定 TTL 代表某个当前书稿。

@@ -1,0 +1,18 @@
+[#object-boundaries]
+== 对象边界
+
+`inkrail` 不实现 AsciiDoc parser。AsciiDoc 语义由 Asciidoctor 和 `asciidoc-abundant-tree` 承担。`inkrail` 只协调书架构建、投影产物和查询执行。
+
+`inkrail` 不替代 `asciidoc-abundant-tree`。单文件解析、tree 输出、JSON 输出、RDF12 投影和 RDF12 JSON-LD 投影的语义来源仍然是 `asciidoc-abundant-tree`。
+
+`inkrail` 项目模式一次查询一本书。跨书联合图不属于当前公共契约。跨书联合查询会引入 label 空间、IRI 命名、source provenance、跨书 xref 绑定和结果归属问题；这些问题没有进入当前需求边界。
+
+`inkrail` 不提供原始拆分文件 source map。当前 RDF 投影的行号坐标指向聚合 adoc。原始文件定位属于文档指南中的回源搜索方法，不属于查询命令输出的隐含承诺。
+
+`inkrail` 不解释 payload raw。payload 的 JSON、YAML、TOML、XML 或其它格式作为 raw 文本保留。`inkrail` 可以查询 payload 绑定事实，但不把 payload 展开为业务图。
+
+`inkrail` 不判断写作质量。未绑定 xref、多义 xref、重复 headline、重复 address label 和 degree 统计都是结构事实。它们提供作者判断入口，不自动构成错误结论。
+
+`inkrail` 不把 stale projection 作为当前书稿事实。项目模式下，过期 TTL 不可查询。构建或投影失败时，查询失败。
+
+`inkrail` 不在每次命令结果中输出回源教学文本。查询结果提供 `path`、`start`、`end`、`raw`、`selector`、`headline` 等字段。聚合 adoc 与原始书稿之间的回源方法由 README 或指南说明。

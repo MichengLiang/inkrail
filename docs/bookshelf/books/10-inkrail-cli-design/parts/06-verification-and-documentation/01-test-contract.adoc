@@ -1,0 +1,73 @@
+[#test-contract]
+== 测试合同
+
+`inkrail` 的测试必须覆盖对象契约，而不是只证明命令可运行。
+
+配置测试必须覆盖：
+
+* 非法 book id。
+* 重复 bookshelf id。
+* 重复 book id。
+* 路径为绝对路径。
+* 路径包含反斜杠。
+* 路径包含 `..`。
+* `default_book` 指向未登记 book。
+* standard profile 禁止手写冲突路径。
+* custom profile 缺少必填路径。
+
+书本选择测试必须覆盖：
+
+* `--book` 优先于 `default_book`。
+* `default_book` 生效。
+* 单 book 项目可解析唯一书。
+* 多 book 项目无目标书时报 `BOOK_REQUIRED`。
+* 指定未知 book 时报 `BOOK_NOT_FOUND`。
+
+路径推导测试必须覆盖 standard profile 下的 `book_entry`、`aggregate_adoc`、`rdf12_ttl`、`rdf12_jsonld`、`html` 和 watch globs。
+
+新鲜度测试必须覆盖：
+
+* aggregate 缺失触发 `build_adoc_command`。
+* source fingerprint 变化触发 `build_adoc_command`。
+* aggregate hash 不变时不重投影 RDF12。
+* RDF12 TTL 缺失触发投影。
+* RDF12 TTL 的 `projectedFromAggregateHash` 不匹配触发投影。
+* 构建失败时查询失败。
+* 投影失败时查询失败。
+* 不存在 stale continue 分支。
+
+Oxigraph 查询测试必须覆盖：
+
+* SELECT 查询。
+* ASK 查询。
+* CONSTRUCT 或 DESCRIBE 查询。
+* property path。
+* `rdf:reifies ?relation` 返回 triple term。
+* Turtle 加载错误映射为 `TTL_LOAD_FAILED`。
+* SPARQL 错误映射为 `QUERY_FAILED`。
+
+输出测试必须覆盖：
+
+* pretty 输出只在 stdout 写结果表。
+* 刷新事件写 stderr。
+* JSON 输出保留 envelope。
+* JSON row value 保留 RDF term 结构。
+* triple term 不被压成普通字符串。
+* 字段名沿用 SPARQL 变量名。
+
+内置查询测试必须覆盖：
+
+* 每个内置命令生成的 SPARQL 与工作流指南语义一致。
+* 每个内置命令的输出变量与 SELECT 变量一致。
+* `--print-query` 输出 SPARQL，不执行查询。
+* 查询排序与指南保持一致。
+
+模板初始化测试必须覆盖：
+
+* 目标目录不存在时创建书架。
+* 目标目录为空时创建书架。
+* 目标路径为文件时报错。
+* 目标目录非空时报错。
+* `--title` 更新 catalog 标题和 `:series-name:`。
+* `--name` 更新 `package.json`。
+* `--register` 写入 `[[bookshelves]]`。

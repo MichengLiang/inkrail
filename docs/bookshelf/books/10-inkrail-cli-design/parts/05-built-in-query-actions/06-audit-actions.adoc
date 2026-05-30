@@ -1,0 +1,76 @@
+[#audit-actions]
+== 审计动作
+
+审计动作暴露书稿结构事实。审计结果提供作者判断入口，不自动给出内容评价。
+
+重复 address label：
+
+[source,bash]
+----
+inkrail audit duplicate-labels
+----
+
+输出变量：
+
+[source,text]
+----
+label count
+----
+
+重复 headline：
+
+[source,bash]
+----
+inkrail audit duplicate-headlines
+----
+
+输出变量：
+
+[source,text]
+----
+headline count
+----
+
+节点 payload：
+
+[source,bash]
+----
+inkrail audit payloads --kind node
+----
+
+输出变量：
+
+[source,text]
+----
+headingHeadline payloadId format payloadStart payloadEnd
+----
+
+边 payload：
+
+[source,bash]
+----
+inkrail audit payloads --kind edge
+----
+
+输出变量：
+
+[source,text]
+----
+sourceHeadline targetHeadline payloadId format payloadStart payloadEnd
+----
+
+raw 抽查：
+
+[source,bash]
+----
+inkrail audit raw --headline <headline> --contains <fragment>
+----
+
+输出变量：
+
+[source,text]
+----
+headline start containsExpected
+----
+
+`containsExpected` 是查询结果，不是测试断言。需要把它作为自动化回归条件时，应由调用方检查 JSON 输出。

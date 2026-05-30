@@ -1,0 +1,90 @@
+[#xref-actions]
+== 交叉引用动作
+
+交叉引用动作读取 `aat:XrefEdge` 边证据。
+
+发出的交叉引用：
+
+[source,bash]
+----
+inkrail xrefs outgoing --label <label>
+----
+
+输出变量：
+
+[source,text]
+----
+edge selector target targetHeadline raw start col
+----
+
+指向当前标题的交叉引用：
+
+[source,bash]
+----
+inkrail xrefs incoming --label <label>
+----
+
+输出变量：
+
+[source,text]
+----
+source sourceHeadline raw path start col
+----
+
+全书交叉引用表：
+
+[source,bash]
+----
+inkrail xrefs list
+----
+
+输出变量：
+
+[source,text]
+----
+sourceHeadline selector targetHeadline path start col raw
+----
+
+未绑定交叉引用：
+
+[source,bash]
+----
+inkrail xrefs unbound
+----
+
+输出变量：
+
+[source,text]
+----
+sourceHeadline selector raw path start col
+----
+
+多义交叉引用：
+
+[source,bash]
+----
+inkrail xrefs ambiguous
+----
+
+输出变量：
+
+[source,text]
+----
+sourceHeadline selector candidateHeadline candidateStart raw path start
+----
+
+子树内部引用：
+
+[source,bash]
+----
+inkrail xrefs internal --label <label>
+----
+
+输出变量：
+
+[source,text]
+----
+sourceHeadline targetHeadline start
+----
+
+未绑定和多义结果是结构事实，不自动构成错误结论。

@@ -1,0 +1,91 @@
+[#degree-and-neighborhood-actions]
+== Degree 与邻域动作
+
+Degree 动作统计 heading 在 xref 网络中的连接数量。
+
+出度：
+
+[source,bash]
+----
+inkrail degree out
+----
+
+输出变量：
+
+[source,text]
+----
+heading headline outDegree
+----
+
+入度：
+
+[source,bash]
+----
+inkrail degree in
+----
+
+输出变量：
+
+[source,text]
+----
+heading headline inDegree
+----
+
+合并入度与出度：
+
+[source,bash]
+----
+inkrail degree both
+----
+
+输出变量：
+
+[source,text]
+----
+heading headline inDegree outDegree
+----
+
+范围内出度：
+
+[source,bash]
+----
+inkrail degree out --scope <label>
+----
+
+输出变量：
+
+[source,text]
+----
+heading headline outDegree
+----
+
+范围外依赖数量：
+
+[source,bash]
+----
+inkrail degree external-out --scope <label>
+----
+
+输出变量：
+
+[source,text]
+----
+source sourceHeadline externalOutDegree
+----
+
+邻域动作读取一个 heading 周围的局部 xref 网络。
+
+[source,bash]
+----
+inkrail neighborhood out --label <label> --depth 1
+inkrail neighborhood in --label <label> --depth 1
+inkrail neighborhood out --label <label> --depth 2
+inkrail neighborhood in --label <label> --depth 2
+inkrail neighborhood both --label <label>
+inkrail neighborhood external-out --scope <label>
+inkrail neighborhood external-in --scope <label>
+----
+
+邻域命令的输出变量沿用工作流指南中的 `target`、`targetHeadline`、`source`、`sourceHeadline`、`near`、`nearHeadline`、`far`、`farHeadline`、`direction`、`neighbor`、`neighborHeadline`、`edgeStart` 和 `raw`。
+
+Degree 高低是阅读和审计信号，不是内容质量判决。

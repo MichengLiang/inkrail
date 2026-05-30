@@ -1,0 +1,21 @@
+[#query-engine]
+== 查询执行器
+
+`inkrail` 使用 Oxigraph 作为内置本地查询执行器。
+
+Oxigraph 是 Rust 实现的 RDF store 和 SPARQL engine。JavaScript binding 通过 WebAssembly 暴露内存 store。`inkrail` 在本地读取 RDF12 TTL，把 Turtle 加载进 Oxigraph store，并在该 store 上执行 SPARQL。
+
+该选择回应当前问题世界。`inkrail` 查询的是本地单本书 TTL，不是远程 RDF source federation。Oxigraph 的内存 store、轻依赖和直接 load/query 模型适合该场景。
+
+`inkrail` 依赖的查询能力包括：
+
+* 加载 Turtle。
+* 执行 SELECT 查询。
+* 执行 ASK 查询。
+* 执行 CONSTRUCT 和 DESCRIBE 查询。
+* 执行 property path。
+* 返回 `rdf:reifies` 指向的 triple term。
+
+RDF 1.2 / RDF-star 相关能力必须通过 fixture 测试锁定。`inkrail` 不把 Oxigraph 的全部未来标准覆盖范围写成自身公共承诺。
+
+查询语句使用 SPARQL。`inkrail` 不定义新的查询 DSL。内置命令是 SPARQL 模板的命令化表面，raw query 始终保留。

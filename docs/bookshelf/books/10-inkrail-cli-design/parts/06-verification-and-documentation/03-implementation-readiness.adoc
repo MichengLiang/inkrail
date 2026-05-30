@@ -1,0 +1,22 @@
+[#implementation-readiness]
+== 实现准备条件
+
+实现 `inkrail` 前，以下契约必须保持稳定：
+
+* 人工制品定义。
+* standard profile 与 custom profile 的配置边界。
+* standard profile 路径推导规则。
+* 初始化命令契约。
+* source、aggregate 和 projection fingerprint 模型。
+* 项目查询刷新状态机。
+* stale projection 不可查询规则。
+* `rdf12` 与 `rdf12-json-ld` 投影边界。
+* project mode、ttl-only mode 和 single-file projection mode。
+* pretty 与 JSON 两类输出表面。
+* RDF term JSON 结构化输出规则。
+* 错误码和恢复动作。
+* 内置查询动作集合。
+* README 与指南职责。
+* 测试合同。
+
+实现计划应从这些契约派生。实现计划可以安排文件顺序、测试顺序和提交顺序，但不得用实施阶段改写对象边界。

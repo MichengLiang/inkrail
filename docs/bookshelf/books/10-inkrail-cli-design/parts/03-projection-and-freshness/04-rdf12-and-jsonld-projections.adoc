@@ -1,0 +1,27 @@
+[#rdf12-and-jsonld-projections]
+== RDF12 与 JSON-LD 投影
+
+`rdf12` 是面向查询执行器的 Turtle 投影。项目模式查询依赖 RDF12 TTL。
+
+`rdf12-json-ld` 是面向结构化消费者的 JSON-LD 投影。它不作为 Oxigraph 查询输入。
+
+单文件投影命令必须支持两个格式：
+
+[source,bash]
+----
+inkrail project path/to/file.adoc --format rdf12 --out path/to/file.adoc.ttl
+inkrail project path/to/file.adoc --format rdf12-json-ld --out path/to/file.adoc.jsonld
+----
+
+单文件投影模式不写 `.inkrail/state/`。它只读取输入 adoc，生成指定输出文件。
+
+项目刷新可以指定投影格式：
+
+[source,bash]
+----
+inkrail refresh --projection rdf12
+inkrail refresh --projection rdf12-json-ld
+inkrail refresh --projection all
+----
+
+`query` 只要求 `rdf12` 新鲜。`refresh --projection all` 生成 TTL 与 JSON-LD，并为两个投影分别记录 projection fingerprint。

@@ -1,0 +1,85 @@
+= 命令表面
+
+项目记忆：
+
+[source,bash]
+----
+inkrail init
+inkrail status
+inkrail config print
+inkrail doctor
+----
+
+书架与书本：
+
+[source,bash]
+----
+inkrail bookshelf init <target-dir> --title <title> --name <package-name>
+inkrail bookshelves add <id> --root <path> --profile inkrail-asciidoc-multi-book
+inkrail books add <book-id> --bookshelf <bookshelf-id>
+inkrail books use <book-id>
+inkrail books list
+----
+
+刷新与投影：
+
+[source,bash]
+----
+inkrail refresh
+inkrail refresh --book <book-id>
+inkrail refresh --projection rdf12
+inkrail refresh --projection rdf12-json-ld
+inkrail refresh --projection all
+inkrail project <file.adoc> --format rdf12 --out <file.adoc.ttl>
+inkrail project <file.adoc> --format rdf12-json-ld --out <file.adoc.jsonld>
+----
+
+Raw query：
+
+[source,bash]
+----
+inkrail query '<sparql>'
+inkrail query --file query.sparql
+inkrail query --ttl path/to/file.ttl --file query.sparql
+inkrail query --json --file query.sparql
+----
+
+内置查询：
+
+[source,bash]
+----
+inkrail source
+inkrail outline
+inkrail heading locate --label <label>
+inkrail heading locate --headline <headline>
+inkrail heading raw --label <label>
+inkrail labels
+inkrail structure children --label <label>
+inkrail structure descendants --label <label>
+inkrail structure subtree --label <label>
+inkrail structure parent --label <label>
+inkrail structure previous-sibling --label <label>
+inkrail xrefs outgoing --label <label>
+inkrail xrefs incoming --label <label>
+inkrail xrefs list
+inkrail xrefs unbound
+inkrail xrefs ambiguous
+inkrail xrefs internal --label <label>
+inkrail degree out
+inkrail degree in
+inkrail degree both
+inkrail degree out --scope <label>
+inkrail degree external-out --scope <label>
+inkrail neighborhood out --label <label> --depth 1
+inkrail neighborhood in --label <label> --depth 1
+inkrail neighborhood out --label <label> --depth 2
+inkrail neighborhood in --label <label> --depth 2
+inkrail neighborhood both --label <label>
+inkrail neighborhood external-out --scope <label>
+inkrail neighborhood external-in --scope <label>
+inkrail audit duplicate-labels
+inkrail audit duplicate-headlines
+inkrail audit payloads --kind node
+inkrail audit payloads --kind edge
+inkrail audit raw --headline <headline> --contains <fragment>
+----

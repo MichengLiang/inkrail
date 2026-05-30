@@ -1,0 +1,25 @@
+[#refresh-state-machine]
+== 刷新状态机
+
+项目模式查询前必须执行刷新状态机。
+
+1. 解析项目上下文。
+2. 解析唯一目标书。
+3. 根据 profile 物化书本路径和观察范围。
+4. 计算 source fingerprint。
+5. 当 aggregate adoc 缺失时，运行 `build_adoc_command`。
+6. 当 source fingerprint 与状态不一致时，运行 `build_adoc_command`。
+7. 构建后计算目标书 aggregate fingerprint。
+8. 当 RDF12 TTL 缺失时，生成 RDF12 TTL。
+9. 当 RDF12 TTL 的 `projectedFromAggregateHash` 与当前 aggregate hash 不一致时，生成 RDF12 TTL。
+10. 加载 RDF12 TTL 到 Oxigraph。
+11. 执行查询。
+12. 写入新的状态。
+
+构建失败时，查询失败。投影失败时，查询失败。TTL 加载失败时，查询失败。
+
+项目模式不存在 stale continue 分支。`inkrail` 已经知道 TTL 不代表当前书稿事实时，不得使用该 TTL 回答当前查询。
+
+查询失败不回滚已经成功写入的聚合 adoc 或投影产物。查询错误属于 SPARQL 执行层；已经完成的新鲜投影仍然可以保留。
+
+`inkrail refresh` 主动执行同一状态机，但不执行用户查询。`inkrail query` 在项目模式下隐式执行该状态机。

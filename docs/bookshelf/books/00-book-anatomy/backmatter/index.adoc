@@ -1,0 +1,9 @@
+= 索引
+
+索引 section 位于书籍后置区域。正文中的索引词宏是索引词来源：
+
+[source,asciidoc]
+----
+(((section)))
+(((discrete heading)))
+----

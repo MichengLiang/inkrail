@@ -1,0 +1,114 @@
+= inkrail CLI 设计书
+弥澄亮 <t103ooooo@stu.mju.edu.cn>
+v0.1, 2026-05
+:doctype: book
+:toc: left
+:toclevels: 3
+:sectnums:
+:icons: font
+:experimental:
+:idprefix:
+:idseparator: -
+
+include::../../shared/attributes.adoc[]
+
+[abstract]
+include::frontmatter/abstract.adoc[]
+
+[preface]
+include::frontmatter/preface.adoc[]
+
+= 第一部：对象与问题世界
+
+[partintro]
+include::parts/01-object-and-domain/_partintro.adoc[]
+
+include::parts/01-object-and-domain/01-artifact-identity.adoc[]
+
+include::parts/01-object-and-domain/02-problem-world.adoc[]
+
+include::parts/01-object-and-domain/03-design-coordinates.adoc[]
+
+include::parts/01-object-and-domain/04-boundaries.adoc[]
+
+= 第二部：书架与项目记忆
+
+[partintro]
+include::parts/02-bookshelf-and-project-memory/_partintro.adoc[]
+
+include::parts/02-bookshelf-and-project-memory/01-standard-bookshelf-template.adoc[]
+
+include::parts/02-bookshelf-and-project-memory/02-project-config-model.adoc[]
+
+include::parts/02-bookshelf-and-project-memory/03-book-path-derivation.adoc[]
+
+include::parts/02-bookshelf-and-project-memory/04-initialization-contract.adoc[]
+
+= 第三部：投影与新鲜度
+
+[partintro]
+include::parts/03-projection-and-freshness/_partintro.adoc[]
+
+include::parts/03-projection-and-freshness/01-build-artifacts.adoc[]
+
+include::parts/03-projection-and-freshness/02-fingerprint-model.adoc[]
+
+include::parts/03-projection-and-freshness/03-refresh-state-machine.adoc[]
+
+include::parts/03-projection-and-freshness/04-rdf12-and-jsonld-projections.adoc[]
+
+= 第四部：查询契约
+
+[partintro]
+include::parts/04-query-contract/_partintro.adoc[]
+
+include::parts/04-query-contract/01-query-engine.adoc[]
+
+include::parts/04-query-contract/02-query-modes.adoc[]
+
+include::parts/04-query-contract/03-output-surfaces.adoc[]
+
+include::parts/04-query-contract/04-error-semantics.adoc[]
+
+= 第五部：内置查询动作
+
+[partintro]
+include::parts/05-built-in-query-actions/_partintro.adoc[]
+
+include::parts/05-built-in-query-actions/01-action-source.adoc[]
+
+include::parts/05-built-in-query-actions/02-heading-actions.adoc[]
+
+include::parts/05-built-in-query-actions/03-structure-actions.adoc[]
+
+include::parts/05-built-in-query-actions/04-xref-actions.adoc[]
+
+include::parts/05-built-in-query-actions/05-degree-and-neighborhood-actions.adoc[]
+
+include::parts/05-built-in-query-actions/06-audit-actions.adoc[]
+
+= 第六部：验证与文档
+
+[partintro]
+include::parts/06-verification-and-documentation/_partintro.adoc[]
+
+include::parts/06-verification-and-documentation/01-test-contract.adoc[]
+
+include::parts/06-verification-and-documentation/02-readme-and-guide-contract.adoc[]
+
+include::parts/06-verification-and-documentation/03-implementation-readiness.adoc[]
+
+[appendix]
+include::backmatter/appendix-a-command-surface.adoc[]
+
+[appendix]
+include::backmatter/appendix-b-config-example.adoc[]
+
+[appendix]
+include::backmatter/appendix-c-query-action-map.adoc[]
+
+[glossary]
+include::backmatter/glossary.adoc[]
+
+[bibliography]
+include::backmatter/bibliography.adoc[]

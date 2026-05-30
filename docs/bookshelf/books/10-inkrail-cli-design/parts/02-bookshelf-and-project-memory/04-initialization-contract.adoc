@@ -1,0 +1,56 @@
+[#initialization-contract]
+== 初始化契约
+
+`inkrail init` 初始化项目记忆。该命令在目标项目下创建：
+
+[source,text]
+----
+.inkrail/config.toml
+.inkrail/cache/
+.inkrail/state/
+----
+
+该命令不创建 AsciiDoc 书架。它只建立 `inkrail` 项目上下文。
+
+`inkrail bookshelf init <target-dir>` 从标准 `asciidoc-multi-book-workspace` 模板创建多书书架。目标目录必须不存在或为空目录。目标路径存在且不是目录时，命令失败。目标目录非空时，命令失败。
+
+书架初始化命令支持：
+
+[source,bash]
+----
+inkrail bookshelf init docs/bookshelf --title "Inkrail 文档" --name "inkrail-bookshelf"
+----
+
+`--title` 写入 `catalog.adoc` 标题和 `shared/attributes.adoc` 中的 `:series-name:`。`--name` 写入书架 `package.json` 的 `name`。
+
+`inkrail bookshelves add` 把已有书架登记到项目记忆：
+
+[source,bash]
+----
+inkrail bookshelves add docs --root docs/bookshelf --profile inkrail-asciidoc-multi-book
+----
+
+`inkrail books add` 把一本书登记到项目记忆：
+
+[source,bash]
+----
+inkrail books add 10-inkrail-cli-design --bookshelf docs
+----
+
+`inkrail books use` 设置项目默认书：
+
+[source,bash]
+----
+inkrail books use 10-inkrail-cli-design
+----
+
+`bookshelf init` 可以提供注册选项：
+
+[source,bash]
+----
+inkrail bookshelf init docs/bookshelf --title "Inkrail 文档" --name "inkrail-bookshelf" --register docs
+----
+
+`--register <id>` 在创建书架后写入 `[[bookshelves]]`。自动登记书架中的所有 book 需要显式选项；书架模板中的样本书不能在未授权时进入项目记忆。
+
+初始化命令不提供覆盖非空书架目录的公共契约。覆盖和合并属于不同人工制品，不进入当前设计。

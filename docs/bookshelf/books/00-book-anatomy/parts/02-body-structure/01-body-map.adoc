@@ -1,0 +1,13 @@
+[#body-map]
+== 正文结构地图
+
+part 是 book doctype 中的 level 0 section。chapter 是 part 下的 level 1 section，也就是 `==` 标题。
+
+=== 小节层级
+
+小节用于组织 chapter 内部内容。(((section)))
+
+[discrete]
+=== 离散标题
+
+离散标题提供视觉分隔，但不进入书籍目录层级。(((discrete heading)))

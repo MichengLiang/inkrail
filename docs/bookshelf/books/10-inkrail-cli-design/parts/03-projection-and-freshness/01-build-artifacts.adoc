@@ -1,0 +1,29 @@
+[#build-artifacts]
+== 构建产物
+
+聚合 adoc 是 include 展开后的单文件书稿。它位于：
+
+[source,text]
+----
+build/adoc/books/<book-id>.adoc
+----
+
+聚合 adoc 是 RDF 投影器输入。作者可以打开它阅读全书线性上下文，但不应手写修改它。
+
+RDF12 TTL 是 `asciidoc-abundant-tree` 的 `rdf12` Turtle 输出。它位于：
+
+[source,text]
+----
+build/adoc/books/<book-id>.adoc.ttl
+----
+
+RDF12 JSON-LD 是 `asciidoc-abundant-tree` 的 `rdf12-json-ld` 输出。它位于：
+
+[source,text]
+----
+build/adoc/books/<book-id>.adoc.jsonld
+----
+
+聚合 adoc、TTL 和 JSON-LD 都是 build artifact。它们可以删除并重新生成。它们不作为手写源文件维护。
+
+HTML 是发布表面。HTML 构建不参与 `inkrail query` 的新鲜度判断。查询前刷新只要求聚合 adoc 与 RDF12 TTL 代表当前书稿事实。

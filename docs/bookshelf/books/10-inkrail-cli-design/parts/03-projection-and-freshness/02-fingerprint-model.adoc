@@ -1,0 +1,28 @@
+[#fingerprint-model]
+== 指纹模型
+
+`inkrail` 使用指纹判断构建产物是否代表当前输入。
+
+Source fingerprint 描述观察范围内的源输入集合。每个输入文件记录相对路径、size、mtimeMs 和 content hash。mtimeMs 是快速变化线索，content hash 是内容事实。
+
+Aggregate fingerprint 描述目标书的聚合 adoc。它记录路径、size、mtimeMs 和 content hash。
+
+Projection fingerprint 描述一个投影产物。它记录投影格式、输出路径、输出 hash、projectedFromAggregateHash、projector identity 和 projection options。
+
+项目状态存储在：
+
+[source,text]
+----
+.inkrail/state/
+----
+
+状态文件保存上次成功判断的 source fingerprint、aggregate fingerprint 和 projection fingerprint。状态文件不替代产物本身。TTL 缺失时，即使状态声称存在投影，查询仍必须刷新。
+
+RDF12 TTL 的 freshness 条件是：
+
+* 目标书 aggregate adoc 存在。
+* RDF12 TTL 文件存在。
+* 当前 aggregate hash 等于 TTL 状态中的 `projectedFromAggregateHash`。
+* 当前 projection options 与 TTL 状态中的 projection options 一致。
+
+RDF12 JSON-LD 有独立 projection fingerprint。它可以与 TTL 基于同一个 aggregate hash 生成，但它不是 Oxigraph 查询输入。
