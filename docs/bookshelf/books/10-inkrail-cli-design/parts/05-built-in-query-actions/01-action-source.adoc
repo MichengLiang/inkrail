@@ -17,4 +17,4 @@ path digest
 
 `path` 是 RDF 投影中的 `aat:relativePath`。`digest` 是投影记录的 source digest。该动作应在跨项目查询和异常结果审查时使用。
 
-`inkrail source --print-query` 输出来源确认 SPARQL，不执行查询。
+`--print-query` 输出来源确认 SPARQL，不执行查询。

@@ -1,0 +1,6 @@
+[#query-template-contract]
+== 查询模板契约
+
+每个内置查询命令都接受 `--print-query`。该选项把命令对应的 SPARQL 写入 stdout，不执行查询，不读取 TTL，也不触发刷新状态机。
+
+内置查询模板必须保持 xref:../08-rdf12-heading-projection-query-workflow/book.adoc[查询工作流指南] 的查询语义。SELECT 变量、排序字段、property path、`OPTIONAL`、`FILTER NOT EXISTS`、`GROUP BY` 和 `HAVING` 条件属于查询契约。命令参数只能替换指南查询中的占位 literal 或 scope label，不能改变查询动作的事实边界。

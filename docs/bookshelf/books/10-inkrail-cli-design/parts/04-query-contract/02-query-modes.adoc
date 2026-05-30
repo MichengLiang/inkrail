@@ -15,6 +15,15 @@ inkrail xrefs unbound --book 10-inkrail-cli-design
 
 Project mode 在查询前执行 xref:refresh-state-machine[刷新状态机]。只有 RDF12 TTL 新鲜时，查询才执行。
 
+Project mode 的 raw query 输入表面包括命令参数、查询文件和 stdin：
+
+[source,bash]
+----
+inkrail query 'SELECT ... WHERE { ... }'
+inkrail query --file query.sparql
+inkrail query --stdin < query.sparql
+----
+
 === TTL-only mode
 
 TTL-only mode 直接查询用户提供的 Turtle 文件。
@@ -25,6 +34,8 @@ inkrail query --ttl path/to/book.adoc.ttl --file query.sparql
 ----
 
 TTL-only mode 不查找 `.inkrail/config.toml`，不计算 source fingerprint，不刷新聚合 adoc，不判断 project freshness。该模式只声明给定 TTL 已被加载并查询。
+
+TTL-only mode 接受与 Project mode 相同的 raw query 输入表面。
 
 === Single-file projection mode
 

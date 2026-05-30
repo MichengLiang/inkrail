@@ -1,7 +1,7 @@
 [#heading-actions]
 == 标题动作
 
-标题动作来自工作流指南中的标题定位、标题切片和 label 空间检查。
+标题动作来自 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#heading-location-and-slices[查询工作流指南的标题定位与切片查询]。
 
 目录骨架：
 

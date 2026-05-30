@@ -28,6 +28,8 @@ bookshelf = "docs"
 
 `books.id` 是 `books/<book-id>/` 的目录名。标准 profile 下，`bookshelf` 与 `id` 唯一决定书本入口、聚合 adoc、RDF12 TTL、RDF12 JSON-LD、HTML 产物和观察范围。
 
+标准 profile 的 book 配置不得声明 `book_entry`、`aggregate_adoc`、`rdf12_ttl`、`rdf12_jsonld`、`html` 或 `watch`。这些字段由 profile 规则推导。手写同名字段会制造两个路径来源，应作为 `BOOK_CONFIG_INVALID` 处理。
+
 custom profile 必须完整声明路径：
 
 [source,toml]

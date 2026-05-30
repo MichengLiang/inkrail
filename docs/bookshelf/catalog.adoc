@@ -8,7 +8,7 @@ v0.1, 2026-05
 :idprefix:
 :idseparator: -
 
-本页是样本书导航。每本书代表一种常见书籍组织场景。
+本页是书架导航。样本书代表常见书籍组织场景，项目书记录 `inkrail` 的查询工作流和设计契约。
 
 == 按目标选择
 
@@ -36,6 +36,10 @@ v0.1, 2026-05
 |xref:books/04-reference-manual/book.adoc[04 参考手册]
 |它是查阅型书，而不是线性教程。
 
+|执行 AsciiDoc 书稿 RDF 查询工作流
+|xref:books/08-rdf12-heading-projection-query-workflow/book.adoc[08 RDF 投影查询工作流]
+|它定义聚合 adoc、RDF12 TTL、SPARQL 查询和写作回源闭环。
+
 |组织可独立发布的上册和下册
 |xref:books/05-upper-volume/book.adoc[05 上册] 与 xref:books/06-lower-volume/book.adoc[06 下册]
 |它们展示分卷作为独立 book 的关系。
@@ -57,6 +61,7 @@ v0.1, 2026-05
 
 == 项目设计书
 
+* xref:books/08-rdf12-heading-projection-query-workflow/book.adoc[08 AsciiDoc 书稿 RDF 投影查询工作流]：定义书稿 RDF 投影查询工作流、查询语句集和写作回源闭环。
 * xref:books/10-inkrail-cli-design/book.adoc[10 inkrail CLI 设计书]：定义 inkrail 的对象边界、项目记忆、投影新鲜度和查询契约。
 
 == 工作区地图

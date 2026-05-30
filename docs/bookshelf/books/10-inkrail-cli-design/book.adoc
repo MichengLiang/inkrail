@@ -75,6 +75,8 @@ include::parts/04-query-contract/04-error-semantics.adoc[]
 [partintro]
 include::parts/05-built-in-query-actions/_partintro.adoc[]
 
+include::parts/05-built-in-query-actions/00-query-template-contract.adoc[]
+
 include::parts/05-built-in-query-actions/01-action-source.adoc[]
 
 include::parts/05-built-in-query-actions/02-heading-actions.adoc[]

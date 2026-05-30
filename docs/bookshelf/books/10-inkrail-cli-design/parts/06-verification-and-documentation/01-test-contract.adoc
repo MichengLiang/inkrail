@@ -34,7 +34,7 @@
 * RDF12 TTL 的 `projectedFromAggregateHash` 不匹配触发投影。
 * 构建失败时查询失败。
 * 投影失败时查询失败。
-* 不存在 stale continue 分支。
+* 不存在过期投影继续查询分支。
 
 Oxigraph 查询测试必须覆盖：
 
@@ -61,6 +61,7 @@ Oxigraph 查询测试必须覆盖：
 * 每个内置命令的输出变量与 SELECT 变量一致。
 * `--print-query` 输出 SPARQL，不执行查询。
 * 查询排序与指南保持一致。
+* `OPTIONAL`、`FILTER NOT EXISTS`、`GROUP BY`、`HAVING` 和 property path 语义不被模板封装改写。
 
 模板初始化测试必须覆盖：
 

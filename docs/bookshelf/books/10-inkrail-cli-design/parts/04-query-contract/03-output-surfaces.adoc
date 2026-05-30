@@ -12,6 +12,10 @@ sourceHeadline  selector  targetHeadline  path  start  col  raw
 
 Pretty 输出写入 stdout。刷新事件、诊断和错误写入 stderr。stdout 不混入教学文本或进度事件。
 
+ASK 查询的 pretty 输出使用单列表格，列名为 `ask`，值为 `true` 或 `false`。
+
+CONSTRUCT 和 DESCRIBE 查询的 pretty 输出使用 RDF 三元组或四元组文本表面。该表面仍然写入 stdout；刷新事件和诊断仍然写入 stderr。
+
 JSON 是机器、脚本和大语言模型表面。JSON 输出使用 envelope，保留模式、书本、投影、查询种类、变量名和 rows。
 
 [source,json]
@@ -62,4 +66,6 @@ NamedNode 示例：
 
 Triple term 或 quad term 必须结构化表示，不能只输出字符串。`rdf:reifies ?relation` 查询会返回 triple term；该对象结构属于机器输出契约。
 
-`inkrail` 当前不设计 Markdown、AsciiDoc、CSV、TSV 或 JSON Lines 输出。新增导出格式需要新的消费者动作和验证方式。
+SELECT 查询的 JSON `query.kind` 为 `select`，并使用 `variables` 与 `rows` 表达结果。ASK 查询的 `query.kind` 为 `ask`，并使用 `value` 表达布尔结果。CONSTRUCT 和 DESCRIBE 查询的 `query.kind` 分别为 `construct` 和 `describe`，并使用 `quads` 表达 RDF term 结构。
+
+`inkrail` 当前输出契约只包含 pretty 和 JSON。新增导出表面需要新的消费者动作、字段规则和验证方式。

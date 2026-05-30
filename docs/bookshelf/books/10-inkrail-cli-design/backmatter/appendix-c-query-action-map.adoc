@@ -92,9 +92,33 @@
 |`inkrail degree external-out --scope <label>`
 |`source sourceHeadline externalOutDegree`
 
+|正向一跳邻域
+|`inkrail neighborhood out --label <label> --depth 1`
+|`target targetHeadline targetStart raw edgeStart`
+
+|反向一跳邻域
+|`inkrail neighborhood in --label <label> --depth 1`
+|`source sourceHeadline sourceStart raw edgeStart`
+
+|正向两跳邻域
+|`inkrail neighborhood out --label <label> --depth 2`
+|`first firstHeadline second secondHeadline firstStart secondStart`
+
+|反向两跳邻域
+|`inkrail neighborhood in --label <label> --depth 2`
+|`near nearHeadline far farHeadline nearStart farStart`
+
 |双向一跳邻域
 |`inkrail neighborhood both --label <label>`
 |`direction neighbor neighborHeadline edgeStart raw`
+
+|子树向外引用
+|`inkrail neighborhood external-out --scope <label>`
+|`sourceHeadline targetHeadline start raw`
+
+|外部指向子树
+|`inkrail neighborhood external-in --scope <label>`
+|`sourceHeadline targetHeadline start raw`
 
 |重复 address label
 |`inkrail audit duplicate-labels`
