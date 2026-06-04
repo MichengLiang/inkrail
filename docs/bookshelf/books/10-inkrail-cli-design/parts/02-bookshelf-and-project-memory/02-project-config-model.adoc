@@ -26,9 +26,9 @@ bookshelf = "docs"
 
 `bookshelves.profile` 决定路径推导规则。`inkrail-asciidoc-multi-book` 是标准书架 profile。`custom` 是非标准书架 profile。
 
-`books.id` 是 `books/<book-id>/` 的目录名。标准 profile 下，`bookshelf` 与 `id` 唯一决定书本入口、聚合 adoc、RDF12 TTL、RDF12 JSON-LD、HTML 产物和观察范围。
+`books.id` 是 `books/<book-id>/` 的目录名。标准 profile 下，`bookshelf` 与 `id` 唯一决定 book entry、documentRoot、RDF12 TTL、RDF12 JSON-LD、HTML 产物和 watch globs。
 
-标准 profile 的 book 配置不得声明 `book_entry`、`aggregate_adoc`、`rdf12_ttl`、`rdf12_jsonld`、`html` 或 `watch`。这些字段由 profile 规则推导。手写同名字段会制造两个路径来源，应作为 `BOOK_CONFIG_INVALID` 处理。
+标准 profile 的 book 配置不得声明 `book_entry`、`document_root`、`rdf12_ttl`、`rdf12_jsonld`、`html` 或 `watch`。这些字段由 profile 规则推导。手写同名字段会制造两个路径来源，应作为 `BOOK_CONFIG_INVALID` 处理。
 
 custom profile 必须完整声明路径：
 
@@ -38,15 +38,14 @@ custom profile 必须完整声明路径：
 id = "custom-docs"
 root = "docs"
 profile = "custom"
-build_adoc_command = "pnpm run build:adoc"
 
 [[books]]
 id = "manual"
 bookshelf = "custom-docs"
 book_entry = "books/manual/book.adoc"
-aggregate_adoc = "build/adoc/books/manual.adoc"
-rdf12_ttl = "build/adoc/books/manual.adoc.ttl"
-rdf12_jsonld = "build/adoc/books/manual.adoc.jsonld"
+document_root = "."
+rdf12_ttl = "build/rdf12/books/manual.ttl"
+rdf12_jsonld = "build/rdf12/books/manual.jsonld"
 watch = ["books/manual/**/*.adoc", "shared/**/*.adoc"]
 ----
 

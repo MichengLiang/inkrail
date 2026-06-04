@@ -7,7 +7,7 @@
 
 === 来源文件确认
 
-来源查询确认 TTL 来自哪个聚合 adoc：
+来源查询确认 TTL 来自哪个 book entry：
 
 [source,sparql]
 ----
@@ -93,7 +93,7 @@ ORDER BY ?path ?start ?col
 ----
 PREFIX aat: <https://micheng.dev/ns/asciidoc-abundant-tree#>
 
-SELECT ?sourceHeadline ?selector ?candidateHeadline ?candidateStart ?path ?start WHERE {
+SELECT ?sourceHeadline ?selector ?candidateHeadline ?candidatePath ?candidateLine ?path ?start WHERE {
   ?edge a aat:XrefEdge ;
         aat:sourceHeading ?source ;
         aat:targetSelector ?selector ;
@@ -102,9 +102,10 @@ SELECT ?sourceHeadline ?selector ?candidateHeadline ?candidateStart ?path ?start
         aat:startLine ?start .
   ?source aat:headline ?sourceHeadline .
   ?candidate aat:headline ?candidateHeadline ;
-             aat:startLine ?candidateStart .
+             aat:relativePath ?candidatePath ;
+             aat:headingLine ?candidateLine .
 }
-ORDER BY ?path ?start ?selector ?candidateStart
+ORDER BY ?path ?start ?selector ?candidatePath ?candidateLine
 ----
 
 作者可以通过增加显式 ID、修改引用 selector 或重命名标题消除多义。
@@ -117,17 +118,18 @@ ORDER BY ?path ?start ?selector ?candidateStart
 ----
 PREFIX aat: <https://micheng.dev/ns/asciidoc-abundant-tree#>
 
-SELECT ?headingHeadline ?payloadId ?format ?payloadStart ?payloadEnd WHERE {
+SELECT ?headingHeadline ?payloadId ?format ?payloadPath ?payloadStart ?payloadEnd WHERE {
   ?heading a aat:Heading ;
            aat:headline ?headingHeadline ;
            aat:payload ?payload .
   ?payload aat:payloadKind "node" ;
            aat:payloadId ?payloadId ;
+           aat:relativePath ?payloadPath ;
            aat:startLine ?payloadStart ;
            aat:endLine ?payloadEnd .
   OPTIONAL { ?payload aat:format ?format . }
 }
-ORDER BY ?payloadStart
+ORDER BY ?payloadPath ?payloadStart
 ----
 
 边 payload 查询：
@@ -136,7 +138,7 @@ ORDER BY ?payloadStart
 ----
 PREFIX aat: <https://micheng.dev/ns/asciidoc-abundant-tree#>
 
-SELECT ?sourceHeadline ?targetHeadline ?payloadId ?format ?payloadStart ?payloadEnd WHERE {
+SELECT ?sourceHeadline ?targetHeadline ?payloadId ?format ?payloadPath ?payloadStart ?payloadEnd WHERE {
   ?edge a aat:XrefEdge ;
         aat:sourceHeading ?source ;
         aat:targetHeading ?target ;
@@ -145,11 +147,12 @@ SELECT ?sourceHeadline ?targetHeadline ?payloadId ?format ?payloadStart ?payload
   ?target aat:headline ?targetHeadline .
   ?payload aat:payloadKind "edge" ;
            aat:payloadId ?payloadId ;
+           aat:relativePath ?payloadPath ;
            aat:startLine ?payloadStart ;
            aat:endLine ?payloadEnd .
   OPTIONAL { ?payload aat:format ?format . }
 }
-ORDER BY ?payloadStart
+ORDER BY ?payloadPath ?payloadStart
 ----
 
 payload raw 不展开为业务图。审计查询只检查 payload 是否绑定到预期 heading 或 xref edge。
@@ -162,10 +165,11 @@ raw 抽查用于确认关键标题切片包含预期文本：
 ----
 PREFIX aat: <https://micheng.dev/ns/asciidoc-abundant-tree#>
 
-SELECT ?headline ?start ?containsExpected WHERE {
+SELECT ?headline ?path ?headingLine ?containsExpected WHERE {
   ?h aat:headline "<heading-headline>" ;
      aat:headline ?headline ;
-     aat:startLine ?start ;
+     aat:relativePath ?path ;
+     aat:headingLine ?headingLine ;
      aat:raw ?raw .
   BIND(CONTAINS(?raw, "<expected-fragment>") AS ?containsExpected)
 }

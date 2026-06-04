@@ -30,7 +30,7 @@ JSON 是机器、脚本和大语言模型表面。JSON 输出使用 envelope，�
     },
     "projection": {
       "format": "rdf12",
-      "path": "docs/bookshelf/build/adoc/books/10-inkrail-cli-design.adoc.ttl",
+      "path": "docs/bookshelf/build/rdf12/books/10-inkrail-cli-design.ttl",
       "freshness": "fresh"
     },
     "query": {
@@ -68,4 +68,4 @@ Triple term 或 quad term 必须结构化表示，不能只输出字符串。`rd
 
 SELECT 查询的 JSON `query.kind` 为 `select`，并使用 `variables` 与 `rows` 表达结果。ASK 查询的 `query.kind` 为 `ask`，并使用 `value` 表达布尔结果。CONSTRUCT 和 DESCRIBE 查询的 `query.kind` 分别为 `construct` 和 `describe`，并使用 `quads` 表达 RDF term 结构。
 
-`inkrail` 当前输出契约只包含 pretty 和 JSON。新增导出表面需要新的消费者动作、字段规则和验证方式。
+`inkrail` 输出契约只包含 pretty 和 JSON。其它导出表面需要消费者动作、字段规则和验证方式。

@@ -28,15 +28,14 @@ default_book = "manual"
 id = "custom-docs"
 root = "docs"
 profile = "custom"
-build_adoc_command = "pnpm run build:adoc"
 
 [[books]]
 id = "manual"
 bookshelf = "custom-docs"
 book_entry = "books/manual/book.adoc"
-aggregate_adoc = "build/adoc/books/manual.adoc"
-rdf12_ttl = "build/adoc/books/manual.adoc.ttl"
-rdf12_jsonld = "build/adoc/books/manual.adoc.jsonld"
+document_root = "."
+rdf12_ttl = "build/rdf12/books/manual.ttl"
+rdf12_jsonld = "build/rdf12/books/manual.jsonld"
 watch = [
   "books/manual/**/*.adoc",
   "shared/**/*.adoc"
@@ -48,8 +47,8 @@ watch = [
 [source,text]
 ----
 book_entry       books/<book-id>/book.adoc
-aggregate_adoc   build/adoc/books/<book-id>.adoc
-rdf12_ttl        build/adoc/books/<book-id>.adoc.ttl
-rdf12_jsonld     build/adoc/books/<book-id>.adoc.jsonld
+document_root    .
+rdf12_ttl        build/rdf12/books/<book-id>.ttl
+rdf12_jsonld     build/rdf12/books/<book-id>.jsonld
 html             build/html/books/<book-id>/book.html
 ----

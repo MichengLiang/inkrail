@@ -32,6 +32,7 @@ inkrail refresh --projection rdf12-json-ld
 inkrail refresh --projection all
 inkrail project <file.adoc> --format rdf12 --out <file.adoc.ttl>
 inkrail project <file.adoc> --format rdf12-json-ld --out <file.adoc.jsonld>
+inkrail project <book.adoc> --mode book-entry --document-root <root> --format rdf12 --out <book.ttl>
 ----
 
 Raw query：

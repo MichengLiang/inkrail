@@ -1,7 +1,7 @@
 [#error-semantics]
 == 错误语义
 
-错误码是恢复动作的索引。`inkrail` 使用稳定错误码区分配置、书架、构建、投影、加载和查询失败。
+错误码是恢复动作的索引。`inkrail` 使用稳定错误码区分配置、书架、book entry、投影、加载和查询失败。
 
 [cols="1,3,3", options="header"]
 |===
@@ -27,17 +27,13 @@
 |书本入口不存在。
 |创建或修正 `books/<book-id>/book.adoc`。
 
-|`AGGREGATE_NOT_FOUND`
-|构建后目标聚合 adoc 仍不存在。
-|检查 `build_adoc_command` 和标准路径推导。
-
-|`BUILD_FAILED`
-|`build_adoc_command` 执行失败。
-|修复 AsciiDoc 源、依赖或书架构建环境。
+|`SOURCE_SET_FAILED`
+|book-entry source set 无法构造。
+|检查 include target、include attrlist、documentRoot 和 include path 边界。
 
 |`PROJECTION_FAILED`
-|聚合 adoc 到 RDF 投影失败。
-|检查聚合 adoc、投影器版本和 projection options。
+|book entry 到 RDF 投影失败。
+|检查 book entry、投影器版本和 projection options。
 
 |`TTL_READ_FAILED`
 |TTL 文件无法读取。
@@ -57,7 +53,7 @@
 
 |`STALE_PROJECTION`
 |项目模式检测到过期投影且无法刷新。
-|修复构建或投影失败原因；不能使用旧 TTL 继续查询。
+|修复 source set 或投影失败原因；不能使用 stale TTL 继续查询。
 
 |`TOOL_NOT_FOUND`
 |外部命令缺失。

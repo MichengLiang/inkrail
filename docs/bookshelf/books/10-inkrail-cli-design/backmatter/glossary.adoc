@@ -1,17 +1,21 @@
 = 术语表
 
-book:: 具有独立 `book.adoc`、章节顺序和构建产物的书籍单位。
-bookshelf:: 保存 catalog、books、shared、scripts、test 和 build 产物的多书工作区。
+book:: 具有独立 book entry、章节顺序和生成物的书籍单位。
+bookshelf:: 保存 catalog、books、shared、scripts、test 和生成物的多书工作区。
 standard bookshelf profile:: `inkrail` 对标准 AsciiDoc 多书模板的路径、构建和 watch 推导规则。
 custom profile:: 非标准书架配置方式；书本路径和 watch 必须完整声明。
 project memory:: `.inkrail/config.toml` 与 `.inkrail/state/` 中保存的书架、书本和投影状态。
-aggregate adoc:: include 展开后的单文件书稿，位于 `build/adoc/books/<book-id>.adoc`。
+book entry:: 调用者显式传入的书稿入口 source file，标准书架中为 `books/<book-id>/book.adoc`。
+documentRoot:: `aat:relativePath` 的基准和 include path 的边界，标准书架中为 bookshelf root。
+source set:: book entry 通过受支持 include directive 到达的 source files 集合。
 RDF12 TTL:: `asciidoc-abundant-tree` 的 `rdf12` Turtle 投影。
 RDF12 JSON-LD:: `asciidoc-abundant-tree` 的 `rdf12-json-ld` 投影。
-fresh projection:: 投影的 `projectedFromAggregateHash` 与当前 aggregate hash 一致。
-stale projection:: 源或 aggregate 已改变，但投影未更新；项目模式下不可查询。
+fresh projection:: 投影的 source set fingerprint、documentRoot、projection options 和 projector identity 与当前输入一致。
+stale projection:: source set、documentRoot、projection options 或 projector identity 已改变，但投影未更新；项目模式下不可查询。
 project mode:: 通过 `.inkrail/config.toml` 解析书本并执行新鲜度检查的命令模式。
 TTL-only mode:: 直接查询用户提供 TTL，不判断项目新鲜度的命令模式。
-single-file projection mode:: 直接把一个 adoc 文件投影为 `rdf12` 或 `rdf12-json-ld` 的命令模式。
+explicit projection mode:: 读取调用者指定输入并生成 `rdf12` 或 `rdf12-json-ld` 的命令模式；该模式不写项目状态。
+single-file input semantics:: explicit projection mode 的默认输入语义；投影器只读取调用者指定的单个 source file。
+origin source coordinate:: RDF fact 在 source file 中的 `relativePath`、heading line、line span、column span 和 raw 表面。
 pretty output:: 面向终端读者的数据库式表格输出。
 JSON output:: 面向机器、脚本和大语言模型的结构化 envelope 输出。

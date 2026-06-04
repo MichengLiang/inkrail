@@ -1,7 +1,7 @@
 [#source-action]
 == 来源确认动作
 
-来源确认动作验证当前 TTL 来自哪个聚合 adoc。
+来源确认动作验证当前 TTL 来自哪个 book entry。
 
 [source,bash]
 ----

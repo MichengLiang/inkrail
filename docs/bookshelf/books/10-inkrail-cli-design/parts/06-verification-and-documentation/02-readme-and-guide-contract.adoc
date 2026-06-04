@@ -1,22 +1,23 @@
 [#readme-and-guide-contract]
 == README 与指南契约
 
-README 说明 `inkrail` 的工具定位、安装入口、项目初始化、书架初始化、基础查询命令、配置文件位置、输出表面和对象边界。
+README 说明 `inkrail` 的工具定位、安装入口、项目初始化、书架初始化、基础查询命令、配置文件位置、source-aware 输出表面和对象边界。
 
 README 不展开全部内置查询语句。完整查询动作由本设计书和用户指南维护。
 
-用户指南承担回源边界说明。查询结果中的 `path`、`start` 和 `end` 指向聚合 adoc。修改原始拆分书稿时，作者使用 headline、raw、selector 或附近文本在源书稿目录内搜索。
+用户指南承担 source coordinate 说明。查询结果中的 `path`、`headingLine`、`start`、`end`、`col` 和 `raw` 指向 RDF fact 的 origin source file surface。修改书稿时，作者使用这些字段进入 source file。
 
-回源边界说明应链接 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#reading-and-editing-loop[RDF 投影查询工作流的阅读与修改闭环]。该链接提供聚合 adoc 行号、原始书稿搜索回退和修改后刷新之间的完整关系。
+Source coordinate 说明应链接 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#reading-and-editing-loop[RDF 投影查询工作流的阅读与修改闭环, rel=documents]。该链接提供 path、heading line、line span、column、raw、编辑动作和修改后刷新之间的完整关系。
 
-该回源说明不进入每次命令输出。命令输出只提供查询结果字段、刷新事件和错误诊断。
+Source coordinate 说明不进入每次命令输出。命令输出只提供查询结果字段、刷新事件和错误诊断。
 
 用户指南还应说明：
 
 * 项目模式会强制刷新过期投影。
 * TTL-only mode 不判断项目新鲜度。
-* 单文件投影模式不写项目状态。
+* explicit projection mode 不写项目状态。
+* book-entry projection 使用 documentRoot 解释 `relativePath`。
 * 未绑定 xref、多义 xref、重复 headline 和 degree 统计是结构事实，不自动等于错误。
 * pretty 输出给终端读者，JSON 输出给机器和大语言模型。
 
-README 和指南不得承诺跨书联合查询、原始 source map、payload 业务解释、远程 federation 或 stale TTL fallback。
+README 和指南不得承诺跨书联合查询、payload 业务解释、远程 federation 或 stale TTL fallback。

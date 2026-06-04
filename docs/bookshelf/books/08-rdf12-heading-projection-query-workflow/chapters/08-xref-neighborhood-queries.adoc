@@ -15,17 +15,19 @@
 ----
 PREFIX aat: <https://micheng.dev/ns/asciidoc-abundant-tree#>
 
-SELECT ?target ?targetHeadline ?targetStart ?raw ?edgeStart WHERE {
+SELECT ?target ?targetHeadline ?targetPath ?targetLine ?raw ?edgePath ?edgeStart WHERE {
   ?root aat:addressLabel "<heading-label>" .
   ?edge a aat:XrefEdge ;
         aat:sourceHeading ?root ;
         aat:targetHeading ?target ;
         aat:raw ?raw ;
+        aat:relativePath ?edgePath ;
         aat:startLine ?edgeStart .
   ?target aat:headline ?targetHeadline ;
-          aat:startLine ?targetStart .
+          aat:relativePath ?targetPath ;
+          aat:headingLine ?targetLine .
 }
-ORDER BY ?edgeStart ?targetStart
+ORDER BY ?edgePath ?edgeStart ?targetPath ?targetLine
 ----
 
 该查询回答“这个标题把读者带向哪里”。
@@ -38,17 +40,19 @@ ORDER BY ?edgeStart ?targetStart
 ----
 PREFIX aat: <https://micheng.dev/ns/asciidoc-abundant-tree#>
 
-SELECT ?source ?sourceHeadline ?sourceStart ?raw ?edgeStart WHERE {
+SELECT ?source ?sourceHeadline ?sourcePath ?sourceLine ?raw ?edgePath ?edgeStart WHERE {
   ?root aat:addressLabel "<heading-label>" .
   ?edge a aat:XrefEdge ;
         aat:sourceHeading ?source ;
         aat:targetHeading ?root ;
         aat:raw ?raw ;
+        aat:relativePath ?edgePath ;
         aat:startLine ?edgeStart .
   ?source aat:headline ?sourceHeadline ;
-          aat:startLine ?sourceStart .
+          aat:relativePath ?sourcePath ;
+          aat:headingLine ?sourceLine .
 }
-ORDER BY ?edgeStart ?sourceStart
+ORDER BY ?edgePath ?edgeStart ?sourcePath ?sourceLine
 ----
 
 该查询回答“哪些标题把读者带到这里”。
@@ -61,22 +65,24 @@ ORDER BY ?edgeStart ?sourceStart
 ----
 PREFIX aat: <https://micheng.dev/ns/asciidoc-abundant-tree#>
 
-SELECT ?first ?firstHeadline ?second ?secondHeadline ?firstStart ?secondStart WHERE {
+SELECT ?first ?firstHeadline ?firstPath ?firstLine ?second ?secondHeadline ?secondPath ?secondLine WHERE {
   ?root aat:addressLabel "<heading-label>" .
 
   ?edge1 a aat:XrefEdge ;
          aat:sourceHeading ?root ;
          aat:targetHeading ?first .
   ?first aat:headline ?firstHeadline ;
-         aat:startLine ?firstStart .
+         aat:relativePath ?firstPath ;
+         aat:headingLine ?firstLine .
 
   ?edge2 a aat:XrefEdge ;
          aat:sourceHeading ?first ;
          aat:targetHeading ?second .
   ?second aat:headline ?secondHeadline ;
-          aat:startLine ?secondStart .
+          aat:relativePath ?secondPath ;
+          aat:headingLine ?secondLine .
 }
-ORDER BY ?firstStart ?secondStart
+ORDER BY ?firstPath ?firstLine ?secondPath ?secondLine
 ----
 
 该查询显式展开两步。显式展开比复杂 property path 更适合教程，因为 `aat:XrefEdge` 是边证据资源，不是直接 heading-to-heading 谓词。
@@ -89,22 +95,24 @@ ORDER BY ?firstStart ?secondStart
 ----
 PREFIX aat: <https://micheng.dev/ns/asciidoc-abundant-tree#>
 
-SELECT ?near ?nearHeadline ?far ?farHeadline ?nearStart ?farStart WHERE {
+SELECT ?near ?nearHeadline ?nearPath ?nearLine ?far ?farHeadline ?farPath ?farLine WHERE {
   ?root aat:addressLabel "<heading-label>" .
 
   ?edge1 a aat:XrefEdge ;
          aat:sourceHeading ?near ;
          aat:targetHeading ?root .
   ?near aat:headline ?nearHeadline ;
-        aat:startLine ?nearStart .
+        aat:relativePath ?nearPath ;
+        aat:headingLine ?nearLine .
 
   ?edge2 a aat:XrefEdge ;
          aat:sourceHeading ?far ;
          aat:targetHeading ?near .
   ?far aat:headline ?farHeadline ;
-       aat:startLine ?farStart .
+       aat:relativePath ?farPath ;
+       aat:headingLine ?farLine .
 }
-ORDER BY ?nearStart ?farStart
+ORDER BY ?nearPath ?nearLine ?farPath ?farLine
 ----
 
 该查询回答“哪些标题通过中间标题间接走到这里”。
@@ -117,12 +125,13 @@ ORDER BY ?nearStart ?farStart
 ----
 PREFIX aat: <https://micheng.dev/ns/asciidoc-abundant-tree#>
 
-SELECT ?direction ?neighbor ?neighborHeadline ?edgeStart ?raw WHERE {
+SELECT ?direction ?neighbor ?neighborHeadline ?edgePath ?edgeStart ?raw WHERE {
   ?root aat:addressLabel "<heading-label>" .
   {
     ?edge a aat:XrefEdge ;
           aat:sourceHeading ?root ;
           aat:targetHeading ?neighbor ;
+          aat:relativePath ?edgePath ;
           aat:startLine ?edgeStart ;
           aat:raw ?raw .
     BIND("out" AS ?direction)
@@ -132,13 +141,14 @@ SELECT ?direction ?neighbor ?neighborHeadline ?edgeStart ?raw WHERE {
     ?edge a aat:XrefEdge ;
           aat:sourceHeading ?neighbor ;
           aat:targetHeading ?root ;
+          aat:relativePath ?edgePath ;
           aat:startLine ?edgeStart ;
           aat:raw ?raw .
     BIND("in" AS ?direction)
   }
   ?neighbor aat:headline ?neighborHeadline .
 }
-ORDER BY ?direction ?edgeStart
+ORDER BY ?direction ?edgePath ?edgeStart
 ----
 
 该查询适合在修改一个标题前查看它的引用上下文。
@@ -151,13 +161,14 @@ ORDER BY ?direction ?edgeStart
 ----
 PREFIX aat: <https://micheng.dev/ns/asciidoc-abundant-tree#>
 
-SELECT ?sourceHeadline ?targetHeadline ?start ?raw WHERE {
+SELECT ?sourceHeadline ?targetHeadline ?path ?start ?raw WHERE {
   ?root aat:addressLabel "<heading-label>" .
   ?root aat:containsDirectly* ?source .
 
   ?edge a aat:XrefEdge ;
         aat:sourceHeading ?source ;
         aat:targetHeading ?target ;
+        aat:relativePath ?path ;
         aat:startLine ?start ;
         aat:raw ?raw .
 
@@ -168,7 +179,7 @@ SELECT ?sourceHeadline ?targetHeadline ?start ?raw WHERE {
   ?source aat:headline ?sourceHeadline .
   ?target aat:headline ?targetHeadline .
 }
-ORDER BY ?start
+ORDER BY ?path ?start
 ----
 
 该查询回答一个章节范围依赖哪些外部章节。
@@ -181,13 +192,14 @@ ORDER BY ?start
 ----
 PREFIX aat: <https://micheng.dev/ns/asciidoc-abundant-tree#>
 
-SELECT ?sourceHeadline ?targetHeadline ?start ?raw WHERE {
+SELECT ?sourceHeadline ?targetHeadline ?path ?start ?raw WHERE {
   ?root aat:addressLabel "<heading-label>" .
   ?root aat:containsDirectly* ?target .
 
   ?edge a aat:XrefEdge ;
         aat:sourceHeading ?source ;
         aat:targetHeading ?target ;
+        aat:relativePath ?path ;
         aat:startLine ?start ;
         aat:raw ?raw .
 
@@ -198,7 +210,7 @@ SELECT ?sourceHeadline ?targetHeadline ?start ?raw WHERE {
   ?source aat:headline ?sourceHeadline .
   ?target aat:headline ?targetHeadline .
 }
-ORDER BY ?start
+ORDER BY ?path ?start
 ----
 
 该查询回答哪些外部章节依赖当前章节范围。

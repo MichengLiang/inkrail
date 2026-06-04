@@ -1,7 +1,7 @@
 [#xref-actions]
 == 交叉引用动作
 
-交叉引用动作来自 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#xref-edge-queries[查询工作流指南的交叉引用边查询]。它们读取 `aat:XrefEdge` 边证据。
+交叉引用动作来自 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#xref-edge-queries[查询工作流指南的交叉引用边查询, rel=implementation]。它们读取 `aat:XrefEdge` 边证据。
 
 发出的交叉引用：
 
@@ -14,7 +14,7 @@ inkrail xrefs outgoing --label <label>
 
 [source,text]
 ----
-edge selector target targetHeadline raw start col
+edge selector target targetHeadline raw path start col
 ----
 
 指向当前标题的交叉引用：
@@ -70,7 +70,7 @@ inkrail xrefs ambiguous
 
 [source,text]
 ----
-sourceHeadline selector candidateHeadline candidateStart raw path start
+sourceHeadline selector candidateHeadline candidatePath candidateLine raw path start
 ----
 
 子树内部引用：
@@ -84,7 +84,7 @@ inkrail xrefs internal --label <label>
 
 [source,text]
 ----
-sourceHeadline targetHeadline start
+sourceHeadline targetHeadline path start
 ----
 
 未绑定和多义结果是结构事实，不自动构成错误结论。

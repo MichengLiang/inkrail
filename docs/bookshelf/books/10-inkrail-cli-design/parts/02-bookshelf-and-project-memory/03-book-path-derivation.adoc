@@ -1,23 +1,23 @@
 [#book-path-derivation]
-== 书本路径推导
+== 书本对象推导
 
-标准 profile 下，`bookshelf.root` 与 `books.id` 推导全部书本路径。
+标准 profile 下，`bookshelf.root` 与 `books.id` 推导目标书的输入、投影输出、发布输出和 watch globs。
 
 [cols="1,2", options="header"]
 |===
-|对象 |路径
+|对象 |推导值
 
 |Book entry
 |`books/<book-id>/book.adoc`
 
-|Aggregate adoc
-|`build/adoc/books/<book-id>.adoc`
+|DocumentRoot
+|bookshelf root
 
 |RDF12 TTL
-|`build/adoc/books/<book-id>.adoc.ttl`
+|`build/rdf12/books/<book-id>.ttl`
 
 |RDF12 JSON-LD
-|`build/adoc/books/<book-id>.adoc.jsonld`
+|`build/rdf12/books/<book-id>.jsonld`
 
 |HTML
 |`build/html/books/<book-id>/book.html`
@@ -25,27 +25,14 @@
 
 所有路径都相对 `bookshelf.root` 解释。`inkrail` 对外展示时可以显示相对项目根路径，但状态判断必须以物化后的绝对路径执行文件操作。
 
-标准 profile 的 `build_adoc_command` 是：
-
-[source,text]
-----
-pnpm run build:adoc
-----
-
-该命令的工作目录是 `bookshelf.root`。它会重建整个书架的 `build/adoc/`，不是只重建目标书。`inkrail` 查询新鲜度仍只以目标书的 aggregate hash 判断是否需要重新投影目标书 TTL。
-
-标准 profile 的观察范围是：
+标准 profile 的 watch globs 是：
 
 [source,text]
 ----
 books/<book-id>/**/*.adoc
 shared/**/*.adoc
-scripts/build-adoc.mjs
-package.json
-pnpm-lock.yaml
-catalog.adoc
 ----
 
-`catalog.adoc` 纳入观察范围，因为标准 `build:adoc` 需要 catalog 存在并生成 catalog 聚合文件。catalog 改变可能触发 `build:adoc`，但目标书 aggregate hash 不变时不触发目标书 RDF12 重投影。
+Watch globs 服务快速变化检测。Source set fingerprint 由 book-entry include graph 到达的 source files 构成；投影器版本和 projection options 进入 projection fingerprint。
 
 `rdf12_jsonld` 是配置字段名。命令行 format 使用 `rdf12-json-ld`，文件后缀使用 `.jsonld`。

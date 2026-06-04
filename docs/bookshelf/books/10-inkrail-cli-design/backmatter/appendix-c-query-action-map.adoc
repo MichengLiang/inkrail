@@ -10,15 +10,15 @@
 
 |目录骨架
 |`inkrail outline`
-|`level headline start end`
+|`level headline path headingLine`
 
 |按 address label 定位
 |`inkrail heading locate --label <label>`
-|`heading headline path start end`
+|`heading headline path headingLine start end`
 
 |按 headline 定位
 |`inkrail heading locate --headline <headline>`
-|`heading headline path start end label generated`
+|`heading headline path headingLine start end label generated`
 
 |标题 raw
 |`inkrail heading raw --label <label>`
@@ -26,31 +26,31 @@
 
 |label 空间
 |`inkrail labels`
-|`heading headline label generated start`
+|`heading headline path label generated headingLine`
 
 |直接子标题
 |`inkrail structure children --label <label>`
-|`child childHeadline start end`
+|`child childHeadline path childLine start end`
 
 |递归后代
 |`inkrail structure descendants --label <label>`
-|`descendant level headline start end`
+|`descendant level headline path headingLine start end`
 
 |包含根节点的子树
 |`inkrail structure subtree --label <label>`
-|`node level headline start end`
+|`node level headline path headingLine start end`
 
 |父标题反查
 |`inkrail structure parent --label <label>`
-|`parent parentHeadline parentStart`
+|`parent parentHeadline parentPath parentLine parentSliceStart parentSliceEnd`
 
 |兄弟顺序
 |`inkrail structure previous-sibling --label <label>`
-|`headingHeadline previousHeadline start`
+|`headingHeadline previousHeadline path headingLine`
 
 |发出的 xref
 |`inkrail xrefs outgoing --label <label>`
-|`edge selector target targetHeadline raw start col`
+|`edge selector target targetHeadline raw path start col`
 
 |指向当前标题的 xref
 |`inkrail xrefs incoming --label <label>`
@@ -66,11 +66,11 @@
 
 |多义 xref
 |`inkrail xrefs ambiguous`
-|`sourceHeadline selector candidateHeadline candidateStart raw path start`
+|`sourceHeadline selector candidateHeadline candidatePath candidateLine raw path start`
 
 |子树内部引用
 |`inkrail xrefs internal --label <label>`
-|`sourceHeadline targetHeadline start`
+|`sourceHeadline targetHeadline path start`
 
 |出度
 |`inkrail degree out`
@@ -94,31 +94,31 @@
 
 |正向一跳邻域
 |`inkrail neighborhood out --label <label> --depth 1`
-|`target targetHeadline targetStart raw edgeStart`
+|`target targetHeadline targetPath targetLine raw edgePath edgeStart`
 
 |反向一跳邻域
 |`inkrail neighborhood in --label <label> --depth 1`
-|`source sourceHeadline sourceStart raw edgeStart`
+|`source sourceHeadline sourcePath sourceLine raw edgePath edgeStart`
 
 |正向两跳邻域
 |`inkrail neighborhood out --label <label> --depth 2`
-|`first firstHeadline second secondHeadline firstStart secondStart`
+|`first firstHeadline firstPath firstLine second secondHeadline secondPath secondLine`
 
 |反向两跳邻域
 |`inkrail neighborhood in --label <label> --depth 2`
-|`near nearHeadline far farHeadline nearStart farStart`
+|`near nearHeadline nearPath nearLine far farHeadline farPath farLine`
 
 |双向一跳邻域
 |`inkrail neighborhood both --label <label>`
-|`direction neighbor neighborHeadline edgeStart raw`
+|`direction neighbor neighborHeadline edgePath edgeStart raw`
 
 |子树向外引用
 |`inkrail neighborhood external-out --scope <label>`
-|`sourceHeadline targetHeadline start raw`
+|`sourceHeadline targetHeadline path start raw`
 
 |外部指向子树
 |`inkrail neighborhood external-in --scope <label>`
-|`sourceHeadline targetHeadline start raw`
+|`sourceHeadline targetHeadline path start raw`
 
 |重复 address label
 |`inkrail audit duplicate-labels`
@@ -130,13 +130,13 @@
 
 |节点 payload
 |`inkrail audit payloads --kind node`
-|`headingHeadline payloadId format payloadStart payloadEnd`
+|`headingHeadline payloadId format payloadPath payloadStart payloadEnd`
 
 |边 payload
 |`inkrail audit payloads --kind edge`
-|`sourceHeadline targetHeadline payloadId format payloadStart payloadEnd`
+|`sourceHeadline targetHeadline payloadId format payloadPath payloadStart payloadEnd`
 
 |raw 抽查
 |`inkrail audit raw --headline <headline> --contains <fragment>`
-|`headline start containsExpected`
+|`headline path headingLine containsExpected`
 |===

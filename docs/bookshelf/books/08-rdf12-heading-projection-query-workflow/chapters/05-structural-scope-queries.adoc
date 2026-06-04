@@ -15,14 +15,16 @@
 ----
 PREFIX aat: <https://micheng.dev/ns/asciidoc-abundant-tree#>
 
-SELECT ?child ?childHeadline ?start ?end WHERE {
+SELECT ?child ?childHeadline ?path ?childLine ?start ?end WHERE {
   ?parent aat:addressLabel "<heading-label>" .
   ?parent aat:containsDirectly ?child .
   ?child aat:headline ?childHeadline ;
+         aat:relativePath ?path ;
+         aat:headingLine ?childLine ;
          aat:startLine ?start ;
          aat:endLine ?end .
 }
-ORDER BY ?start
+ORDER BY ?path ?childLine
 ----
 
 该查询不递归。它回答当前标题直接分成哪些子节。
@@ -35,15 +37,17 @@ ORDER BY ?start
 ----
 PREFIX aat: <https://micheng.dev/ns/asciidoc-abundant-tree#>
 
-SELECT ?descendant ?level ?headline ?start ?end WHERE {
+SELECT ?descendant ?level ?headline ?path ?headingLine ?start ?end WHERE {
   ?root aat:addressLabel "<heading-label>" .
   ?root aat:containsDirectly+ ?descendant .
   ?descendant aat:headingLevel ?level ;
               aat:headline ?headline ;
+              aat:relativePath ?path ;
+              aat:headingLine ?headingLine ;
               aat:startLine ?start ;
               aat:endLine ?end .
 }
-ORDER BY ?start
+ORDER BY ?path ?headingLine
 ----
 
 `aat:containsDirectly+` 表示一跳或多跳后代。该查询不返回根标题自身。
@@ -56,15 +60,17 @@ ORDER BY ?start
 ----
 PREFIX aat: <https://micheng.dev/ns/asciidoc-abundant-tree#>
 
-SELECT ?node ?level ?headline ?start ?end WHERE {
+SELECT ?node ?level ?headline ?path ?headingLine ?start ?end WHERE {
   ?root aat:addressLabel "<heading-label>" .
   ?root aat:containsDirectly* ?node .
   ?node aat:headingLevel ?level ;
         aat:headline ?headline ;
+        aat:relativePath ?path ;
+        aat:headingLine ?headingLine ;
         aat:startLine ?start ;
         aat:endLine ?end .
 }
-ORDER BY ?start
+ORDER BY ?path ?headingLine
 ----
 
 该查询生成章节范围集合。后续 xref 查询可以用该集合判断引用发生在子树内部还是指向子树外部。
@@ -77,15 +83,18 @@ ORDER BY ?start
 ----
 PREFIX aat: <https://micheng.dev/ns/asciidoc-abundant-tree#>
 
-SELECT ?parent ?parentHeadline ?parentStart WHERE {
+SELECT ?parent ?parentHeadline ?parentPath ?parentLine ?parentSliceStart ?parentSliceEnd WHERE {
   ?child aat:addressLabel "<heading-label>" .
   ?parent aat:containsDirectly ?child ;
-          aat:headline ?parentHeadline ;
-          aat:startLine ?parentStart .
+           aat:headline ?parentHeadline ;
+           aat:relativePath ?parentPath ;
+           aat:headingLine ?parentLine ;
+           aat:startLine ?parentSliceStart ;
+           aat:endLine ?parentSliceEnd .
 }
 ----
 
-标题最多有一个直接父标题。没有父标题的标题是当前聚合 adoc 中的顶层标题。
+标题最多有一个直接父标题。没有父标题的标题是当前 book entry 投影图中的顶层标题。
 
 === 兄弟顺序
 
@@ -95,10 +104,11 @@ SELECT ?parent ?parentHeadline ?parentStart WHERE {
 ----
 PREFIX aat: <https://micheng.dev/ns/asciidoc-abundant-tree#>
 
-SELECT ?headingHeadline ?previousHeadline ?start WHERE {
+SELECT ?headingHeadline ?previousHeadline ?path ?headingLine WHERE {
   ?heading aat:addressLabel "<heading-label>" ;
            aat:headline ?headingHeadline ;
-           aat:startLine ?start ;
+           aat:relativePath ?path ;
+           aat:headingLine ?headingLine ;
            aat:previousSibling ?previous .
   ?previous aat:headline ?previousHeadline .
 }
@@ -114,18 +124,19 @@ SELECT ?headingHeadline ?previousHeadline ?start WHERE {
 ----
 PREFIX aat: <https://micheng.dev/ns/asciidoc-abundant-tree#>
 
-SELECT ?sourceHeadline ?targetHeadline ?start WHERE {
+SELECT ?sourceHeadline ?targetHeadline ?path ?start WHERE {
   ?root aat:addressLabel "<heading-label>" .
   ?root aat:containsDirectly* ?inside .
 
   ?edge a aat:XrefEdge ;
         aat:sourceHeading ?inside ;
         aat:targetHeading ?target ;
+        aat:relativePath ?path ;
         aat:startLine ?start .
   ?inside aat:headline ?sourceHeadline .
   ?target aat:headline ?targetHeadline .
 }
-ORDER BY ?start
+ORDER BY ?path ?start
 ----
 
 该查询回答某个章节范围内的标题引用了哪些目标标题。父子结构在这里承担范围边界，xref 承担脉络关系。

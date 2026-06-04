@@ -5,7 +5,7 @@
 
 `rdf12-json-ld` 是面向结构化消费者的 JSON-LD 投影。它不作为 Oxigraph 查询输入。
 
-单文件投影命令必须支持两个格式：
+显式投影命令必须支持两个格式：
 
 [source,bash]
 ----
@@ -13,7 +13,19 @@ inkrail project path/to/file.adoc --format rdf12 --out path/to/file.adoc.ttl
 inkrail project path/to/file.adoc --format rdf12-json-ld --out path/to/file.adoc.jsonld
 ----
 
-单文件投影模式不写 `.inkrail/state/`。它只读取输入 adoc，生成指定输出文件。
+显式投影命令默认使用 single-file input semantics。调用者可以选择 book-entry input semantics：
+
+[source,bash]
+----
+mkdir -p build/rdf12/books
+inkrail project books/manual/book.adoc \
+  --mode book-entry \
+  --document-root docs/bookshelf \
+  --format rdf12 \
+  --out build/rdf12/books/manual.ttl
+----
+
+显式投影命令不写 `.inkrail/state/`。它只读取输入 adoc，生成指定输出文件。
 
 项目刷新可以指定投影格式：
 
@@ -24,4 +36,4 @@ inkrail refresh --projection rdf12-json-ld
 inkrail refresh --projection all
 ----
 
-`query` 只要求 `rdf12` 新鲜。`refresh --projection all` 生成 TTL 与 JSON-LD，并为两个投影分别记录 projection fingerprint。
+项目模式 projection 输入是目标 book entry 和 documentRoot。`query` 只要求 `rdf12` 新鲜。`refresh --projection all` 生成 TTL 与 JSON-LD，并为两个投影分别记录 projection fingerprint。

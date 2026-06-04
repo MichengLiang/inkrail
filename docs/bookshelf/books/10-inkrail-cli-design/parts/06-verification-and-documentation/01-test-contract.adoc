@@ -23,16 +23,18 @@
 * 多 book 项目无目标书时报 `BOOK_REQUIRED`。
 * 指定未知 book 时报 `BOOK_NOT_FOUND`。
 
-路径推导测试必须覆盖 standard profile 下的 `book_entry`、`aggregate_adoc`、`rdf12_ttl`、`rdf12_jsonld`、`html` 和 watch globs。
+路径推导测试必须覆盖 standard profile 下的 `book_entry`、`document_root`、`rdf12_ttl`、`rdf12_jsonld`、`html` 和 watch globs。
 
 新鲜度测试必须覆盖：
 
-* aggregate 缺失触发 `build_adoc_command`。
-* source fingerprint 变化触发 `build_adoc_command`。
-* aggregate hash 不变时不重投影 RDF12。
+* book entry 缺失时查询失败。
+* book-entry source set 构造失败时查询失败。
+* source set fingerprint 变化触发 RDF12 重投影。
+* source set hash 不变时不重投影 RDF12。
 * RDF12 TTL 缺失触发投影。
-* RDF12 TTL 的 `projectedFromAggregateHash` 不匹配触发投影。
-* 构建失败时查询失败。
+* RDF12 TTL 的 `projectedFromSourceSetHash` 不匹配触发投影。
+* documentRoot、projection options 或 projector identity 不匹配触发投影。
+* shared attributes 参与 source set fingerprint。
 * 投影失败时查询失败。
 * 不存在过期投影继续查询分支。
 
@@ -54,6 +56,7 @@ Oxigraph 查询测试必须覆盖：
 * JSON row value 保留 RDF term 结构。
 * triple term 不被压成普通字符串。
 * 字段名沿用 SPARQL 变量名。
+* source coordinate 字段保留 origin source file 路径、heading line、line span、column span 和 raw。
 
 内置查询测试必须覆盖：
 
@@ -62,6 +65,14 @@ Oxigraph 查询测试必须覆盖：
 * `--print-query` 输出 SPARQL，不执行查询。
 * 查询排序与指南保持一致。
 * `OPTIONAL`、`FILTER NOT EXISTS`、`GROUP BY`、`HAVING` 和 property path 语义不被模板封装改写。
+* 内置查询返回的 `path` 字段表示 origin source file。
+
+RDF12 book-entry 投影测试必须覆盖：
+
+* 项目模式使用 book-entry 输入语义。
+* RDF12 TTL 包含 source file reconstruction surface。
+* heading 查询输出 heading line；xref edge 和 payload 查询输出 origin source coordinate。
+* explicit projection mode 的 single-file input semantics 不隐式展开 include。
 
 模板初始化测试必须覆盖：
 

@@ -7,11 +7,11 @@
 * standard profile 与 custom profile 的配置边界。
 * standard profile 路径推导规则。
 * 初始化命令契约。
-* source、aggregate 和 projection fingerprint 模型。
+* source set 和 projection fingerprint 模型。
 * 项目查询刷新状态机。
 * stale projection 不可查询规则。
 * `rdf12` 与 `rdf12-json-ld` 投影边界。
-* project mode、ttl-only mode 和 single-file projection mode。
+* project mode、ttl-only mode 和 explicit projection mode。
 * pretty 与 JSON 两类输出表面。
 * RDF term JSON 结构化输出规则。
 * 错误码和恢复动作。

@@ -1,7 +1,7 @@
 [#heading-actions]
 == 标题动作
 
-标题动作来自 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#heading-location-and-slices[查询工作流指南的标题定位与切片查询]。
+标题动作来自 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#heading-location-and-slices[查询工作流指南的标题定位与切片查询, rel=implementation]。
 
 目录骨架：
 
@@ -15,7 +15,7 @@ inkrail outline --levels 2
 
 [source,text]
 ----
-level headline start end
+level headline path headingLine
 ----
 
 按 address label 定位：
@@ -29,7 +29,7 @@ inkrail heading locate --label <label>
 
 [source,text]
 ----
-heading headline path start end
+heading headline path headingLine start end
 ----
 
 按 headline 定位：
@@ -43,7 +43,7 @@ inkrail heading locate --headline <headline>
 
 [source,text]
 ----
-heading headline path start end label generated
+heading headline path headingLine start end label generated
 ----
 
 headline 可以重复。该命令保留多行结果，不自动选择第一行。
@@ -73,7 +73,7 @@ inkrail labels
 
 [source,text]
 ----
-heading headline label generated start
+heading headline path label generated headingLine
 ----
 
-标题动作按 `start` 排序。排序是查询契约的一部分。
+标题定位动作按 `path` 和 `headingLine` 排序。标题 raw 动作使用 `start` 和 `end` 返回 heading slice。排序是查询契约的一部分。

@@ -30,16 +30,16 @@ TTL-only mode 直接查询用户提供的 Turtle 文件。
 
 [source,bash]
 ----
-inkrail query --ttl path/to/book.adoc.ttl --file query.sparql
+inkrail query --ttl path/to/book.ttl --file query.sparql
 ----
 
-TTL-only mode 不查找 `.inkrail/config.toml`，不计算 source fingerprint，不刷新聚合 adoc，不判断 project freshness。该模式只声明给定 TTL 已被加载并查询。
+TTL-only mode 不查找 `.inkrail/config.toml`，不计算 source set fingerprint，不刷新 projection，不判断 project freshness。该模式只声明给定 TTL 已被加载并查询。
 
 TTL-only mode 接受与 Project mode 相同的 raw query 输入表面。
 
-=== Single-file projection mode
+=== Explicit projection mode
 
-Single-file projection mode 读取一个 adoc 文件并生成指定 RDF 投影。
+Explicit projection mode 读取调用者指定的 adoc 文件并生成指定 RDF 投影。
 
 [source,bash]
 ----
@@ -47,7 +47,19 @@ inkrail project path/to/file.adoc --format rdf12 --out path/to/file.adoc.ttl
 inkrail project path/to/file.adoc --format rdf12-json-ld --out path/to/file.adoc.jsonld
 ----
 
-该模式不写项目状态。它服务临时实验和单文件分析。
+该模式默认使用 single-file 输入语义。调用者可以显式选择 book-entry 输入语义：
+
+[source,bash]
+----
+mkdir -p build/rdf12/books
+inkrail project books/manual/book.adoc \
+  --mode book-entry \
+  --document-root docs/bookshelf \
+  --format rdf12 \
+  --out build/rdf12/books/manual.ttl
+----
+
+该模式不写项目状态。它服务临时实验、单文件分析和显式 book-entry 投影。
 
 === Book selection
 

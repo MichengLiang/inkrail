@@ -1,31 +1,31 @@
 [#build-artifacts]
-== 构建产物
+== 投影生成物
 
-聚合 adoc 是 include 展开后的单文件书稿。它位于：
-
-[source,text]
-----
-build/adoc/books/<book-id>.adoc
-----
-
-聚合 adoc 是 RDF 投影器输入。作者可以打开它阅读全书线性上下文，但不应手写修改它。
-
-聚合 adoc 与 TTL 的生成纪律来自 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#build-and-projection[RDF 投影查询工作流的构建与投影章节]。
-
-RDF12 TTL 是 `asciidoc-abundant-tree` 的 `rdf12` Turtle 输出。它位于：
+RDF12 TTL 是 `asciidoc-abundant-tree` 的 `rdf12` Turtle 输出。标准 profile 下，它位于：
 
 [source,text]
 ----
-build/adoc/books/<book-id>.adoc.ttl
+build/rdf12/books/<book-id>.ttl
 ----
 
-RDF12 JSON-LD 是 `asciidoc-abundant-tree` 的 `rdf12-json-ld` 输出。它位于：
+RDF12 TTL 是项目模式查询的输入。Oxigraph 加载该文件并执行 SPARQL。
+
+RDF12 JSON-LD 是 `asciidoc-abundant-tree` 的 `rdf12-json-ld` 输出。标准 profile 下，它位于：
 
 [source,text]
 ----
-build/adoc/books/<book-id>.adoc.jsonld
+build/rdf12/books/<book-id>.jsonld
 ----
 
-聚合 adoc、TTL 和 JSON-LD 都是 build artifact。它们可以删除并重新生成。它们不作为手写源文件维护。
+TTL 与 JSON-LD 的生成纪律来自 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#build-and-projection[RDF 投影查询工作流的投影输入与生成物章节, rel=depends-on]。
 
-HTML 是发布表面。HTML 构建不参与 `inkrail query` 的新鲜度判断。查询前刷新只要求聚合 adoc 与 RDF12 TTL 代表当前书稿事实。
+HTML 是发布表面。标准 profile 下，它位于：
+
+[source,text]
+----
+build/html/books/<book-id>/book.html
+----
+
+TTL、JSON-LD 和 HTML 都是生成物。它们可以删除并重新生成。它们不作为手写源文件维护。
+
+HTML 构建不参与 `inkrail query` 的新鲜度判断。查询前刷新只要求 RDF12 TTL 代表当前 book entry source set。

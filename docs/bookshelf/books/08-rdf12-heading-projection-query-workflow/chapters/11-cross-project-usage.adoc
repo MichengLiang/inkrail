@@ -1,36 +1,38 @@
 [#cross-project-usage]
 == 跨项目用法
 
-每个书架项目负责自己的 AsciiDoc 构建。`asciidoc-abundant-tree` 命令负责读取聚合 adoc 并输出标题投影图。
+每个书架项目负责自己的 book entry、documentRoot 和 projection artifacts。`asciidoc-abundant-tree` 命令读取目标 book entry，并输出 source-aware RDF12 标题投影图。
 
-=== 项目内构建
+=== 项目内书稿入口
 
-在目标项目的 docs 工作区运行构建：
-
-[source,bash]
-----
-cd /home/t103o/workbench/projects/ExampleProject/docs
-pnpm build
-----
-
-构建产物位于目标项目自己的 build 目录：
+标准书架的 book entry 位于目标 bookshelf root 下：
 
 [source,text]
 ----
-/home/t103o/workbench/projects/ExampleProject/docs/build/adoc/books/<book-id>.adoc
+books/<book-id>/book.adoc
+----
+
+DocumentRoot 是目标 bookshelf root。TTL 位于目标项目自己的 build 目录：
+
+[source,text]
+----
+/home/t103o/workbench/projects/ExampleProject/docs/bookshelf/build/rdf12/books/<book-id>.ttl
 ----
 
 === 投影命令
 
-在当前工作区中，`asciidoc-abundant-tree` 命令可以直接使用：
+在目标 bookshelf root 中运行投影命令：
 
 [source,bash]
 ----
-cd /home/t103o/workbench
+cd /home/t103o/workbench/projects/ExampleProject/docs/bookshelf
+mkdir -p build/rdf12/books
 asciidoc-abundant-tree \
-  projects/ExampleProject/docs/build/adoc/books/<book-id>.adoc \
+  books/<book-id>/book.adoc \
+  --mode book-entry \
+  --document-root . \
   --format rdf12 \
-  > projects/ExampleProject/docs/build/adoc/books/<book-id>.adoc.ttl
+  > build/rdf12/books/<book-id>.ttl
 ----
 
 该命令让 TTL 留在目标项目自己的 build 目录下。
@@ -41,10 +43,10 @@ TTL 放在目标项目的 build 目录下：
 
 [source,text]
 ----
-docs/build/adoc/books/<book-id>.adoc.ttl
+docs/bookshelf/build/rdf12/books/<book-id>.ttl
 ----
 
-该位置表达 TTL 与聚合 adoc 的派生关系。TTL 不放入源书稿目录，不放入仓库根目录，不作为手写文档维护。
+该位置表达 TTL 是目标书的 projection artifact。TTL 不放入源书稿目录，不放入仓库根目录，不作为手写文档维护。
 
 === 查询语句复用
 
@@ -56,6 +58,6 @@ docs/build/adoc/books/<book-id>.adoc.ttl
 
 === 跨项目路径边界
 
-投影器的 document root 由运行目录和 CLI 约束共同决定。跨项目投影时，从共同工作区根目录运行可以让目标聚合 adoc 处于当前目录之下。
+投影器的 documentRoot 由 `--document-root` 指定。跨项目投影时，在目标 bookshelf root 下运行可以让 source coordinate 保持相对于目标 bookshelf root。
 
-该规则避免把投影输入放到工作区外部。TTL 中的 `aat:relativePath` 也会保持相对于运行根的路径。
+该规则让 TTL 中的 `aat:relativePath` 与目标项目的 source tree 对齐。

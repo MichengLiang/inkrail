@@ -1,7 +1,7 @@
 [#structure-actions]
 == 结构范围动作
 
-结构范围动作来自 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#structural-scope-queries[查询工作流指南的结构范围查询]。它读取 heading 之间的父子和兄弟关系。
+结构范围动作来自 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#structural-scope-queries[查询工作流指南的结构范围查询, rel=implementation]。它读取 heading 之间的父子和兄弟关系。
 
 直接子标题：
 
@@ -14,7 +14,7 @@ inkrail structure children --label <label>
 
 [source,text]
 ----
-child childHeadline start end
+child childHeadline path childLine start end
 ----
 
 递归后代：
@@ -28,7 +28,7 @@ inkrail structure descendants --label <label>
 
 [source,text]
 ----
-descendant level headline start end
+descendant level headline path headingLine start end
 ----
 
 包含根节点的子树：
@@ -42,7 +42,7 @@ inkrail structure subtree --label <label>
 
 [source,text]
 ----
-node level headline start end
+node level headline path headingLine start end
 ----
 
 父标题反查：
@@ -56,7 +56,7 @@ inkrail structure parent --label <label>
 
 [source,text]
 ----
-parent parentHeadline parentStart
+parent parentHeadline parentPath parentLine parentSliceStart parentSliceEnd
 ----
 
 前一个同父兄弟：
@@ -70,7 +70,7 @@ inkrail structure previous-sibling --label <label>
 
 [source,text]
 ----
-headingHeadline previousHeadline start
+headingHeadline previousHeadline path headingLine
 ----
 
-结构范围动作按 `start` 或指南指定字段排序。结构范围提供阅读边界，不替代 xref 脉络。
+结构范围动作按 `path`、heading line 或指南指定字段排序。结构范围提供阅读边界，不替代 xref 脉络。

@@ -11,18 +11,18 @@
 
 [source,bash]
 ----
-arq --data build/adoc/books/<book-id>.adoc.ttl --query <(cat <<'SPARQL'
+arq --data build/rdf12/books/<book-id>.ttl --query <(cat <<'SPARQL'
 PREFIX aat: <https://micheng.dev/ns/asciidoc-abundant-tree#>
 
-SELECT ?level ?headline ?start ?end WHERE {
+SELECT ?level ?headline ?path ?headingLine WHERE {
   ?h a aat:Heading ;
      aat:headingLevel ?level ;
      aat:headline ?headline ;
-     aat:startLine ?start ;
-     aat:endLine ?end .
+     aat:relativePath ?path ;
+     aat:headingLine ?headingLine .
   FILTER(?level <= 1)
 }
-ORDER BY ?start
+ORDER BY ?path ?headingLine
 SPARQL
 )
 ----
@@ -75,11 +75,11 @@ here-doc 查询没有独立参数表面。查询文本可以直接写入目标 l
 
 标题查询和引用查询应显式排序。RDF graph 不承诺 triple 顺序，SPARQL 查询结果也不应依赖数据文件排版顺序。
 
-文档阅读查询通常按 `?start` 或 `?start ?col` 排序：
+文档阅读查询通常按 `?path ?start` 或 `?path ?start ?col` 排序：
 
 [source,sparql]
 ----
-ORDER BY ?start ?col
+ORDER BY ?path ?start ?col
 ----
 
 度数查询通常按度数降序排序：

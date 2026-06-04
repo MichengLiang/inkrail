@@ -1,1 +1,1 @@
-本部定义聚合 adoc、RDF12 TTL、RDF12 JSON-LD、文件指纹和刷新状态机。项目模式查询只有在 RDF12 TTL 代表当前聚合 adoc 时才成立。
+本部定义 RDF12 TTL、RDF12 JSON-LD、source set 指纹、projection 指纹和刷新状态机。项目模式查询只有在 RDF12 TTL 代表当前 book-entry source set 时才成立。

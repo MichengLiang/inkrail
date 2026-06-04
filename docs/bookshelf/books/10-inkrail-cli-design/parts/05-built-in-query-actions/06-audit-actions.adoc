@@ -1,7 +1,7 @@
 [#audit-actions]
 == 审计动作
 
-审计动作来自 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#quality-audit-queries[查询工作流指南的质量审计查询]。它们暴露书稿结构事实。审计结果提供作者判断入口，不自动给出内容评价。
+审计动作来自 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#quality-audit-queries[查询工作流指南的质量审计查询, rel=implementation]。它们暴露书稿结构事实。审计结果提供作者判断入口，不自动给出内容评价。
 
 重复 address label：
 
@@ -42,7 +42,7 @@ inkrail audit payloads --kind node
 
 [source,text]
 ----
-headingHeadline payloadId format payloadStart payloadEnd
+headingHeadline payloadId format payloadPath payloadStart payloadEnd
 ----
 
 边 payload：
@@ -56,7 +56,7 @@ inkrail audit payloads --kind edge
 
 [source,text]
 ----
-sourceHeadline targetHeadline payloadId format payloadStart payloadEnd
+sourceHeadline targetHeadline payloadId format payloadPath payloadStart payloadEnd
 ----
 
 raw 抽查：
@@ -70,7 +70,7 @@ inkrail audit raw --headline <headline> --contains <fragment>
 
 [source,text]
 ----
-headline start containsExpected
+headline path headingLine containsExpected
 ----
 
 `containsExpected` 是查询结果，不是测试断言。需要把它作为自动化回归条件时，应由调用方检查 JSON 输出。
