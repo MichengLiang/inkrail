@@ -23,6 +23,34 @@
 |书架根目录不存在。
 |检查 `bookshelves.root`。
 
+|`BOOKSHELF_INIT_TARGET_INVALID`
+|书架初始化目标路径存在且不是目录。
+|选择不存在路径或空目录作为目标书架目录。
+
+|`BOOKSHELF_INIT_TARGET_NOT_EMPTY`
+|书架初始化目标目录非空且未传 `--force`。
+|选择空目录，或传入 `--force`。
+
+|`BOOKSHELF_NOT_FOUND`
+|指定书架未登记。
+|检查 `[[bookshelves]]` 或传入已登记书架 id。
+
+|`BOOKSHELF_PROFILE_UNSUPPORTED`
+|书架本地构建调度收到非标准 profile。
+|使用标准 profile 书架，或直接在目标书架内运行自有构建命令。
+
+|`BOOKSHELF_SCRIPT_NOT_FOUND`
+|标准书架缺少本地 `build`、`check` 或 `clean` package script。
+|检查书架 `package.json`。
+
+|`BOOKSHELF_RUNTIME_NOT_FOUND`
+|标准书架缺少 `tools/adoc-books.mjs`。
+|检查标准书架初始化结果。
+
+|`BOOKSHELF_BUILD_FAILED`
+|标准书架本地 `build`、`check` 或 `clean` 动作执行失败。
+|阅读书架本地运行时输出并修复书架源文件或构建环境。
+
 |`BOOK_ENTRY_NOT_FOUND`
 |书本入口不存在。
 |创建或修正 `books/<book-id>/book.adoc`。

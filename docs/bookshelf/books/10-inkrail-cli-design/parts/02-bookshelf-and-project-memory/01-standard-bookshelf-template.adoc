@@ -1,42 +1,42 @@
 [#standard-bookshelf-template]
 == 标准书架模板
 
-`inkrail` 集成的标准书架是 `asciidoc-multi-book-workspace` 模板。该模板是 book-first 的 AsciiDoc 多书工作区。
+`inkrail` 集成的标准书架由 `create-asciidoc-multi-book-workspace` 默认模板创建。该模板创建 user-owned、book-first 的 AsciiDoc 多书工作区。
 
-标准书架源目录包含：
+标准书架根目录包含：
 
 [source,text]
 ----
+README.md
 catalog.adoc
+package.json
+.gitignore
+tools/adoc-books.mjs
 books/
 shared/
-scripts/
-test/
-package.json
-pnpm-lock.yaml
-pnpm-workspace.yaml
-README.md
-DESIGN.adoc
 ----
 
-每本书位于 `books/<book-id>/`，并以 `book.adoc` 作为唯一入口。`catalog.adoc` 是书架网页入口和书目导航。`shared/` 只保存跨书共享属性和共享图片。单书图片保留在 `books/<book-id>/assets/images/`。单书示例代码保留在对应书内。
+每本书位于 `books/<book-id>/`，并以 `book.adoc` 作为唯一入口。`catalog.adoc` 是书架网页入口和书目导航。`shared/` 保存跨书共享属性和共享图片。单书图片保留在 `books/<book-id>/assets/images/`。单书示例代码保留在对应书内。
 
-标准书架提供以下构建命令：
+`tools/adoc-books.mjs` 是标准书架本地运行时。该脚本属于生成工作区，负责书架 HTML 构建、展开后 ADOC 输出、资源复制和工作区合同检查。
+
+标准书架提供以下本地 package scripts：
 
 [source,text]
 ----
-pnpm run build:adoc
 pnpm run build
-pnpm run check:contract
-pnpm run check:samples
+pnpm run check
+pnpm run clean
 ----
 
-`build:adoc` 生成书架构建和发布检查所需的 AsciiDoc 输出。
+`build` 生成 HTML、展开后 ADOC、复制资源、写根 `index.html`，并运行当前工作区合同检查。HTML 发布不是 `inkrail query` 的前置条件。
 
-`build` 生成 HTML、复制资源、写根 `index.html`、检查 HTML 本地资源，并运行通用工作区合同检查。HTML 发布不是 `inkrail query` 的前置条件。
+`check` 执行与构建同源的当前工作区检查。该检查验证当前 `catalog.adoc`、现存 book、`:doctype: book`、跨书 xref、anchor 和本地 HTML 资源。
 
-`check:contract` 验证当前 `catalog.adoc`、现存 book、`:doctype: book` 和跨书 xref。该检查适合复制模板后的普通工作区。
+`clean` 删除书架构建生成物。
 
-`check:samples` 验证模板本体的七本样本书覆盖要求。该检查属于模板维护，不属于 `inkrail` 项目查询前置条件。
+标准书架默认包含七本样本书。样本书是学习材料和复制起点，可以从用户工作区删除。`inkrail` 不把样本书自动登记为项目记忆中的查询目标。
 
-`inkrail` 的标准 profile 只依赖标准书架的可复用契约：`catalog.adoc`、`books/<book-id>/book.adoc`、`shared/`、包元数据和 book-first 目录结构。
+生成工作区不包含维护者源码、维护者测试、发布配置或维护者设计文档。
+
+`inkrail` 的标准 profile 路径推导只依赖生成工作区的可复用契约：`catalog.adoc`、`books/<book-id>/book.adoc`、`shared/`、包元数据和 book-first 目录结构。书架本地构建调度依赖本地 package scripts 和 `tools/adoc-books.mjs`。

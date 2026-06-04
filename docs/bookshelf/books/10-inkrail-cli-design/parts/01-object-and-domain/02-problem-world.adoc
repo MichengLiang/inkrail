@@ -1,7 +1,7 @@
 [#problem-world]
 == 问题世界
 
-AsciiDoc 多书书架由 `catalog.adoc`、`books/`、`shared/`、`scripts/`、`test/` 和生成物组成。每本书拥有自己的 `books/<book-id>/book.adoc`、章节顺序、资源边界和网页产物。
+AsciiDoc 多书书架由 `catalog.adoc`、`books/`、`shared/`、`tools/adoc-books.mjs`、包元数据和生成物组成。每本书拥有自己的 `books/<book-id>/book.adoc`、章节顺序、资源边界和网页产物。
 
 标准书架的 book entry 位于：
 

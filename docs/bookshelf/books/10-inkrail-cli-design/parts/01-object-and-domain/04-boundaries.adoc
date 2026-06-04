@@ -15,4 +15,6 @@
 
 `inkrail` 不把 stale projection 作为当前书稿事实。项目模式下，过期 TTL 不可查询。source set 构造或投影失败时，查询失败。
 
+`inkrail` 不实现标准书架的 HTML 构建运行时。标准书架的 `build`、`check` 和 `clean` 动作由书架本地运行时承担。`inkrail` 可以调度这些动作，但不把 HTML 构建作为项目查询前置条件。
+
 `inkrail` 不在每次命令结果中输出 source coordinate 教学文本。README 和指南说明 source coordinate、documentRoot 和编辑动作之间的关系。

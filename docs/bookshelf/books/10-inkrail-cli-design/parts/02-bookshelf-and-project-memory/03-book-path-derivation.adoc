@@ -21,6 +21,9 @@
 
 |HTML
 |`build/html/books/<book-id>/book.html`
+
+|展开后 ADOC
+|`build/adoc/books/<book-id>.adoc`
 |===
 
 所有路径都相对 `bookshelf.root` 解释。`inkrail` 对外展示时可以显示相对项目根路径，但状态判断必须以物化后的绝对路径执行文件操作。
@@ -34,5 +37,7 @@ shared/**/*.adoc
 ----
 
 Watch globs 服务快速变化检测。Source set fingerprint 由 book-entry include graph 到达的 source files 构成；投影器版本和 projection options 进入 projection fingerprint。
+
+展开后 ADOC 和 HTML 是标准书架本地构建产物。它们不参与 `inkrail query` 的 RDF12 TTL 新鲜度判断。
 
 `rdf12_jsonld` 是配置字段名。命令行 format 使用 `rdf12-json-ld`，文件后缀使用 `.jsonld`。

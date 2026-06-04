@@ -1,7 +1,7 @@
 == 摘要
 
-本书定义 `inkrail` CLI 的人工制品边界、项目记忆、标准书架集成、book-entry RDF12 投影、source set 新鲜度、Oxigraph 查询契约、内置查询动作、输出表面、错误语义和验证标准。
+本书定义 `inkrail` CLI 的人工制品边界、项目记忆、标准书架集成、书架本地构建调度、book-entry RDF12 投影、source set 新鲜度、Oxigraph 查询契约、内置查询动作、输出表面、错误语义和验证标准。
 
-`inkrail` 面向 AsciiDoc 多书书架。它创建和识别标准书架，在项目配置中记录书架与书本，按标准 profile 推导每本书的 book entry、documentRoot、RDF12 TTL、RDF12 JSON-LD 和 watch globs，在项目查询前强制刷新过期投影，并使用 Oxigraph 对单本书 RDF12 TTL 执行 SPARQL。
+`inkrail` 面向 AsciiDoc 多书书架。它创建和识别标准书架，在项目配置中记录书架与书本，调度标准书架本地构建检查动作，按标准 profile 推导每本书的 book entry、documentRoot、RDF12 TTL、RDF12 JSON-LD 和 watch globs，在项目查询前强制刷新过期投影，并使用 Oxigraph 对单本书 RDF12 TTL 执行 SPARQL。
 
 本书是设计规约，不是实现计划。它规定对象、契约和验收条件，使实现者和设计审查者能够在相同上下文中判断 `inkrail` 的行为是否成立。

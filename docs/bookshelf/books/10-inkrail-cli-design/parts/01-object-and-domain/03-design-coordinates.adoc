@@ -8,11 +8,11 @@
 Domain ∧ Specification ⊨ Requirements
 ----
 
-Domain 是当前书稿世界中的事实。它包括标准多书书架结构、book entry、documentRoot、source set、RDF12 投影、Oxigraph 本地查询能力、单本书查询边界和 origin source coordinate。
+Domain 是当前书稿世界中的事实。它包括标准多书书架结构、书架本地构建运行时、book entry、documentRoot、source set、RDF12 投影、Oxigraph 本地查询能力、单本书查询边界和 origin source coordinate。
 
 Requirements 是作者希望达到的状态。作者需要用较少路径记忆和较少刷新心智负担，对当前书稿事实发起结构查询，并得到带 source coordinate、可审计、可重复的结果。
 
-Specification 是 `inkrail` 能直接控制的规约。它包括项目配置、书本选择、标准 profile 路径推导、source set 新鲜度、投影刷新状态机、SPARQL 查询执行、pretty 输出、JSON 输出和错误语义。
+Specification 是 `inkrail` 能直接控制的规约。它包括项目配置、书本选择、标准 profile 路径推导、书架本地构建调度、source set 新鲜度、投影刷新状态机、SPARQL 查询执行、pretty 输出、JSON 输出和错误语义。
 
 `inkrail` 不能直接改变源书稿世界。它只能通过可控规约把当前书稿事实投影为可查询对象，并阻止过期投影进入当前查询。
 

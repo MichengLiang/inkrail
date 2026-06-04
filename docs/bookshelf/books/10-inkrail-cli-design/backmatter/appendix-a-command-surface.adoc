@@ -14,11 +14,17 @@ inkrail doctor
 
 [source,bash]
 ----
-inkrail bookshelf init <target-dir> --title <title> --name <package-name>
+inkrail bookshelf init <target-dir>
+inkrail bookshelf init <target-dir> --force
+inkrail bookshelf init <target-dir> --register <bookshelf-id>
+inkrail bookshelf init <target-dir> --force --register <bookshelf-id>
 inkrail bookshelves add <id> --root <path> --profile inkrail-asciidoc-multi-book
 inkrail books add <book-id> --bookshelf <bookshelf-id>
 inkrail books use <book-id>
 inkrail books list
+inkrail bookshelf build <bookshelf-id>
+inkrail bookshelf check <bookshelf-id>
+inkrail bookshelf clean <bookshelf-id>
 ----
 
 刷新与投影：

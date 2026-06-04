@@ -44,6 +44,8 @@ include::parts/02-bookshelf-and-project-memory/03-book-path-derivation.adoc[]
 
 include::parts/02-bookshelf-and-project-memory/04-initialization-contract.adoc[]
 
+include::parts/02-bookshelf-and-project-memory/05-bookshelf-build-dispatch.adoc[]
+
 = 第三部：投影与新鲜度
 
 [partintro]

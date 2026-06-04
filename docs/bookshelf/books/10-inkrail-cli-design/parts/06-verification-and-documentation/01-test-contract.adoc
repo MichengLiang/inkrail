@@ -23,7 +23,7 @@
 * 多 book 项目无目标书时报 `BOOK_REQUIRED`。
 * 指定未知 book 时报 `BOOK_NOT_FOUND`。
 
-路径推导测试必须覆盖 standard profile 下的 `book_entry`、`document_root`、`rdf12_ttl`、`rdf12_jsonld`、`html` 和 watch globs。
+路径推导测试必须覆盖 standard profile 下的 `book_entry`、`document_root`、`rdf12_ttl`、`rdf12_jsonld`、`html`、展开后 ADOC 和 watch globs。
 
 新鲜度测试必须覆盖：
 
@@ -79,7 +79,20 @@ RDF12 book-entry 投影测试必须覆盖：
 * 目标目录不存在时创建书架。
 * 目标目录为空时创建书架。
 * 目标路径为文件时报错。
-* 目标目录非空时报错。
-* `--title` 更新 catalog 标题和 `:series-name:`。
-* `--name` 更新 `package.json`。
+* 目标目录非空且未传 `--force` 时报错。
+* `--force` 覆盖固定模板输出路径并保留未知用户文件。
+* 生成工作区包含 `catalog.adoc`、`books/`、`shared/`、`tools/adoc-books.mjs`、`package.json` 和 `.gitignore`。
+* 生成工作区不包含维护者源码、测试、发布配置或维护者设计文档。
 * `--register` 写入 `[[bookshelves]]`。
+* `--register` 不写入模板样本书对应的 `[[books]]`。
+
+书架本地构建调度测试必须覆盖：
+
+* 已登记标准书架可以执行 `build`、`check` 和 `clean`。
+* 未登记书架执行构建调度时报错。
+* 标准书架缺少本地 package script 时报 `BOOKSHELF_SCRIPT_NOT_FOUND`。
+* 标准书架缺少 `tools/adoc-books.mjs` 时报 `BOOKSHELF_RUNTIME_NOT_FOUND`。
+* 标准书架本地 script 非零退出时报 `BOOKSHELF_BUILD_FAILED`。
+* 构建调度转发本地 script 的 stdout 和 stderr。
+* 构建调度不写 RDF projection state。
+* 项目模式查询不隐式执行书架本地构建动作。

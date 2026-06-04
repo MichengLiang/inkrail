@@ -1,8 +1,8 @@
 == 前言
 
-本书按设计判断的依赖顺序组织。读者先阅读 xref:artifact-identity[人工制品身份] 和 xref:problem-world[问题世界]，再阅读书架配置、投影新鲜度、查询契约和内置查询动作。
+本书按设计判断的依赖顺序组织。读者先阅读 xref:artifact-identity[人工制品身份] 和 xref:problem-world[问题世界]，再阅读书架配置、书架本地构建调度、投影新鲜度、查询契约和内置查询动作。
 
-本书依赖三个事实来源。AsciiDoc 多书书架的标准结构来自 `asciidoc-multi-book-workspace` 模板。Book-entry parsing、origin source coordinate recovery 和 RDF12 投影来自 `asciidoc-abundant-tree`。查询语义由 xref:../08-rdf12-heading-projection-query-workflow/book.adoc[AsciiDoc 书稿 RDF 投影查询工作流, rel=depends-on] 定义。
+本书依赖三个事实来源。AsciiDoc 多书书架的标准结构来自 `create-asciidoc-multi-book-workspace` 默认模板。Book-entry parsing、origin source coordinate recovery 和 RDF12 投影来自 `asciidoc-abundant-tree`。查询语义由 xref:../08-rdf12-heading-projection-query-workflow/book.adoc[AsciiDoc 书稿 RDF 投影查询工作流, rel=depends-on] 定义。
 
 `inkrail` 把查询动作放入带项目记忆和新鲜度约束的 CLI。它不复制查询教程，而是消费查询教程定义的动作、变量、排序和 source coordinate 语义。
 

@@ -26,11 +26,11 @@ bookshelf = "docs"
 
 `bookshelves.profile` 决定路径推导规则。`inkrail-asciidoc-multi-book` 是标准书架 profile。`custom` 是非标准书架 profile。
 
-`books.id` 是 `books/<book-id>/` 的目录名。标准 profile 下，`bookshelf` 与 `id` 唯一决定 book entry、documentRoot、RDF12 TTL、RDF12 JSON-LD、HTML 产物和 watch globs。
+`books.id` 是 `books/<book-id>/` 的目录名。标准 profile 下，`bookshelf` 与 `id` 唯一决定 book entry、documentRoot、RDF12 TTL、RDF12 JSON-LD、标准书架构建产物位置和 watch globs。
 
-标准 profile 的 book 配置不得声明 `book_entry`、`document_root`、`rdf12_ttl`、`rdf12_jsonld`、`html` 或 `watch`。这些字段由 profile 规则推导。手写同名字段会制造两个路径来源，应作为 `BOOK_CONFIG_INVALID` 处理。
+标准 profile 的 book 配置不得声明 `book_entry`、`document_root`、`rdf12_ttl`、`rdf12_jsonld` 或 `watch`。这些字段由 profile 规则推导。手写同名字段会制造两个路径来源，应作为 `BOOK_CONFIG_INVALID` 处理。HTML 和展开后 ADOC 是标准书架本地构建产物路径，不作为 book 配置字段声明。
 
-custom profile 必须完整声明路径：
+custom profile 必须完整声明查询路径和 watch：
 
 [source,toml]
 ----

@@ -1,0 +1,25 @@
+[#bookshelf-build-dispatch]
+== 书架本地构建调度
+
+xref:standard-bookshelf-template[标准书架] 提供 `build`、`check` 和 `clean` 三个本地 package script。`inkrail` 按项目记忆中的书架登记项调度这些动作。
+
+[source,bash]
+----
+inkrail bookshelf build docs
+inkrail bookshelf check docs
+inkrail bookshelf clean docs
+----
+
+`inkrail bookshelf build <bookshelf-id>` 在目标书架根目录执行标准书架本地 `build` script。该动作生成 HTML、展开后 ADOC 和书架构建检查所需的生成物。
+
+`inkrail bookshelf check <bookshelf-id>` 在目标书架根目录执行标准书架本地 `check` script。该动作验证当前书架的 catalog、现存 book、xref、anchor 和本地资源，并允许书架本地运行时重建检查所需的生成物。
+
+`inkrail bookshelf clean <bookshelf-id>` 在目标书架根目录执行标准书架本地 `clean` script。该动作删除书架本地构建生成物。
+
+书架本地构建调度使用已登记书架的 `bookshelves.root` 作为工作目录。构建调度转发本地 script 的 stdout、stderr 和退出状态。非零退出状态映射为 `BOOKSHELF_BUILD_FAILED`。
+
+书架本地构建调度不写 `.inkrail/state/`。RDF12 TTL 和 RDF12 JSON-LD 的投影状态由 xref:refresh-state-machine[刷新状态机] 维护。
+
+`inkrail query` 在项目模式下隐式执行刷新状态机，不隐式执行书架本地 `build`、`check` 或 `clean` script。HTML 构建、展开后 ADOC 输出和工作区合同检查不作为 RDF 查询前置条件。
+
+目标书架未登记时，构建调度失败。目标书架不是标准 profile 时，构建调度失败。标准书架缺少本地 package script 时，构建调度失败。标准书架缺少 `tools/adoc-books.mjs` 时，构建调度失败。

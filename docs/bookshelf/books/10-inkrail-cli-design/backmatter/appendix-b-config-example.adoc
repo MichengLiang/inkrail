@@ -50,5 +50,6 @@ book_entry       books/<book-id>/book.adoc
 document_root    .
 rdf12_ttl        build/rdf12/books/<book-id>.ttl
 rdf12_jsonld     build/rdf12/books/<book-id>.jsonld
-html             build/html/books/<book-id>/book.html
+html output      build/html/books/<book-id>/book.html
+expanded ADOC    build/adoc/books/<book-id>.adoc
 ----

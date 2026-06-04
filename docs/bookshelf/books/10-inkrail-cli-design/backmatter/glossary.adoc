@@ -1,8 +1,9 @@
 = 术语表
 
 book:: 具有独立 book entry、章节顺序和生成物的书籍单位。
-bookshelf:: 保存 catalog、books、shared、scripts、test 和生成物的多书工作区。
-standard bookshelf profile:: `inkrail` 对标准 AsciiDoc 多书模板的路径、构建和 watch 推导规则。
+bookshelf:: 保存 catalog、books、shared、书架本地运行时、包元数据和生成物的多书工作区。
+bookshelf local runtime:: 标准书架中的 `tools/adoc-books.mjs`；该脚本承担书架本地 `build`、`check` 和 `clean` 动作。
+standard bookshelf profile:: `inkrail` 对标准 AsciiDoc 多书工作区的路径、构建和 watch 推导规则。
 custom profile:: 非标准书架配置方式；书本路径和 watch 必须完整声明。
 project memory:: `.inkrail/config.toml` 与 `.inkrail/state/` 中保存的书架、书本和投影状态。
 book entry:: 调用者显式传入的书稿入口 source file，标准书架中为 `books/<book-id>/book.adoc`。
@@ -17,5 +18,5 @@ TTL-only mode:: 直接查询用户提供 TTL，不判断项目新鲜度的命令
 explicit projection mode:: 读取调用者指定输入并生成 `rdf12` 或 `rdf12-json-ld` 的命令模式；该模式不写项目状态。
 single-file input semantics:: explicit projection mode 的默认输入语义；投影器只读取调用者指定的单个 source file。
 origin source coordinate:: RDF fact 在 source file 中的 `relativePath`、heading line、line span、column span 和 raw 表面。
-pretty output:: 面向终端读者的数据库式表格输出。
+pretty output:: 面向终端读者的表格式输出。
 JSON output:: 面向机器、脚本和大语言模型的结构化 envelope 输出。

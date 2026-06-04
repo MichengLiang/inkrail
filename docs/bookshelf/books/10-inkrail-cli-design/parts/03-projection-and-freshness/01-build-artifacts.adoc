@@ -26,6 +26,13 @@ HTML 是发布表面。标准 profile 下，它位于：
 build/html/books/<book-id>/book.html
 ----
 
-TTL、JSON-LD 和 HTML 都是生成物。它们可以删除并重新生成。它们不作为手写源文件维护。
+展开后 ADOC 是标准书架本地构建表面。标准 profile 下，它位于：
 
-HTML 构建不参与 `inkrail query` 的新鲜度判断。查询前刷新只要求 RDF12 TTL 代表当前 book entry source set。
+[source,text]
+----
+build/adoc/books/<book-id>.adoc
+----
+
+TTL、JSON-LD、HTML 和展开后 ADOC 都是生成物。它们可以删除并重新生成。它们不作为手写源文件维护。
+
+HTML 构建和展开后 ADOC 构建不参与 `inkrail query` 的新鲜度判断。查询前刷新只要求 RDF12 TTL 代表当前 book entry source set。

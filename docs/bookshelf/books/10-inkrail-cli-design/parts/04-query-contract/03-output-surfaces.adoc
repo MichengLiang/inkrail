@@ -3,7 +3,7 @@
 
 `inkrail` 只有两类查询输出表面：pretty 和 JSON。
 
-Pretty 是终端读者表面。它使用数据库式表格，字段名直接使用 SPARQL 变量名。
+Pretty 是终端读者表面。它使用表格式输出，字段名直接使用 SPARQL 变量名。
 
 [source,text]
 ----
