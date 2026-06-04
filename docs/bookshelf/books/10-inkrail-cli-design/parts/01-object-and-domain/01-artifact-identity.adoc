@@ -5,6 +5,8 @@
 
 它创建和识别标准多书书架，在项目配置中记录书架与书本，调度标准书架本地构建检查动作，按标准书架规则推导每本书的 book entry、documentRoot、RDF12 TTL、RDF12 JSON-LD 和 watch globs，在项目查询前强制刷新过期投影，并使用 Oxigraph 对单本书 RDF12 TTL 执行 SPARQL。
 
+`inkrail` 把标准书架、项目记忆、书架本地运行时、book-entry RDF12 投影和本地查询执行器组织为同一个项目命令表面。
+
 该定义包含 `inkrail` 的构成性条件。缺少标准书架集成，`inkrail` 不能覆盖从空书架到可查询书稿的入口。缺少项目记忆，`inkrail` 只是普通 SPARQL runner。缺少投影新鲜度约束，`inkrail` 会把 stale projection 作为当前答案。缺少单书查询边界，`inkrail` 会过早进入跨书联合图问题。缺少 TTL-only mode 和 explicit projection mode，`inkrail` 会把临时实验强行纳入项目配置。
 
 `inkrail` 的核心消费者是维护 AsciiDoc 多书书架的作者和开发者。作者使用它查询当前书稿的标题结构、交叉引用网络和审计事实。开发者使用它验证书稿投影、查询模板和 CLI 契约是否一致。

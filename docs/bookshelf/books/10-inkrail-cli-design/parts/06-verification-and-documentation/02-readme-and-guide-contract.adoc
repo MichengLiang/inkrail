@@ -7,6 +7,8 @@ README 不展开全部内置查询语句。完整查询动作由本设计书和�
 
 用户指南承担 source coordinate 说明。查询结果中的 `path`、`headingLine`、`start`、`end`、`col` 和 `raw` 指向 RDF fact 的 origin source file surface。修改书稿时，作者使用这些字段进入 source file。
 
+用户指南说明从 book entry 到 RDF12 TTL、从查询结果到 origin source file、从源文件修改到下一次项目模式查询刷新之间的关系。
+
 Source coordinate 说明应链接 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#reading-and-editing-loop[RDF 投影查询工作流的阅读与修改闭环, rel=documents]。该链接提供 path、heading line、line span、column、raw、编辑动作和修改后刷新之间的完整关系。
 
 Source coordinate 说明不进入每次命令输出。命令输出只提供查询结果字段、刷新事件和错误诊断。

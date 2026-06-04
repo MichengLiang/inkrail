@@ -14,15 +14,15 @@ books/<book-id>/book.adoc
 
 作者需要反复执行以下动作：
 
-* 选择目标书。
+* 选择目标 book。
+* 解析 book entry 和 documentRoot。
 * 生成 RDF12 TTL。
-* 验证或加载 TTL。
-* 执行 SPARQL 查询。
-* 根据查询结果读取 source file。
+* 加载 TTL 并执行 SPARQL 查询。
+* 根据查询结果读取 origin source file。
 * 使用 path、heading line、line span、column、headline、selector 和 raw 修改源书稿。
-* 修改源书稿后重新执行上述链条。
+* 修改源书稿后重新查询当前书稿事实。
 
-该链条的主要摩擦不是单个命令难写，而是状态分散。书本选择存在于作者记忆中。Book entry、documentRoot、source set、projection output 和查询语句分属不同对象。查询语句来自 xref:../08-rdf12-heading-projection-query-workflow/book.adoc[查询工作流指南, rel=depends-on]。新鲜度判断由作者手动承担。投影、加载和查询的错误语义来自不同工具。
+该链条的主要摩擦来自对象关系的手动维持。标准书架提供 book entry 和 include graph。`asciidoc-abundant-tree` 提供 source-aware RDF12 投影。查询执行器加载 TTL 并执行 SPARQL。查询语句来自 xref:../08-rdf12-heading-projection-query-workflow/book.adoc[查询工作流指南, rel=depends-on]。查询结果提供 origin source coordinate。书本选择、documentRoot、source set、projection output、新鲜度判断和错误语义分属不同对象。
 
 该链条的主要风险是 stale projection。TTL 仍然可能是合法 Turtle，查询引擎仍然可以返回结果，但这些结果对应不同的 source set。项目模式下，stale projection 不能作为当前书稿查询依据。
 
