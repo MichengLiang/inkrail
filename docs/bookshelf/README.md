@@ -84,4 +84,6 @@ The repository-level workflow at `../../.github/workflows/pages.yml` builds this
 
 ## License
 
-Apache-2.0. See [`../../LICENSE`](../../LICENSE).
+PolyForm Noncommercial License 1.0.0. See [`../../LICENSE`](../../LICENSE).
+
+Commercial use is not permitted under this license.

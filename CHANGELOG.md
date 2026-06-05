@@ -4,6 +4,13 @@ All notable changes to this project are documented in this file.
 
 This project uses semantic versioning after `0.1.0`.
 
+## Unreleased
+
+### Changed
+
+- Changed project licensing to PolyForm Noncommercial License 1.0.0.
+- Added source-available contribution governance, commercial-use guidance, and Contributor License Agreement requirements.
+
 ## 0.1.0 - 2026-05-30
 
 Initial public specification release.

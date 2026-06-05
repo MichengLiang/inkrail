@@ -11,4 +11,8 @@ The current package reserves the public npm name and points to the design book. 
 
 ## License
 
-Apache-2.0
+PolyForm Noncommercial License 1.0.0. See [`LICENSE`](LICENSE).
+
+Commercial use is not permitted under this license.
+
+Commercial licensing and contribution terms are maintained in the source repository.

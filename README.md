@@ -88,6 +88,12 @@ pnpm --dir docs/bookshelf build
 pnpm --filter inkrail pack:check
 ```
 
+## Contributions
+
+inkrail is maintained by its core team as a source-available product project. Public source access supports review, reproducibility, issue reporting, and noncommercial use; it does not make the project community-governed.
+
+Substantive external contributions require prior maintainer approval and a signed Contributor License Agreement. See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`CLA.md`](CLA.md).
+
 ## Release State
 
 `inkrail` is prepared for public npm publishing as a specification package. Tag releases use `v<package-version>`, run the full check suite, publish the npm package with provenance, and create a GitHub release from `CHANGELOG.md`.
@@ -98,4 +104,8 @@ See [CHANGELOG.md](./CHANGELOG.md).
 
 ## License
 
-Apache License 2.0. See [`LICENSE`](LICENSE).
+PolyForm Noncommercial License 1.0.0. See [`LICENSE`](LICENSE).
+
+Commercial use is not permitted under this license. Contact the copyright holder for commercial licensing.
+
+For commercial licensing terms, see [`COMMERCIAL.md`](COMMERCIAL.md).
