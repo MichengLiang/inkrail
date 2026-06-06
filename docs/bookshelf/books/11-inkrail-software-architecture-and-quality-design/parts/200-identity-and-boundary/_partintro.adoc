@@ -1,0 +1,1 @@
+本部定义本书的 architecture baseline 身份、消费者角色、模块 role 和架构边界。

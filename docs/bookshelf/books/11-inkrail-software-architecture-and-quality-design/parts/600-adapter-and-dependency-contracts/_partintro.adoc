@@ -1,0 +1,1 @@
+本部定义标准书架 initializer、`asciidoc-abundant-tree`、Oxigraph、文件系统、进程运行器和版本能力锁定的适配器契约。

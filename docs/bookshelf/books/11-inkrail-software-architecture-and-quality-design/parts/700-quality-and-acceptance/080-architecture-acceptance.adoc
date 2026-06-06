@@ -1,0 +1,19 @@
+[#architecture-acceptance.quality-gate]
+== Architecture Acceptance
+
+This architecture baseline is acceptable when the following statements are true:
+
+* Every constitutive condition from 10 号书 has an architecture carrier in this book.
+* Public library API and CLI consumer boundary are explicit.
+* Domain core、application services、adapters、commands and output projectors have separate responsibilities.
+* Config、project、book、path、fingerprint、state、query result and RDF term JSON models are defined.
+* Project mode、TTL-only mode and explicit projection mode have separate runtime flows.
+* Refresh state machine forbids stale projection fallback.
+* Built-in action flow sources SPARQL semantics from 08 号书.
+* Workspace initializer、asciidoc-abundant-tree and Oxigraph enter runtime through adapters.
+* Test layering, fixture strategy, negative tests, output tests and package gates are defined.
+* Backmatter provides API surface, module responsibility map, error mapping and test matrix for implementation WBS.
+
+Architecture acceptance does not require implementation files to exist. It requires the architecture baseline to be sufficient for implementation WBS without unresolved object boundaries.
+
+If implementation discovers a missing architecture object, the discovery must be returned to this book or to a successor architecture revision before work packages depend on it.

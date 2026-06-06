@@ -1,0 +1,32 @@
+[#built-in-action-flow.runtime-flow, owner=query-runtime]
+== Built-in Action Flow
+
+Built-in action flow maps commandized author actions to SPARQL templates. It implements xref:../10-inkrail-cli-design/book.adoc#query-template-contract[10 号书查询模板契约, rel=implements-contract] and sources SPARQL semantics from xref:../08-rdf12-heading-projection-query-workflow/book.adoc#query-library[08 号书查询语句集, rel=sources-query-from]。
+
+[source,text]
+----
+built-in action input
+  -> lookup action definition
+  -> validate action parameters
+  -> render SPARQL template
+  -> if printQuery, return rendered query
+  -> else call project mode or ttl-only query flow
+  -> return action result
+----
+
+Action definition includes:
+
+* Action id.
+* CLI command path.
+* Query kind.
+* Parameter schema.
+* SPARQL template.
+* SELECT variables when query kind is select.
+* Sort contract.
+* Source workflow reference.
+
+`--print-query` stops after SPARQL rendering. It does not resolve project context, read TTL, run refresh state machine or execute SPARQL.
+
+Action parameters only replace documented literal placeholders or scope labels. Action parameter handling cannot change query fact boundary, variables, sorting, `OPTIONAL`、`FILTER NOT EXISTS`、`GROUP BY`、`HAVING` or property path semantics.
+
+Built-in action result uses same query result model as raw query. Built-in action identity is recorded in `query.source = "built-in"` and action metadata.

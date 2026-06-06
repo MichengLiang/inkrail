@@ -1,0 +1,82 @@
+[#source-tree.module-contract, owner=package-runtime]
+== Source Tree
+
+`src/` 按 module role 分区。目录名表达模块身份，不表达实现批次。
+
+[source,text]
+----
+src/
+  index.ts
+  bin.ts
+  cli.ts
+  core/
+    config.ts
+    profiles.ts
+    project.ts
+    books.ts
+    paths.ts
+    fingerprint.ts
+    freshness.ts
+    errors.ts
+    result.ts
+    rdf-terms.ts
+    query-actions.ts
+  services/
+    load-project.ts
+    init-project.ts
+    bookshelf-init.ts
+    bookshelf-runtime.ts
+    projection.ts
+    refresh.ts
+    query.ts
+    built-in-actions.ts
+  adapters/
+    filesystem.ts
+    toml.ts
+    abundant-tree.ts
+    workspace-initializer.ts
+    oxigraph.ts
+    process-runner.ts
+  commands/
+    init.ts
+    bookshelves.ts
+    books.ts
+    bookshelf.ts
+    refresh.ts
+    project.ts
+    query.ts
+    builtins.ts
+    status.ts
+    doctor.ts
+    config-print.ts
+  io/
+    json-output.ts
+    pretty-output.ts
+    table.ts
+    diagnostics.ts
+  test-support/
+----
+
+`index.ts` 是 public library API entry。`bin.ts` 是 Node executable entry。`cli.ts` 是 CLI adapter entry。`core/`、`services/` 和 `adapters/` 组成 public API 可消费的 runtime。`commands/` 和 `io/` 组成 CLI consumer surface。
+
+依赖方向如下：
+
+[source,text]
+----
+core
+  <- services
+  <- commands
+  <- cli
+
+adapters
+  <- services
+  <- commands
+  <- cli
+
+io
+  <- cli
+----
+
+`core/` 不依赖 `services/`、`adapters/`、`commands/` 或 `io/`。`services/` 可以依赖 `core/` 和 adapter interfaces。`commands/` 可以依赖 `services/`。`io/` 可以依赖 public result types，但不得执行 domain logic。
+
+`test-support/` 提供 fake adapters、fixture builders 和 assertions。`src/index.ts` 不导出 `test-support/`。

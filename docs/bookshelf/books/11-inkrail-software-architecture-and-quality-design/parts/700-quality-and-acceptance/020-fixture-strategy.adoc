@@ -1,0 +1,18 @@
+[#fixture-strategy.test-contract, owner=quality]
+== Fixture Strategy
+
+Fixtures provide stable evidence surfaces for architecture contracts.
+
+[horizontal]
+Minimal project fixture:: Contains `.inkrail/config.toml` and no bookshelf. Used for config、project discovery and init tests.
+Minimal standard bookshelf fixture:: Contains catalog、books、shared、package scripts and one or more book entries. Used for profile path derivation、refresh and query tests.
+Book-entry source fixture:: Contains entry file、frontmatter、chapters、backmatter and shared attributes. Used for source set and projection tests.
+Stale projection fixture:: Contains source files、old state and old TTL. Used for freshness tests.
+RDF term fixture:: Contains TTL with literal、named node、blank node and quad term evidence. Used for Oxigraph and RDF term JSON tests.
+Query action fixture:: Contains RDF facts needed by built-in actions. Used for registry and CLI command tests.
+
+Fixtures live under package test fixture directories or project-local `tmp/` during test execution. Tests must not scan or mutate workspace-external paths.
+
+Fixture source files should be small and purposeful. A fixture exists to verify a contract, not to imitate a full user project.
+
+Generated artifacts in fixtures must be either checked in as explicit expected artifacts or generated inside test setup. Tests must not silently depend on stale build output from previous runs.

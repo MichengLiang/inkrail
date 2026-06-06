@@ -1,0 +1,41 @@
+[#negative-test-contract.test-contract, owner=quality]
+== Negative Test Contract
+
+Negative tests verify that invalid states do not pass silently.
+
+Config negative tests:
+
+* Invalid book id.
+* Duplicate bookshelf id.
+* Duplicate book id.
+* Absolute path.
+* Backslash path.
+* Parent traversal path.
+* `default_book` points to missing book.
+* Standard profile declares derived fields.
+* Custom profile omits required paths.
+
+Runtime negative tests:
+
+* Project config not found.
+* Book not found.
+* Book entry not found.
+* Source set construction failure.
+* Projection failure.
+* TTL read failure.
+* TTL load failure.
+* Query read failure.
+* Query execution failure.
+* Stale projection cannot be refreshed.
+
+Bookshelf negative tests:
+
+* Init target is file.
+* Init target is non-empty without force.
+* Bookshelf not registered.
+* Non-standard profile build dispatch.
+* Missing package script.
+* Missing `tools/adoc-books.mjs`.
+* Non-zero local runtime exit status.
+
+Negative tests must assert stable error code and recovery-relevant details. They should not assert unstable upstream error message text unless adapter contract defines that text.

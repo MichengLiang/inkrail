@@ -1,0 +1,36 @@
+[#state-store.data-model, owner=projection-runtime]
+== State Store
+
+State store 位于 `.inkrail/state/`。它保存 project mode 下上次成功 source set fingerprint 和 projection fingerprint。
+
+State store 使用 project memory 身份组织文件。标准 state path 为：
+
+[source,text]
+----
+.inkrail/state/books/<book-id>/rdf12.json
+.inkrail/state/books/<book-id>/rdf12-json-ld.json
+----
+
+`books.id` 在 config model 中保持项目内唯一，因此 state path 可以使用 book id。若未来允许不同 bookshelf 下同名 book，state path 必须改为包含 bookshelf id 的结构；该变化需要更新 config model 和 migration contract。
+
+State record shape：
+
+[source,typescript]
+----
+type ProjectionStateRecord = {
+  schemaVersion: 1;
+  book: {
+    id: BookId;
+    bookshelf: BookshelfId;
+  };
+  sourceSet: SourceSetFingerprint;
+  projection: ProjectionFingerprint;
+  updatedAt: string;
+};
+----
+
+State file 不替代 projection artifact。State file 缺失、schemaVersion 不支持、JSON parse 失败、projection artifact 缺失或 fingerprint 不匹配，都进入 refresh decision。
+
+State write 发生在 projection artifact 成功写入并计算 outputHash 之后。查询失败不回滚已经成功写入的新鲜 projection artifact 和 state record。
+
+State store 不记录书架本地 `build`、`check` 或 `clean` 状态。书架 local runtime 的生成物和 RDF projection state 是不同对象。

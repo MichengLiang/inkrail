@@ -1,0 +1,65 @@
+[#project-and-book-model.data-model, owner=project-memory]
+== Project 与 Book Model
+
+Project context 描述 `.inkrail/config.toml` 所在项目。
+
+[source,typescript]
+----
+type ProjectContext = {
+  projectRoot: AbsolutePath;
+  configDir: AbsolutePath;
+  configPath: AbsolutePath;
+  cacheDir: AbsolutePath;
+  stateDir: AbsolutePath;
+  discoveryMode: "explicit" | "cwd-upward";
+  startDirectory: AbsolutePath;
+};
+----
+
+Project context 由显式 `--project <path>` 或 cwd upward search 得到。显式 project 不存在 config 时返回 `PROJECT_CONFIG_NOT_FOUND`。Upward search 找不到 config 时返回 `PROJECT_NOT_FOUND`。
+
+Bookshelf model 描述已登记书架：
+
+[source,typescript]
+----
+type Bookshelf = {
+  id: BookshelfId;
+  root: ProjectRelativePath;
+  profile: "inkrail-asciidoc-multi-book" | "custom";
+};
+----
+
+Book model 描述已登记 book：
+
+[source,typescript]
+----
+type Book = {
+  id: BookId;
+  bookshelf: BookshelfId;
+};
+----
+
+Resolved book 是 query、refresh 和 projection 的运行对象：
+
+[source,typescript]
+----
+type ResolvedBook = {
+  id: BookId;
+  bookshelf: Bookshelf;
+  bookEntry: BookshelfRelativePath;
+  documentRoot: AbsolutePath;
+  rdf12Ttl: BookshelfRelativePath;
+  rdf12JsonLd: BookshelfRelativePath;
+  html: BookshelfRelativePath;
+  expandedAdoc: BookshelfRelativePath;
+  watch: BookshelfRelativePath[];
+};
+----
+
+Target book selection 按以下顺序解析目标：
+
+1. 调用输入中的 book id。
+2. `project.default_book`。
+3. 项目只登记一本 book 时的唯一 book。
+
+多 book 项目没有目标 book 时返回 `BOOK_REQUIRED`。指定未知 book 时返回 `BOOK_NOT_FOUND`。Book selection 是 domain rule，不属于 CLI command handler。

@@ -1,0 +1,17 @@
+= 术语表
+
+architecture baseline:: 实现前的软件架构与工程质量基线。它定义模块、API、数据流、适配器和质量门禁。
+public API:: Library consumer 直接 import 的结构化 TypeScript/JavaScript 表面。
+CLI consumer:: 通过 `inkrail` 命令消费 pretty 或 JSON 输出的消费者。
+domain core:: 保存纯模型、规则和类型的模块层。
+application service:: 组合 domain core 和 adapters 的用例层。
+adapter:: 封装外部 package、文件系统、进程或查询执行器的边界模块。
+query action registry:: 保存内置查询动作、SPARQL 模板、变量、参数和来源引用的 registry。
+source set fingerprint:: 描述 book-entry source files 当前内容事实的 fingerprint。
+projection fingerprint:: 描述 projection artifact 与 source set、documentRoot、projector 和 options 关系的 fingerprint。
+state store:: `.inkrail/state/` 中保存 projection state record 的存储面。
+query result model:: SPARQL 查询执行后的内部结构化结果。
+RDF term JSON:: 保留 RDF/JS term 结构的 JSON 表示。
+capability lock:: 用 adapter contract test 锁定的依赖能力事实。
+package boundary:: npm publish artifact 的文件边界。
+quality gate:: 完成声明前必须通过的检查命令或证据条件。

@@ -1,0 +1,89 @@
+[#rdf-term-json.data-model, owner=query-runtime, surface=json-output]
+== RDF Term JSON
+
+RDF term JSON 是 public API 和 CLI JSON 共同使用的 RDF term 表示。它保留 RDF/JS term 结构，避免把 NamedNode、Literal、BlankNode、DefaultGraph、Variable 或 Quad term 压成字符串。
+
+NamedNode：
+
+[source,json]
+----
+{
+  "termType": "NamedNode",
+  "value": "urn:aat:doc:example#heading-l17-o0"
+}
+----
+
+Literal：
+
+[source,json]
+----
+{
+  "termType": "Literal",
+  "value": "工作流对象",
+  "datatype": "http://www.w3.org/2001/XMLSchema#string",
+  "language": "",
+  "direction": ""
+}
+----
+
+BlankNode：
+
+[source,json]
+----
+{
+  "termType": "BlankNode",
+  "value": "b0"
+}
+----
+
+DefaultGraph：
+
+[source,json]
+----
+{
+  "termType": "DefaultGraph",
+  "value": ""
+}
+----
+
+Variable：
+
+[source,json]
+----
+{
+  "termType": "Variable",
+  "value": "heading"
+}
+----
+
+Quad term：
+
+[source,json]
+----
+{
+  "termType": "Quad",
+  "value": "",
+  "subject": {
+    "termType": "NamedNode",
+    "value": "urn:aat:doc:example#heading-l3-o0"
+  },
+  "predicate": {
+    "termType": "NamedNode",
+    "value": "https://micheng.dev/ns/asciidoc-relation#depends-on"
+  },
+  "object": {
+    "termType": "NamedNode",
+    "value": "urn:aat:doc:example#heading-l14-o0"
+  },
+  "graph": {
+    "termType": "DefaultGraph",
+    "value": ""
+  }
+}
+----
+
+Quad term 表示 RDF/JS `Quad`。当 Oxigraph 用 Quad 表达 RDF-star / RDF 1.2 triple term 时，`graph` 为 DefaultGraph。Public API 不引入单独的 ad hoc `TripleTerm` surface；它使用 RDF/JS-compatible Quad JSON 保存 subject、predicate、object 和 graph。
+
+RDF term JSON serializer 必须是 total function over supported Oxigraph term classes。遇到未知 term shape 时，adapter 返回 `QUERY_FAILED` with details，而不是输出部分字符串化结果。
+
+Pretty output 可以把 RDF term 渲染为短文本。Pretty 渲染不改变 JSON 契约，也不能作为机器消费者的解析来源。

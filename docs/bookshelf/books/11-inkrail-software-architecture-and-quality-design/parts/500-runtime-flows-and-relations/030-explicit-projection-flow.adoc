@@ -1,0 +1,28 @@
+[#explicit-projection-flow.runtime-flow, owner=projection-runtime]
+== Explicit Projection Flow
+
+Explicit projection flow 读取调用者指定的 AsciiDoc input，并生成指定 RDF projection artifact。该 flow 实现 xref:../10-inkrail-cli-design/book.adoc#rdf12-and-jsonld-projections[10 号书 explicit projection mode, rel=implements-contract]。
+
+[source,text]
+----
+projectAdoc input
+  -> resolve input path
+  -> select input semantics
+  -> parse abundant document
+  -> project RDF12 graph
+  -> serialize requested format
+  -> write output file
+  -> return projection result
+----
+
+Input semantics 有两种：
+
+[horizontal]
+single-file:: 默认语义。Projection adapter 只读取调用者指定 source file。
+book-entry:: 显式语义。Projection adapter 使用 entry file 和 documentRoot 构造 book-entry logical document。
+
+Explicit projection flow 不读取 project memory。它不写 `.inkrail/state/`。它不判断 project freshness。它不登记 book。
+
+Format 为 `rdf12` 时输出 Turtle。Format 为 `rdf12-json-ld` 时输出 JSON-LD。Output path 由调用者提供；runtime 可以创建父目录。
+
+Projection failure 返回 `PROJECTION_FAILED`。Book-entry source set construction failure 返回 `SOURCE_SET_FAILED`。输入路径越界或 documentRoot 不合法返回对应 config/path failure。

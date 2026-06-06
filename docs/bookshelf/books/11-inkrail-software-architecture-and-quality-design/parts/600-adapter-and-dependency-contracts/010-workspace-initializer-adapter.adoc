@@ -1,0 +1,21 @@
+[#workspace-initializer-adapter.adapter-contract, owner=bookshelf-runtime, package=create-asciidoc-multi-book-workspace]
+== Workspace Initializer Adapter
+
+Workspace initializer adapter 集成 `create-asciidoc-multi-book-workspace`。该 adapter 创建标准 AsciiDoc multi-book workspace，并把上游错误映射为 `inkrail` 错误码。
+
+上游 package 提供 npm initializer、默认 workspace template 和本地 runtime。发布包包含 `dist/init-workspace.js`、`dist/runtime/adoc-books.mjs` 和 `templates/`。当前 package boundary 未通过 package `exports` 显式声明 library subpath。
+
+Adapter contract：
+
+* 接收 absolute target directory 和 `force`。
+* 调用上游 workspace initializer。
+* 保留未知用户文件。
+* 覆盖上游固定模板输出路径。
+* 返回 created workspace root。
+* 把 target path 状态错误映射为 `BOOKSHELF_INIT_TARGET_INVALID` 或 `BOOKSHELF_INIT_TARGET_NOT_EMPTY`。
+
+Adapter 是唯一允许接触上游 initializer import path 的位置。若上游发布正式 library export，adapter 使用正式 export。若实现阶段必须使用发布包 subpath，subpath import 不得扩散到 services、commands 或 domain core。
+
+`inkrail` 不复制标准 workspace template。模板内容、七本样本书、user README、package script 和 `tools/adoc-books.mjs` 由上游 package 负责。
+
+Adapter contract test 必须验证生成 workspace 包含 `catalog.adoc`、`books/`、`shared/`、`package.json`、`.gitignore` 和 `tools/adoc-books.mjs`，并验证 maintainer-only files 不进入生成 workspace。

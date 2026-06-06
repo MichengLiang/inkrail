@@ -1,0 +1,38 @@
+[#config-model.data-model, owner=project-memory]
+== Config Model
+
+Config model 表达 `.inkrail/config.toml` 的当前项目记忆。它承载 project、bookshelves 和 books 三类对象。
+
+[source,toml]
+----
+[project]
+default_book = "10-inkrail-cli-design"
+
+[[bookshelves]]
+id = "docs"
+root = "docs/bookshelf"
+profile = "inkrail-asciidoc-multi-book"
+
+[[books]]
+id = "10-inkrail-cli-design"
+bookshelf = "docs"
+----
+
+Raw config 是 TOML 解析结果。Normalized config 是 runtime 内部对象。Public API 返回 normalized config，不要求下游消费者理解 TOML parser 的 raw shape。
+
+Config validation 必须覆盖以下规则：
+
+* `bookshelves.id` 和 `books.id` 使用 CLI identifier。
+* `bookshelves.id` 在项目内唯一。
+* `books.id` 在项目内唯一。
+* `bookshelves.root` 是相对 project root 的 POSIX 路径。
+* 路径不得为绝对路径。
+* 路径不得包含反斜杠。
+* 路径不得包含 `..` segment。
+* `project.default_book` 必须指向已登记 book。
+* Standard profile 禁止手写 `book_entry`、`document_root`、`rdf12_ttl`、`rdf12_jsonld` 和 `watch`。
+* Custom profile 必须完整声明 `book_entry`、`document_root`、`rdf12_ttl`、`rdf12_jsonld` 和 `watch`。
+
+Standard profile 和 custom profile 之间不存在半自动层。Standard profile 的路径来自 profile derivation。Custom profile 的路径来自 config。实现不得在 custom profile 中猜测标准路径，也不得允许 standard profile 同时声明派生字段。
+
+Config serializer 必须输出 runtime 支持的 config surface。Serializer 可以规范化字段顺序，但不得丢失语义字段。

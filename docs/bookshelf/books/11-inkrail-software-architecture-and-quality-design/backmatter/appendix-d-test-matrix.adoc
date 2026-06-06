@@ -1,0 +1,63 @@
+= 附录 D：Test Matrix
+
+[cols="2,2,2,2", options="header"]
+|===
+|Object |Test layer |Fixture |Gate
+
+|Config model
+|Core unit
+|Config text fixtures
+|`pnpm --filter inkrail test`
+
+|Book selection
+|Core unit
+|Normalized config fixtures
+|`pnpm --filter inkrail test`
+
+|Path derivation
+|Core unit
+|Book/profile fixtures
+|`pnpm --filter inkrail test`
+
+|Source set fingerprint
+|Service integration
+|Book-entry source fixture
+|`pnpm --filter inkrail test`
+
+|Projection fingerprint
+|Service integration
+|Projection state fixture
+|`pnpm --filter inkrail test`
+
+|State store
+|Service integration
+|Temporary project fixture
+|`pnpm --filter inkrail test`
+
+|Workspace initializer adapter
+|Adapter contract
+|Generated workspace fixture
+|`pnpm --filter inkrail test`
+
+|asciidoc-abundant-tree adapter
+|Adapter contract
+|Book-entry fixture
+|`pnpm --filter inkrail test`
+
+|Oxigraph adapter
+|Adapter contract
+|RDF term TTL fixture
+|`pnpm --filter inkrail test`
+
+|CLI output
+|CLI surface
+|Minimal project fixture
+|`pnpm --filter inkrail test`
+
+|Package boundary
+|Package boundary
+|Dry-run package output
+|`pnpm --filter inkrail pack:check`
+|===
+
+This matrix is a review surface for implementation WBS. It does not list work package status.

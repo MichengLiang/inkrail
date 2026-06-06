@@ -1,0 +1,17 @@
+[#consumer-roles.architecture-object]
+== 消费者角色
+
+`inkrail` runtime 面向多个消费者。消费者角色决定公共表面，不决定内部模块身份。
+
+[horizontal]
+Library consumer:: 直接 import `inkrail` public API 的 TypeScript/JavaScript 调用方。它依赖结构化结果、结构化错误、RDF term JSON 和可测试函数边界。
+CLI consumer:: 通过 `inkrail` 命令读取 pretty 或 JSON 输出的终端、脚本和人工作者。它依赖 stdout/stderr 分离、exit code、错误码和稳定命令参数。
+Author consumer:: 使用查询结果回到 source file 的书稿作者。它依赖 origin source coordinate、heading line、line span、column、raw 和刷新后的当前事实。
+Automation consumer:: 在 CI、检查脚本或 agent 工具中调用 `inkrail` 的机器消费者。它依赖 JSON envelope、稳定错误码和可重复查询语义。
+Documentation consumer:: 阅读 README、用户指南和设计书的维护者。它依赖当前对象语言、source coordinate 说明、边界说明和测试矩阵。
+
+Library consumer 是核心消费者。CLI consumer 通过 CLI adapter 消费 public API。Automation consumer 可以直接消费 public API，也可以消费 CLI JSON；CLI pretty 不属于机器契约。
+
+消费者不能倒置对象层位。CLI command surface 不定义 domain model。README 不定义内部状态格式。测试 fixture 不定义公共 API。Public API、状态模型、运行流和输出投影由本书定义。
+
+同一事实可以有多个投影。Project mode query result 可以投影为 public API result、CLI JSON、CLI pretty、测试观察对象和文档示例。投影之间必须回到同一 result model；实现不得让不同消费者各自计算查询语义。

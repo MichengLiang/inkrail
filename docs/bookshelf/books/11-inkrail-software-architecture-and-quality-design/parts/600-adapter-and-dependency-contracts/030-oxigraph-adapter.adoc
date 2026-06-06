@@ -1,0 +1,40 @@
+[#oxigraph-adapter.adapter-contract, owner=query-runtime, package=oxigraph]
+== Oxigraph Adapter
+
+Oxigraph adapter 封装本地 SPARQL 查询执行器。Public API 不暴露 Oxigraph Store。
+
+Adapter contract：
+
+* 创建 in-memory store。
+* 使用 Turtle format 加载 RDF12 TTL。
+* 执行 SELECT、ASK、CONSTRUCT 和 DESCRIBE 查询。
+* 支持 property path 查询。
+* 保留 RDF/JS term structure。
+* 把 RDF/JS term 转换为 xref:parts/400-data-and-state-contracts/080-rdf-term-json.adoc[RDF term JSON, rel=projects-to]。
+* 把 TTL load failure 映射为 `TTL_LOAD_FAILED`。
+* 把 SPARQL execution failure 映射为 `QUERY_FAILED`。
+
+Oxigraph `Store.query()` 返回 union value。Adapter 必须分类：
+
+[cols="1,2", options="header"]
+|===
+|Oxigraph return |Inkrail result
+
+|`boolean`
+|ASK result
+
+|`Map<string, Term>[]`
+|SELECT result
+
+|`Quad[]`
+|CONSTRUCT or DESCRIBE graph result
+
+|`string`
+|Unsupported default runtime surface unless explicitly requested by adapter-internal test
+|===
+
+Runtime 默认不设置 string `results_format`。String result 会丢失 RDF term structure，不进入 public query result model。
+
+RDF-star / RDF 1.2 triple term capability 必须由 fixture test 锁定。测试应加载包含 `rdf:reifies` 和 embedded triple term 的 TTL，并验证 query result 中的 Quad term JSON。
+
+Adapter 不定义 built-in query action。Adapter 只执行 SPARQL text。

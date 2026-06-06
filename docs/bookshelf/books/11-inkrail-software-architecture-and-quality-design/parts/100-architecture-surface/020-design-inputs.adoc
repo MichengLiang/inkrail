@@ -1,0 +1,41 @@
+[#design-inputs.architecture-object]
+== 设计输入
+
+本书的设计输入分为需求契约、查询语句来源、上游 runtime、上游 projection、查询执行器和工程骨架。
+
+[cols="1,2,2", options="header"]
+|===
+|输入 |对象 |进入本书的位置
+
+|需求契约
+|xref:../10-inkrail-cli-design/book.adoc[10 号书：inkrail CLI 设计书, rel=depends-on]
+|人工制品身份、项目记忆、投影新鲜度、查询模式、输出表面、错误语义和测试合同。
+
+|查询语句来源
+|xref:../08-rdf12-heading-projection-query-workflow/book.adoc[08 号书：RDF 投影查询工作流, rel=depends-on]
+|内置查询动作 registry 的 SPARQL 模板、变量、排序和 source coordinate 语义。
+
+|标准书架生成与 runtime
+|`create-asciidoc-multi-book-workspace`
+|书架初始化 adapter、标准书架固定输出路径、本地 `build`、`check` 和 `clean` script 调度。
+
+|Book-entry parser 与 RDF12 projector
+|`asciidoc-abundant-tree`
+|Book-entry source set、origin source coordinate、RDF12 TTL 和 RDF12 JSON-LD 投影。
+
+|本地 SPARQL 执行器
+|Oxigraph
+|TTL load、SPARQL query、RDF/JS term 读取和 triple term 结果结构化。
+
+|工程骨架
+|Rootward TypeScript template
+|TypeScript package、CLI runner、测试入口、文件系统抽象和输出投影模式。
+|===
+
+需求契约提供目标对象。查询语句来源提供内置动作的 SPARQL 语义。上游 runtime 和 projection 包提供可复用能力。Oxigraph 提供本地查询执行能力。工程骨架提供初始 TypeScript 承载结构。
+
+这些输入不具有相同层位。10 号书和 08 号书是书籍化 body object。两个 npm 包和 Oxigraph 是运行时依赖。Rootward TypeScript template 是工程起点，不是 `inkrail` 的业务语义来源。
+
+本书只在架构对象需要时引用输入。引用必须说明关系：`rel=depends-on` 表示当前定义依赖目标对象；`rel=implements-contract` 表示当前架构对象承载目标需求契约；`rel=sources-query-from` 表示查询动作来源于目标查询语句；`rel=uses-adapter` 表示运行流使用目标 adapter；`rel=verifies` 表示测试对象验证目标契约。
+
+上游依赖能力必须由 adapter contract 和测试锁定。实现不得把未被公开导出的上游内部模块扩散到 domain core。实现不得用工程模板的 sample scanner 语义污染 `inkrail` 的 book、bookshelf、projection 和 query 语义。

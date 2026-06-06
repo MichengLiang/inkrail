@@ -1,0 +1,22 @@
+[#cli-consumer.module-contract, owner=cli-surface, surface=cli]
+== CLI Consumer
+
+CLI consumer 由 `bin.ts`、`cli.ts`、`commands/` 和 `io/` 承担。它消费 public API 和 application services。
+
+`bin.ts` 是 executable entry。它读取 `process.argv`、调用 `runCli`、写 stdout/stderr，并设置 `process.exitCode`。
+
+`cli.ts` 是 CLI adapter。它创建 command parser、注册 commands、捕获 usage error、调用 command handler，并把 `InkrailResult` 投影为 `CliRunResult`。
+
+`commands/` 保存 command handler。Command handler 把 CLI 参数转换为 service input。Command handler 不读写 stdout，不直接访问 Oxigraph，不直接解析 `.inkrail/config.toml`。
+
+`io/` 保存 output projector。Output projector 根据 result 和 output mode 生成 stdout/stderr。Pretty output 面向终端读者。JSON output 面向机器消费者。错误 JSON 写 stderr。
+
+CLI consumer 必须保持 stdout/stderr 纪律：
+
+* 成功 pretty result 写 stdout。
+* 成功 JSON envelope 写 stdout。
+* Refresh event、diagnostic 和 error 写 stderr。
+* Failure JSON 写 stderr。
+* Stack trace 不进入普通 pretty failure surface。
+
+CLI consumer 的命令表面实现 xref:../10-inkrail-cli-design/book.adoc#query-modes[10 号书查询模式, rel=implements-contract] 和 xref:../10-inkrail-cli-design/book.adoc#output-surfaces[10 号书输出表面, rel=implements-contract]。CLI consumer 不扩大 public API 契约。

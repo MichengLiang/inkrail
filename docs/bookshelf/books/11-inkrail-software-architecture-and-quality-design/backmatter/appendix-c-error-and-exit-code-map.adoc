@@ -1,0 +1,90 @@
+= 附录 C：Error 与 Exit Code Map
+
+Domain error code is the recovery index. Exit code is CLI projection.
+
+[cols="1,1,3", options="header"]
+|===
+|Error code |CLI exit code |Recovery surface
+
+|`BOOK_REQUIRED`
+|3
+|Pass `--book` or set `project.default_book`.
+
+|`BOOK_NOT_FOUND`
+|3
+|Check registered book and standard book entry.
+
+|`BOOK_CONFIG_INVALID`
+|4
+|Fix `.inkrail/config.toml`.
+
+|`WORKSPACE_NOT_FOUND`
+|3
+|Check bookshelf root.
+
+|`BOOKSHELF_INIT_TARGET_INVALID`
+|3
+|Use missing or directory target path.
+
+|`BOOKSHELF_INIT_TARGET_NOT_EMPTY`
+|3
+|Use empty directory or pass `--force`.
+
+|`BOOKSHELF_NOT_FOUND`
+|3
+|Use registered bookshelf id.
+
+|`BOOKSHELF_PROFILE_UNSUPPORTED`
+|4
+|Use standard profile for runtime dispatch.
+
+|`BOOKSHELF_SCRIPT_NOT_FOUND`
+|5
+|Fix bookshelf `package.json`.
+
+|`BOOKSHELF_RUNTIME_NOT_FOUND`
+|5
+|Restore `tools/adoc-books.mjs`.
+
+|`BOOKSHELF_BUILD_FAILED`
+|5
+|Read forwarded local runtime output.
+
+|`BOOK_ENTRY_NOT_FOUND`
+|4
+|Create or fix book entry path.
+
+|`SOURCE_SET_FAILED`
+|5
+|Fix include graph or documentRoot boundary.
+
+|`PROJECTION_FAILED`
+|5
+|Fix source file or projector capability issue.
+
+|`TTL_READ_FAILED`
+|4
+|Check TTL path and permissions.
+
+|`TTL_LOAD_FAILED`
+|5
+|Regenerate or fix Turtle.
+
+|`QUERY_READ_FAILED`
+|4
+|Check query argument, file or stdin.
+
+|`QUERY_FAILED`
+|5
+|Fix SPARQL or query capability assumption.
+
+|`STALE_PROJECTION`
+|5
+|Fix refresh blocker; stale TTL cannot answer project query.
+
+|`TOOL_NOT_FOUND`
+|5
+|Install or configure required tool.
+|===
+
+Implementation may refine exit code groups. Refinement must preserve stable domain error codes.

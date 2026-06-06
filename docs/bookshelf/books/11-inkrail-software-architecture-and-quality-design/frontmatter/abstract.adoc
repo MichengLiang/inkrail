@@ -1,0 +1,5 @@
+== 摘要
+
+本书定义 `inkrail` runtime 的软件架构、模块边界、公共库 API、CLI 消费者关系、上游依赖适配器、状态存储、查询执行管线、输出投影、错误传播、测试分层、文档同步和发布门禁。
+
+本书以 xref:../10-inkrail-cli-design/book.adoc[inkrail CLI 设计书, rel=depends-on] 的对象契约为输入，不改写其需求边界；本书为后续 implementation WBS 提供工程基线。

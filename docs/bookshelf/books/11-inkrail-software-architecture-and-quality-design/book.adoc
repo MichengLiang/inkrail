@@ -1,0 +1,164 @@
+= inkrail 软件架构与工程质量设计书
+弥澄亮 <t103ooooo@stu.mju.edu.cn>
+v0.1.0, 2026-06
+:doctype: book
+:toc: left
+:toclevels: 3
+:sectnums:
+:icons: font
+:experimental:
+:idprefix:
+:idseparator: -
+
+include::../../shared/attributes.adoc[]
+
+[abstract]
+include::frontmatter/abstract.adoc[]
+
+[colophon]
+include::frontmatter/colophon.adoc[]
+
+[preface]
+include::frontmatter/preface.adoc[]
+
+= 第一部：架构表面
+
+[partintro]
+include::parts/100-architecture-surface/_partintro.adoc[]
+
+include::parts/100-architecture-surface/010-architecture-slice.adoc[]
+
+include::parts/100-architecture-surface/020-design-inputs.adoc[]
+
+include::parts/100-architecture-surface/030-source-order-notation.adoc[]
+
+= 第二部：身份与边界
+
+[partintro]
+include::parts/200-identity-and-boundary/_partintro.adoc[]
+
+include::parts/200-identity-and-boundary/010-architecture-baseline-identity.adoc[]
+
+include::parts/200-identity-and-boundary/020-consumer-roles.adoc[]
+
+include::parts/200-identity-and-boundary/030-module-roles.adoc[]
+
+include::parts/200-identity-and-boundary/040-boundaries-and-non-goals.adoc[]
+
+= 第三部：包与模块结构
+
+[partintro]
+include::parts/300-package-and-module-structure/_partintro.adoc[]
+
+include::parts/300-package-and-module-structure/010-package-boundary.adoc[]
+
+include::parts/300-package-and-module-structure/020-source-tree.adoc[]
+
+include::parts/300-package-and-module-structure/030-core-domain-modules.adoc[]
+
+include::parts/300-package-and-module-structure/040-application-services.adoc[]
+
+include::parts/300-package-and-module-structure/050-adapters.adoc[]
+
+include::parts/300-package-and-module-structure/060-cli-consumer.adoc[]
+
+include::parts/300-package-and-module-structure/070-public-exports.adoc[]
+
+= 第四部：数据与状态契约
+
+[partintro]
+include::parts/400-data-and-state-contracts/_partintro.adoc[]
+
+include::parts/400-data-and-state-contracts/010-config-model.adoc[]
+
+include::parts/400-data-and-state-contracts/020-project-and-book-model.adoc[]
+
+include::parts/400-data-and-state-contracts/030-path-model.adoc[]
+
+include::parts/400-data-and-state-contracts/040-source-set-fingerprint.adoc[]
+
+include::parts/400-data-and-state-contracts/050-projection-fingerprint.adoc[]
+
+include::parts/400-data-and-state-contracts/060-state-store.adoc[]
+
+include::parts/400-data-and-state-contracts/070-query-result-model.adoc[]
+
+include::parts/400-data-and-state-contracts/080-rdf-term-json.adoc[]
+
+= 第五部：运行流与关系
+
+[partintro]
+include::parts/500-runtime-flows-and-relations/_partintro.adoc[]
+
+include::parts/500-runtime-flows-and-relations/010-project-mode-query-flow.adoc[]
+
+include::parts/500-runtime-flows-and-relations/020-ttl-only-query-flow.adoc[]
+
+include::parts/500-runtime-flows-and-relations/030-explicit-projection-flow.adoc[]
+
+include::parts/500-runtime-flows-and-relations/040-refresh-state-machine-flow.adoc[]
+
+include::parts/500-runtime-flows-and-relations/050-bookshelf-initialization-flow.adoc[]
+
+include::parts/500-runtime-flows-and-relations/060-bookshelf-runtime-dispatch-flow.adoc[]
+
+include::parts/500-runtime-flows-and-relations/070-built-in-action-flow.adoc[]
+
+include::parts/500-runtime-flows-and-relations/080-output-projection-flow.adoc[]
+
+= 第六部：适配器与依赖契约
+
+[partintro]
+include::parts/600-adapter-and-dependency-contracts/_partintro.adoc[]
+
+include::parts/600-adapter-and-dependency-contracts/010-workspace-initializer-adapter.adoc[]
+
+include::parts/600-adapter-and-dependency-contracts/020-abundant-tree-adapter.adoc[]
+
+include::parts/600-adapter-and-dependency-contracts/030-oxigraph-adapter.adoc[]
+
+include::parts/600-adapter-and-dependency-contracts/040-filesystem-and-process-adapters.adoc[]
+
+include::parts/600-adapter-and-dependency-contracts/050-version-and-capability-locks.adoc[]
+
+= 第七部：质量与验收
+
+[partintro]
+include::parts/700-quality-and-acceptance/_partintro.adoc[]
+
+include::parts/700-quality-and-acceptance/010-test-layering.adoc[]
+
+include::parts/700-quality-and-acceptance/020-fixture-strategy.adoc[]
+
+include::parts/700-quality-and-acceptance/030-contract-test-matrix.adoc[]
+
+include::parts/700-quality-and-acceptance/040-negative-test-contract.adoc[]
+
+include::parts/700-quality-and-acceptance/050-output-test-contract.adoc[]
+
+include::parts/700-quality-and-acceptance/060-documentation-quality.adoc[]
+
+include::parts/700-quality-and-acceptance/070-build-lint-package-gates.adoc[]
+
+include::parts/700-quality-and-acceptance/080-architecture-acceptance.adoc[]
+
+[appendix]
+include::backmatter/appendix-a-api-surface.adoc[]
+
+[appendix]
+include::backmatter/appendix-b-module-responsibility-map.adoc[]
+
+[appendix]
+include::backmatter/appendix-c-error-and-exit-code-map.adoc[]
+
+[appendix]
+include::backmatter/appendix-d-test-matrix.adoc[]
+
+[glossary]
+include::backmatter/glossary.adoc[]
+
+[bibliography]
+include::backmatter/bibliography.adoc[]
+
+[index]
+include::backmatter/index.adoc[]

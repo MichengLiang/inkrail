@@ -1,0 +1,26 @@
+[#public-exports.api-contract, owner=public-api, surface=public-api]
+== Public Exports
+
+`src/index.ts` 是 library consumer 的公共入口。它导出可稳定依赖的 API、类型、错误对象和 query action registry。
+
+Public exports 分为五类：
+
+[horizontal]
+Project API:: `resolveProjectContext`、`loadInkrailProject`、`normalizeInkrailConfig`、`selectTargetBook`、`deriveBookPaths`。
+Mutation API:: `initInkrailProject`、`initBookshelf`、`registerBookshelf`、`registerBook`、`setDefaultBook`。
+Projection API:: `projectAdoc`、`refreshBookProjection`、`refreshProjectBook`。
+Query API:: `queryProjectBook`、`queryTtl`、`executeSparql`、`runBuiltInAction`。
+Model API:: Result、error、diagnostic、config、book、path, fingerprint、projection、query result、RDF term JSON 和 built-in action types。
+
+`runCli` 可以导出为测试和嵌入式 CLI consumer 表面，但它不是 domain core API。Library consumer 不应为了执行 query 而构造 CLI args。
+
+Public exports 不包含：
+
+* `commands/` 内部 command handler。
+* `io/` pretty formatter internals。
+* `test-support/`。
+* Oxigraph Store instance。
+* `asciidoc-abundant-tree` 内部 source files 以外的 parser IR。
+* Workspace initializer deep import path。
+
+Public exports 的类型声明来自 build output。Package `exports` 必须暴露 `"."` 和 `"./package.json"`。其它 subpath export 只有在存在明确消费者动作和稳定契约时才进入 package boundary。

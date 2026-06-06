@@ -1,0 +1,37 @@
+[#test-layering.test-contract, owner=quality]
+== Test Layering
+
+`inkrail` tests follow module role boundaries.
+
+[cols="1,2,3", options="header"]
+|===
+|Layer |Target |Evidence
+
+|Core unit tests
+|Pure domain rules and data serializers.
+|Config validation、path validation、book selection、fingerprint hash、freshness decision、query action rendering、RDF term JSON conversion.
+
+|Service integration tests
+|Application services with fake adapters.
+|Project load、init、refresh decision、projection write、query flow branching、failure propagation.
+
+|Adapter contract tests
+|Real external dependencies and runtime environment.
+|Workspace initializer output、abundant-tree book-entry projection、Oxigraph query execution、process runner script dispatch.
+
+|CLI surface tests
+|`runCli(args, { cwd })` and stdout/stderr projection.
+|Argument parsing、JSON/pretty output、exit code、usage failure、`--print-query` stop point.
+
+|End-to-end fixture tests
+|Full runtime path on minimal standard bookshelf.
+|Init/register/book/refresh/query/built-in action closure.
+
+|Package boundary tests
+|Published package content.
+|`pnpm pack --dry-run` required and forbidden files.
+|===
+
+Lower layer tests do not replace higher layer tests. Adapter contract tests prove dependency capability; they do not prove service branching. CLI tests prove command projection; they do not prove domain rule completeness.
+
+Tests must identify the object they verify. A test named only after a command is insufficient when the asserted behavior belongs to config model、freshness model、RDF term model or adapter contract.

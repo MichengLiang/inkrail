@@ -1,0 +1,12 @@
+= 参考坐标
+
+* [[[inkrail-cli-design]]] xref:../10-inkrail-cli-design/book.adoc[inkrail CLI 设计书]。
+* [[[rdf12-query-workflow]]] xref:../08-rdf12-heading-projection-query-workflow/book.adoc[AsciiDoc 书稿 RDF 投影查询工作流]。
+* [[[structured-writing-conventions]]] `create-asciidoc-multi-book-workspace` default workspace, `07-structured-writing-conventions`。
+* [[[asciidoc-multi-book-workspace]]] MichengLiang, _create-asciidoc-multi-book-workspace_。
+* [[[asciidoc-abundant-tree]]] MichengLiang, _asciidoc-abundant-tree_。
+* [[[oxigraph]]] Oxigraph, RDF store and SPARQL engine。
+* [[[rdfjs]]] RDF/JS, Data model and Dataset interfaces。
+* [[[rdf12-concepts]]] W3C, _RDF 1.2 Concepts and Abstract Data Model_。
+* [[[sparql12-query]]] W3C, _SPARQL 1.2 Query Language_。
+* [[[configuration-management]]] ISO/IEC/IEEE 828, _Systems and software engineering -- Configuration management_。

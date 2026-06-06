@@ -1,0 +1,34 @@
+[#abundant-tree-adapter.adapter-contract, owner=projection-runtime, package=asciidoc-abundant-tree]
+== asciidoc-abundant-tree Adapter
+
+`asciidoc-abundant-tree` adapter 集成 book-entry parser、source coordinate recovery 和 RDF12 projector。
+
+Adapter 使用上游 public API：
+
+[source,typescript]
+----
+parseAbundantTree({
+  sourcePath,
+  mode: "book-entry",
+  documentRoot,
+});
+
+rdf12(document, { documentRoot });
+----
+
+Adapter contract：
+
+* 使用 explicit mode，不从 `:doctype: book`、文件名或 include directive 自动切换模式。
+* 在 project mode projection 中使用 `mode: "book-entry"`。
+* 在 explicit projection single-file mode 中保持 single-file semantics。
+* 从 `AbundantDocument.sourceFiles` 读取 source set reconstruction surface。
+* 输出 RDF12 TTL 和 RDF12 JSON-LD。
+* 提供 projector identity。
+* 把 book-entry construction failure 映射为 `SOURCE_SET_FAILED`。
+* 把 RDF projection failure 映射为 `PROJECTION_FAILED`。
+
+Adapter 不 import `asciidoc-abundant-tree` 内部 source modules。Book-entry source set、logical document、line origin 和 origin recovery 是上游内部或上游 public model 的职责。
+
+Adapter 不解释 payload raw。Adapter 不修改 source files。Adapter 不执行 SPARQL。
+
+Adapter contract test 必须覆盖 book-entry source files、shared attributes inclusion、RDF12 TTL output、RDF12 JSON-LD output、source coordinate preservation 和 single-file mode 不展开 include。

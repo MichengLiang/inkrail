@@ -1,0 +1,40 @@
+[#package-boundary.module-contract, owner=package-runtime]
+== Package Boundary
+
+`packages/inkrail` 是 `inkrail` runtime 的 npm package 边界。该 package 同时发布 public library API 和 CLI binary。
+
+Package root 承担以下职责：
+
+* 声明 package metadata、license、engines、exports、bin、files 和 scripts。
+* 承载 `src/` runtime source。
+* 承载 runtime tests 和 fixtures。
+* 构建 `dist/` 中的 ESM library entry、CLI entry 和类型声明。
+* 通过 package boundary test 验证发布包内容。
+
+Workspace root 承担 monorepo 协调职责。它可以运行全仓检查、版本检查和文档构建；它不定义 `inkrail` runtime public API。
+
+`docs/bookshelf` 承担书籍化设计材料职责。设计书可以约束 runtime，但不进入 npm runtime files。构建输出、HTML、展开后 ADOC 和临时 RDF projection artifacts 不进入 package publish boundary。
+
+发布包必须包含：
+
+[source,text]
+----
+dist/
+README.md
+LICENSE
+package.json
+----
+
+发布包不得包含：
+
+[source,text]
+----
+src/
+test/
+coverage/
+tmp/
+docs/bookshelf/build/
+node_modules/
+----
+
+Package boundary 的证据表面是 `npm pack --dry-run` 或 `pnpm pack --dry-run`。Architecture acceptance 要求 package boundary test 检查 required files 和 forbidden files。

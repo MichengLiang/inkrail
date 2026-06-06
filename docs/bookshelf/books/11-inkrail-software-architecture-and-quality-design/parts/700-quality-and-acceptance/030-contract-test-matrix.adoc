@@ -1,0 +1,59 @@
+[#contract-test-matrix.test-contract, owner=quality]
+== Contract Test Matrix
+
+Contract test matrix maps 10 号书 contracts to architecture test locations.
+
+[cols="2,2,2", options="header"]
+|===
+|Contract |Primary layer |Required evidence
+
+|Config validation
+|Core unit
+|Invalid id、duplicate id、bad path、profile field rules.
+
+|Book selection
+|Core unit
+|CLI book override、default book、single book、multi book failure.
+
+|Standard path derivation
+|Core unit
+|Book entry、documentRoot、TTL、JSON-LD、HTML、expanded ADOC、watch globs.
+
+|Source set fingerprint
+|Service integration
+|Shared attributes included、content hash changes、stable sorted hash.
+
+|Projection fingerprint
+|Service integration
+|Source hash、documentRoot、options、projector identity mismatch refreshes.
+
+|Refresh state machine
+|Service integration
+|Missing TTL、stale TTL、projection failure、no stale query branch.
+
+|RDF12 projection
+|Adapter contract
+|Book-entry TTL、JSON-LD、source file reconstruction surface.
+
+|Oxigraph query
+|Adapter contract
+|SELECT、ASK、CONSTRUCT/DESCRIBE、property path、quad term.
+
+|Output surfaces
+|CLI surface
+|stdout/stderr separation、JSON envelope、RDF term JSON preservation.
+
+|Built-in query actions
+|Core unit and service integration
+|SPARQL template、variables、sort、`--print-query` stop point.
+
+|Bookshelf initialization
+|Adapter contract and service integration
+|Target state rules、force preservation、register without sample books.
+
+|Bookshelf runtime dispatch
+|Service integration and adapter contract
+|Script validation、stdout/stderr forwarding、non-zero status mapping.
+|===
+
+Appendix D expands this matrix into a review checklist. The appendix does not replace this chapter's contract.

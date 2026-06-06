@@ -1,0 +1,30 @@
+[#projection-fingerprint.data-model, owner=projection-runtime]
+== Projection Fingerprint
+
+Projection fingerprint 描述一个 projection artifact 与其输入、投影器和选项之间的关系。
+
+[source,typescript]
+----
+type ProjectionFingerprint = {
+  format: "rdf12" | "rdf12-json-ld";
+  outputPath: ProjectRelativePath;
+  outputHash: string;
+  projectedFromSourceSetHash: string;
+  documentRoot: ProjectRelativePath;
+  projector: {
+    name: "asciidoc-abundant-tree";
+    version: string;
+  };
+  options: Record<string, unknown>;
+};
+----
+
+`format` 区分 RDF12 TTL 与 RDF12 JSON-LD。两个格式有独立 projection fingerprint。它们可以来自同一 source set hash，但不能共享同一个 state record。
+
+`outputPath` 是 project-relative display path。文件操作时由 path model 物化为 absolute path。`outputHash` 是 projection artifact 的 content hash。
+
+`projectedFromSourceSetHash` 连接 projection artifact 与 source set fingerprint。该字段不证明 artifact 存在。TTL 文件缺失时，即使 state 中有 projection fingerprint，project mode query 仍必须刷新。
+
+`documentRoot`、`projector` 和 `options` 是 freshness 条件。任一字段与当前 projection request 不一致时，projection artifact 过期。
+
+Projector identity 由 `asciidoc-abundant-tree` adapter 提供。Adapter 必须从 package metadata 或注入版本读取 projector version。Runtime 不从 TTL 文本推断 projector version。

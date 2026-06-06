@@ -1,0 +1,1 @@
+本部定义 `packages/inkrail` 的包边界、源码树、核心模块、应用服务、适配器、CLI consumer 和公共导出表面。

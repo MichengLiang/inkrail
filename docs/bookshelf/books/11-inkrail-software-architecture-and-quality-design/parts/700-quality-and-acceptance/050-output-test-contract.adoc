@@ -1,0 +1,31 @@
+[#output-test-contract.test-contract, owner=quality]
+== Output Test Contract
+
+Output tests verify consumer projections.
+
+Pretty output tests must verify:
+
+* Successful result writes stdout.
+* Refresh event writes stderr.
+* Failure writes stderr.
+* SELECT table uses SPARQL variable names.
+* ASK table uses `ask`.
+* CONSTRUCT/DESCRIBE surface renders RDF term text.
+* Failure output includes stable error code.
+* Failure output omits stack trace by default.
+
+JSON output tests must verify:
+
+* Success envelope has `ok: true` and `data`.
+* Failure envelope has `ok: false` and `error`.
+* Failure JSON writes stderr.
+* Project result contains mode、book、projection and query metadata.
+* TTL-only result does not contain book freshness claims.
+* SELECT rows preserve RDF term JSON.
+* ASK uses `value`.
+* CONSTRUCT/DESCRIBE uses `quads`.
+* Quad term is not converted to string.
+
+Output tests use CLI surface. Public API tests separately verify raw structured result.
+
+Command output must not include tutorial text. README and user guide carry teaching material.

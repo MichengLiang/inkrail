@@ -1,0 +1,30 @@
+[#documentation-quality.quality-gate, owner=quality]
+== Documentation Quality
+
+Documentation surfaces are part of runtime quality.
+
+README must explain:
+
+* Tool identity.
+* Install and command entry.
+* Project initialization.
+* Bookshelf initialization and registration.
+* Book registration and default book.
+* Basic query examples.
+* Config file location.
+* Source-aware output.
+* Boundary statements.
+
+User guide must explain:
+
+* Project mode refresh behavior.
+* TTL-only mode freshness boundary.
+* Explicit projection mode state boundary.
+* Source coordinate fields.
+* Reading query result back into source files.
+* Built-in query action groups.
+* Structural facts versus quality judgments.
+
+Design books define object contracts and architecture contracts. README and user guide explain usage surfaces. Command output does not carry source coordinate tutorial text.
+
+Documentation tests must at least verify that README examples reference supported commands and that no documentation promises cross-book union query、payload business interpretation、remote federation or stale TTL fallback.

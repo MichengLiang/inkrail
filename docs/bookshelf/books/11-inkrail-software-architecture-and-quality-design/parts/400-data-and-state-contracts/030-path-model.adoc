@@ -1,0 +1,44 @@
+[#path-model.data-model, owner=project-memory]
+== Path Model
+
+Path model 区分 authored path、display path 和 operation path。
+
+[horizontal]
+Project-relative path:: 相对 project root 的 POSIX path。Config 中的 `bookshelves.root` 使用该路径类型。
+Bookshelf-relative path:: 相对 bookshelf root 的 POSIX path。Standard profile 派生的 book entry、RDF12 TTL、JSON-LD、HTML、expanded ADOC 和 watch glob 使用该路径类型。
+DocumentRoot-relative path:: 相对 documentRoot 的 source coordinate path。RDF projection 中的 `aat:relativePath` 使用该路径类型。
+Absolute path:: 文件系统操作路径。Runtime 读写文件时使用该路径类型。
+
+Path validation 使用 segment 规则。路径不得包含反斜杠。路径不得为绝对路径。路径不得包含 `..` segment。路径可以包含 `.` segment only when explicitly allowed by field contract；standard profile 的 documentRoot 在 display surface 中可以显示为 `.`。
+
+Runtime 对外显示相对路径，文件操作使用 absolute path。任何 file read、write、stat、realpath 或 process cwd 都必须在 path model 中完成物化。
+
+Standard profile 的派生路径如下：
+
+[cols="1,2", options="header"]
+|===
+|对象 |Bookshelf-relative path
+
+|Book entry
+|`books/<book-id>/book.adoc`
+
+|DocumentRoot display
+|`.`
+
+|RDF12 TTL
+|`build/rdf12/books/<book-id>.ttl`
+
+|RDF12 JSON-LD
+|`build/rdf12/books/<book-id>.jsonld`
+
+|HTML
+|`build/html/books/<book-id>/book.html`
+
+|Expanded ADOC
+|`build/adoc/books/<book-id>.adoc`
+
+|Watch
+|`books/<book-id>/**/*.adoc`, `shared/**/*.adoc`
+|===
+
+Watch paths are globs. Source set paths are concrete source file paths. Watch globs do not define source set membership.

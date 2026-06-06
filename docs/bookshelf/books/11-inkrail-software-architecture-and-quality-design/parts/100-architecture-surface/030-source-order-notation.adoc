@@ -1,0 +1,59 @@
+[#source-order-notation.boundary-rule]
+== 源文件编排号
+
+本书使用源文件编排号保持结构稳定。Part 目录使用 `100-`、`200-`、`300-`。Chapter 文件在所属 part 内使用 `010-`、`020-`、`030-`。
+
+[source,text]
+----
+parts/100-architecture-surface/
+parts/200-identity-and-boundary/
+parts/300-package-and-module-structure/
+
+010-architecture-slice.adoc
+020-design-inputs.adoc
+030-source-order-notation.adoc
+----
+
+中间插入新主题时，使用相邻编号之间的空位。新增主题不得通过重命名既有文件制造无意义 diff。
+
+[source,text]
+----
+010-architecture-slice.adoc
+015-architecture-slice-constraints.adoc
+020-design-inputs.adoc
+----
+
+标题文本保留对象语义。长期引用的标题必须使用显式 ID。架构章节可以使用 role 标明标题身份。
+
+[source,asciidoc]
+----
+[#oxigraph-adapter.adapter-contract, owner=query-runtime, package=oxigraph]
+== Oxigraph Adapter
+----
+
+本书采用以下 role：
+
+[horizontal]
+architecture-object:: 架构对象定义。
+module-contract:: 模块职责契约。
+api-contract:: 公共 API 契约。
+adapter-contract:: 外部依赖适配器契约。
+data-model:: 数据模型。
+runtime-flow:: 运行流。
+quality-gate:: 工程质量门禁。
+test-contract:: 测试契约。
+boundary-rule:: 边界规则。
+traceability:: 需求追踪表。
+
+本书采用以下 xref relation predicate：
+
+[horizontal]
+depends-on:: 当前章节的判断、规则或契约依赖目标章节。
+implements-contract:: 当前架构对象承载目标需求契约。
+sources-query-from:: 当前查询 registry 或内置动作来源于目标查询语句。
+uses-adapter:: 当前运行流使用目标 adapter。
+projects-to:: 当前对象投影为目标输出表面。
+verifies:: 当前测试契约验证目标对象。
+constrains:: 当前章节约束目标对象合法范围。
+
+Role 描述标题身份。Relation predicate 描述章节之间的边。Named attributes 保存本书架构表面的附加字段。本书第一版使用 `owner`、`package` 和 `surface` 三个附加字段；新增字段必须先在本章登记。

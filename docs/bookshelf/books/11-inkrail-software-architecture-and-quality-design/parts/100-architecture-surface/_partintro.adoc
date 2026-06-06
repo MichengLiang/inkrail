@@ -1,0 +1,1 @@
+本部用一次 project mode 内置查询展示 `inkrail` runtime 的最小完整架构切片，并定义本书的设计输入和源文件编排规则。

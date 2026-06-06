@@ -1,0 +1,57 @@
+[#core-domain-modules.module-contract, owner=domain-core]
+== Core Domain Modules
+
+Domain core 保存不依赖进程环境的对象和规则。
+
+[cols="1,3,3", options="header"]
+|===
+|模块 |职责 |不得承担的职责
+
+|`config.ts`
+|定义 config raw schema、normalized config、serialize/parse shape 和 validation issue mapping。
+|不得读取磁盘、查找项目根或修改配置文件。
+
+|`profiles.ts`
+|定义 standard profile 与 custom profile 的合法字段、派生能力和 profile identity。
+|不得访问实际书架目录。
+
+|`project.ts`
+|定义 project context 类型、config dir 名称、project discovery result 类型。
+|不得执行 upward search。
+
+|`books.ts`
+|定义 bookshelf、book、target book selection 输入输出和选择规则。
+|不得读取 book entry 文件内容。
+
+|`paths.ts`
+|定义 POSIX path validation、project-relative path、bookshelf-relative path 和 absolute operation path 的转换规则。
+|不得直接调用 Node filesystem。
+
+|`fingerprint.ts`
+|定义 source file fingerprint、source set fingerprint、projection fingerprint 和稳定 hash 输入序列。
+|不得自行构造 source set。
+
+|`freshness.ts`
+|定义 freshness decision、refresh reason 和 stale projection 判断。
+|不得生成 projection artifact。
+
+|`errors.ts`
+|定义 `InkrailErrorCode`、`InkrailError`、`InkrailFailure` 和 error details 类型。
+|不得定义 CLI exit code 为 domain 本体。
+
+|`result.ts`
+|定义 `InkrailResult<T>`、success、failure 和 result helpers。
+|不得写 stdout 或 stderr。
+
+|`rdf-terms.ts`
+|定义 RDF term JSON、quad term JSON 和 Oxigraph term 转换目标类型。
+|不得 import Oxigraph runtime class 作为 public type。
+
+|`query-actions.ts`
+|定义内置查询 action registry、参数 schema、SPARQL template、variables、query kind 和 source reference。
+|不得执行 SPARQL。
+|===
+
+Domain core 的测试使用纯输入输出。测试不得依赖真实 `.inkrail/` 目录、真实 Oxigraph store 或真实上游 parser。
+
+Domain core 是 public API 的类型来源。下游消费者能依赖的 object shape 应从 domain core 或 service result 类型导出。

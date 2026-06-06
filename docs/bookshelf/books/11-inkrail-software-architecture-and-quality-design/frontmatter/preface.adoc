@@ -1,0 +1,9 @@
+== 前言
+
+本书位于需求契约之后、实现分解之前。xref:../10-inkrail-cli-design/book.adoc[10 号书, rel=depends-on] 定义 `inkrail` 应当成立的对象契约；本书定义这些契约在软件工程中由哪些模块、公共 API、服务、适配器、状态对象、运行流和质量门禁承载。
+
+本书依赖四类输入。查询动作来源于 xref:../08-rdf12-heading-projection-query-workflow/book.adoc[08 号 RDF 投影查询工作流, rel=depends-on]。标准书架生成与本地 runtime 来源于 `create-asciidoc-multi-book-workspace`。Book-entry parsing、source coordinate recovery、RDF12 TTL 和 RDF12 JSON-LD 投影来源于 `asciidoc-abundant-tree`。本地 SPARQL 执行由 Oxigraph adapter 承担。
+
+本书不定义实现批次、提交顺序或工作包状态。后续 implementation WBS 可以引用本书拆分工作包；工作包不得用执行顺序改写本书的架构对象。
+
+本书使用结构化写作约定。part 目录使用源文件编排号；关键标题使用稳定 ID、role 和受控 xref 关系谓词，以便后续通过 `inkrail` 查询本书自身的架构对象和依赖关系。

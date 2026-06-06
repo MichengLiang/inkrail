@@ -1,0 +1,42 @@
+[#filesystem-and-process-adapters.adapter-contract, owner=adapter-runtime]
+== Filesystem 与 Process Adapters
+
+Filesystem adapter 封装 Node filesystem。Process adapter 封装 child process execution。
+
+Filesystem interface：
+
+[source,typescript]
+----
+type FileSystem = {
+  pathExists(path: AbsolutePath): Promise<boolean>;
+  readText(path: AbsolutePath): Promise<string>;
+  writeText(path: AbsolutePath, content: string): Promise<void>;
+  mkdirp(path: AbsolutePath): Promise<void>;
+  stat(path: AbsolutePath): Promise<FileStat>;
+  lstat(path: AbsolutePath): Promise<FileStat>;
+  realpath(path: AbsolutePath): Promise<AbsolutePath>;
+  listDirectory(path: AbsolutePath): Promise<DirectoryEntry[]>;
+};
+----
+
+Filesystem adapter 不执行 path validation。Path validation 属于 domain core。Filesystem adapter 接收已经物化的 absolute path。
+
+Process runner interface：
+
+[source,typescript]
+----
+type ProcessRunner = {
+  run(options: {
+    cwd: AbsolutePath;
+    command: string;
+    args: string[];
+    env?: Record<string, string>;
+  }): Promise<ProcessResult>;
+};
+----
+
+Process result 保存 stdout、stderr、exit status 和 signal。Bookshelf runtime dispatch 把 process result 映射为 dispatch result 或 `BOOKSHELF_BUILD_FAILED`。
+
+Tests use fake filesystem and fake process runner for service tests. Adapter contract tests use real filesystem and real process execution within repository fixture directories.
+
+Temporary test files belong under project or subproject `tmp/` or fixture directories. Tests must not create files in system temp directories or workspace-external paths unless a test explicitly verifies path rejection.

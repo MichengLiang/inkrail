@@ -1,0 +1,20 @@
+[#boundaries-and-non-goals.boundary-rule]
+== 边界与非目标
+
+本书的架构边界继承 xref:../10-inkrail-cli-design/book.adoc#object-boundaries[10 号书对象边界, rel=implements-contract]。架构实现不得扩大 `inkrail` 的人工制品边界。
+
+`inkrail` 不实现 AsciiDoc parser。Parsing、book-entry input construction、include resolution、origin source coordinate recovery、RDF12 TTL 和 RDF12 JSON-LD projection 由 `asciidoc-abundant-tree` adapter 调用上游 public API 完成。
+
+`inkrail` 不实现标准书架模板。标准书架内容、七本样本书、`tools/adoc-books.mjs`、本地 `build`、`check` 和 `clean` runtime 来源于 `create-asciidoc-multi-book-workspace`。`inkrail` 只提供 initializer adapter、项目登记和错误映射。
+
+`inkrail` 不把 CLI stdout 作为核心契约。Pretty output 是 CLI consumer 投影。机器消费者应消费 public API result 或 CLI JSON envelope。
+
+`inkrail` 不暴露 Oxigraph store 作为 public API。Oxigraph 是 query adapter。Public API 暴露 `inkrail` query result model 和 RDF term JSON。
+
+`inkrail` 不解释 payload raw。Payload 的 JSON、YAML、TOML、XML 或其它格式作为 raw 文本和 RDF fact 保留。业务解释属于下游消费者。
+
+`inkrail` project mode 一次查询一本书。跨书联合图、跨书 label namespace、跨书 provenance 和跨书 result ownership 不属于当前 architecture baseline。
+
+`inkrail` 不允许 stale projection 回答 project mode 查询。Freshness service 已知 RDF12 TTL 不代表当前 source set 时，query service 必须刷新或失败。
+
+这些非目标不是能力缺失说明，而是当前人工制品边界。未来对象要进入边界，必须先形成新的需求契约和 architecture baseline 更新。

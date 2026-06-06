@@ -1,0 +1,19 @@
+= 索引
+
+本索引 section 位于书籍后置区域。正文中的 index term 是索引入口来源。
+
+本书第一版使用显式 heading ID、role 和 xref relation predicate 支持结构查询。后续实现可以使用 `inkrail` 查询 `.adapter-contract`、`.api-contract`、`.runtime-flow` 和 `.quality-gate` 等标题身份。
+
+核心索引词：
+
+[source,asciidoc]
+----
+indexterm:[architecture baseline]
+indexterm:[public API]
+indexterm:[adapter]
+indexterm:[projection fingerprint]
+indexterm:[source set fingerprint]
+indexterm:[state store]
+indexterm:[RDF term JSON]
+indexterm:[quality gate]
+----

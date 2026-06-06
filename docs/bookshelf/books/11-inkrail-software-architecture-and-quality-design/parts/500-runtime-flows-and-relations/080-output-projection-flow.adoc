@@ -1,0 +1,33 @@
+[#output-projection-flow.runtime-flow, owner=cli-surface]
+== Output Projection Flow
+
+Output projection flow converts structured result or failure into CLI stdout/stderr. It implements xref:../10-inkrail-cli-design/book.adoc#output-surfaces[10 号书输出表面, rel=implements-contract]。
+
+[source,text]
+----
+InkrailResult
+  -> select output mode
+  -> project success to stdout
+  -> project diagnostics/events to stderr
+  -> project failure to stderr
+  -> set exit code
+----
+
+Pretty output:
+
+* Writes successful query table or graph rows to stdout.
+* Uses SPARQL variable names as table field names.
+* Uses single-column `ask` table for ASK.
+* Renders CONSTRUCT and DESCRIBE quads as RDF term text.
+* Writes errors to stderr with stable error code and details.
+
+JSON output:
+
+* Writes success envelope to stdout.
+* Writes failure envelope to stderr.
+* Preserves RDF term JSON.
+* Preserves mode、book、projection、query kind、variables、rows、value 或 quads.
+
+Refresh events and diagnostics never mix into successful stdout result. Teaching text belongs to README and user guide, not command output.
+
+Exit code mapping is CLI projection. Domain error code remains the stable recovery index.

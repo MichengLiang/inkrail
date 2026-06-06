@@ -1,0 +1,23 @@
+[#bookshelf-runtime-dispatch-flow.runtime-flow, owner=bookshelf-runtime]
+== Bookshelf Runtime Dispatch Flow
+
+Bookshelf runtime dispatch flow executes standard bookshelf local package scripts. It implements xref:../10-inkrail-cli-design/book.adoc#bookshelf-build-dispatch[10 号书书架本地构建调度, rel=implements-contract]。
+
+[source,text]
+----
+bookshelf runtime input
+  -> load project
+  -> resolve registered bookshelf
+  -> require standard profile
+  -> validate package script
+  -> validate tools/adoc-books.mjs
+  -> run package script in bookshelf root
+  -> forward stdout/stderr/status
+  -> return dispatch result
+----
+
+Supported actions are `build`、`check` 和 `clean`。Dispatch uses registered `bookshelves.root` as process cwd.
+
+Unknown bookshelf returns `BOOKSHELF_NOT_FOUND`。Non-standard profile returns `BOOKSHELF_PROFILE_UNSUPPORTED`。Missing package script returns `BOOKSHELF_SCRIPT_NOT_FOUND`。Missing `tools/adoc-books.mjs` returns `BOOKSHELF_RUNTIME_NOT_FOUND`。Non-zero script status returns `BOOKSHELF_BUILD_FAILED`。
+
+Bookshelf runtime dispatch does not write RDF projection state. Project mode query does not implicitly execute bookshelf local `build`、`check` 或 `clean`。

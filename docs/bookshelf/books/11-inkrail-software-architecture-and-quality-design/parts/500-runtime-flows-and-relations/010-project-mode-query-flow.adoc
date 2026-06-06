@@ -1,0 +1,27 @@
+[#project-mode-query-flow.runtime-flow, owner=query-runtime]
+== Project Mode Query Flow
+
+Project mode query flow 实现 xref:../10-inkrail-cli-design/book.adoc#query-modes[10 号书 Project mode, rel=implements-contract]。该 flow 在查询前确保 RDF12 TTL 代表当前 target book source set。
+
+[source,text]
+----
+queryProjectBook input
+  -> resolve project context
+  -> load normalized config
+  -> select target book
+  -> derive book paths
+  -> refresh RDF12 projection
+  -> read fresh TTL
+  -> load Oxigraph store
+  -> execute SPARQL
+  -> classify query result
+  -> return project query envelope
+----
+
+输入包括 cwd、optional project path、optional book id、raw query 或 built-in action。输出是 project query envelope。失败输出是 `InkrailFailure`。
+
+Project context、normalized config、target book selection 和 path derivation 使用 domain core 规则。Refresh RDF12 projection 使用 xref:refresh-state-machine-flow[刷新状态机, rel=depends-on]。SPARQL execution 使用 xref:oxigraph-adapter[Oxigraph Adapter, rel=uses-adapter]。
+
+Project mode 不接受 stale TTL fallback。Refresh 失败、TTL 缺失、TTL load 失败或 query execution 失败都阻止当前查询结果产生。
+
+Project mode 可以产生 refresh events。Public API 返回结构化 events。CLI consumer 将 events 写入 stderr。

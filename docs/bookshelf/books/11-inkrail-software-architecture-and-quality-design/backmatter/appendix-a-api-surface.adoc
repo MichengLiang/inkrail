@@ -1,0 +1,58 @@
+= 附录 A：Public API Surface
+
+[cols="1,2,2,2", options="header"]
+|===
+|API |输入 |输出 |消费者
+
+|`loadInkrailProject`
+|cwd、optional project path、adapter set
+|Loaded project context and normalized config
+|Library、CLI、automation
+
+|`selectTargetBook`
+|Normalized config、optional book id
+|Resolved book identity
+|Library、services
+
+|`deriveBookPaths`
+|Project context、bookshelf、book
+|Resolved book paths
+|Projection、query、doctor
+
+|`initInkrailProject`
+|Project root、force
+|Project initialization result
+|CLI、library
+
+|`initBookshelf`
+|Target path、force、optional register id
+|Bookshelf initialization result
+|CLI、library
+
+|`refreshProjectBook`
+|Project context、book、projection format
+|Refresh result
+|Query、CLI refresh
+
+|`projectAdoc`
+|Input file、mode、documentRoot、format、out path
+|Projection result
+|CLI project、library
+
+|`queryProjectBook`
+|Project query input
+|Project query envelope
+|CLI、library、automation
+
+|`queryTtl`
+|TTL path、query text
+|TTL-only query envelope
+|CLI、library、automation
+
+|`runBuiltInAction`
+|Action id、parameters、mode input
+|Rendered query or query envelope
+|CLI built-ins、library
+|===
+
+This appendix is a lookup surface. API definitions remain in xref:parts/300-package-and-module-structure/070-public-exports.adoc[Public Exports].

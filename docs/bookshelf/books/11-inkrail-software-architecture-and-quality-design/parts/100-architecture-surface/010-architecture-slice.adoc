@@ -1,0 +1,69 @@
+[#architecture-slice.architecture-object, owner=query-runtime, surface=public-api]
+== 架构切片
+
+本章用一次 project mode 内置查询展示 `inkrail` runtime 的最小完整架构切片。该切片从公共库调用进入，经由项目记忆、投影新鲜度、查询执行和输出投影，返回结构化查询结果。
+
+[source,typescript]
+----
+const result = await queryProjectBook({
+  cwd,
+  book: "10-inkrail-cli-design",
+  action: builtInActions.outline({ levels: 2 }),
+});
+----
+
+该调用表面属于 public API。CLI 命令、脚本消费者、编辑器插件、CI 检查器和 agent 工具应消费同一组 public API 对象，而不是解析 CLI pretty 输出。
+
+[source,text]
+----
+public API caller
+  -> project context resolver
+  -> config loader
+  -> book resolver
+  -> freshness service
+  -> asciidoc-abundant-tree adapter
+  -> projection state store
+  -> Oxigraph adapter
+  -> query result model
+  -> consumer projection
+----
+
+该路径中的节点承担不同身份。Project context resolver 解析 `.inkrail/config.toml` 所在项目。Config loader 读取并规范化项目记忆。Book resolver 选择目标 book 并推导标准 profile 路径。Freshness service 判断 RDF12 TTL 是否代表当前 source set。`asciidoc-abundant-tree` adapter 生成 book-entry RDF12 投影。Projection state store 保存上次成功投影的 fingerprint。Oxigraph adapter 加载 TTL 并执行 SPARQL。Query result model 保存结构化 RDF term。Consumer projection 把同一结果投影为 CLI JSON、CLI pretty 或其它下游表面。
+
+CLI 使用同一个架构切片：
+
+[source,bash]
+----
+inkrail outline --book 10-inkrail-cli-design --levels 2 --json
+----
+
+CLI command handler 只负责参数解析、调用 public API、投影 stdout/stderr 和设置 exit code。CLI command handler 不拥有查询语义、项目选择语义、新鲜度语义或 RDF term 语义。
+
+成功的 JSON 投影保持 xref:../10-inkrail-cli-design/book.adoc#output-surfaces[10 号书输出表面, rel=implements-contract] 定义的 envelope：
+
+[source,json]
+----
+{
+  "ok": true,
+  "data": {
+    "mode": "project",
+    "book": {
+      "id": "10-inkrail-cli-design",
+      "bookshelf": "docs"
+    },
+    "projection": {
+      "format": "rdf12",
+      "freshness": "fresh"
+    },
+    "query": {
+      "kind": "select",
+      "variables": ["level", "headline", "path", "headingLine"]
+    },
+    "rows": []
+  }
+}
+----
+
+该 JSON 是 public API result 的消费者投影。公共库内部的 result model 可以包含更多运行证据，例如 refresh events、state path、projector identity 和 elapsed time；CLI JSON 只公开契约允许消费者依赖的字段。
+
+本书后续章节分别定义该切片中的对象身份、模块边界、数据模型、状态模型、运行流、适配器和质量门禁。后续 implementation WBS 以这些架构对象为拆分坐标。

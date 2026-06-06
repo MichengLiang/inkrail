@@ -1,0 +1,22 @@
+[#ttl-only-query-flow.runtime-flow, owner=query-runtime]
+== TTL-only Query Flow
+
+TTL-only query flow 直接查询调用者提供的 Turtle 文件。该 flow 实现 xref:../10-inkrail-cli-design/book.adoc#query-modes[10 号书 TTL-only mode, rel=implements-contract]。
+
+[source,text]
+----
+queryTtl input
+  -> read TTL path
+  -> load Oxigraph store
+  -> execute SPARQL
+  -> classify query result
+  -> return ttl-only query envelope
+----
+
+TTL-only mode 不查找 `.inkrail/config.toml`，不读取 project memory，不构造 source set，不计算 freshness，不写 state，不声称给定 TTL 代表某个当前书稿。
+
+TTL-only result envelope 只声明 mode、TTL path 和 query result。它不得包含 book identity、bookshelf identity 或 projection freshness。
+
+TTL read failure 返回 `TTL_READ_FAILED`。TTL load failure 返回 `TTL_LOAD_FAILED`。SPARQL execution failure 返回 `QUERY_FAILED`。
+
+TTL-only mode 服务临时实验、外部 TTL 审查和跨项目复制查询。该 mode 不参与 project mode 的 stale projection 规则。

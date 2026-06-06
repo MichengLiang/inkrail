@@ -1,0 +1,18 @@
+[#version-and-capability-locks.adapter-contract, owner=quality]
+== Version 与 Capability Locks
+
+Runtime dependency versions are package-level facts. Capability locks are test-level facts.
+
+`inkrail` package manifest declares runtime dependencies for `commander`、`smol-toml` or equivalent TOML parser、`zod` or equivalent validation library、`asciidoc-abundant-tree`、`create-asciidoc-multi-book-workspace` and `oxigraph`。
+
+Version ranges alone do not prove capability. Adapter contract tests lock required behavior:
+
+* Workspace initializer creates standard workspace and preserves unknown files under force.
+* `asciidoc-abundant-tree` parses book-entry input and exposes `sourceFiles`.
+* `asciidoc-abundant-tree` produces RDF12 TTL and RDF12 JSON-LD from book-entry document.
+* Oxigraph loads RDF12 TTL and executes SELECT、ASK、CONSTRUCT or DESCRIBE.
+* Oxigraph preserves Quad term structure for triple term query results.
+
+Projector identity enters projection fingerprint. Query engine version does not enter projection fingerprint, because it does not generate projection artifacts. Query engine version can enter diagnostics and doctor output.
+
+Dependency upgrades require running adapter contract tests and package boundary tests. A version bump without capability evidence cannot support architecture completion.

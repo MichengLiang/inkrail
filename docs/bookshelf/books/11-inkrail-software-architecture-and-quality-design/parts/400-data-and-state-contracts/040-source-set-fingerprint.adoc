@@ -1,0 +1,29 @@
+[#source-set-fingerprint.data-model, owner=projection-runtime]
+== Source Set Fingerprint
+
+Source set fingerprint 描述 book-entry projection 实际到达的 source files。它由 `asciidoc-abundant-tree` book-entry parse result 的 source file reconstruction surface 和 filesystem metadata 共同构造。
+
+[source,typescript]
+----
+type SourceFileFingerprint = {
+  relativePath: DocumentRootRelativePath;
+  size: number;
+  mtimeMs: number;
+  contentHash: string;
+};
+
+type SourceSetFingerprint = {
+  hash: string;
+  files: SourceFileFingerprint[];
+};
+----
+
+`relativePath` 相对于 documentRoot。`size` 和 `mtimeMs` 来自 filesystem stat。`contentHash` 来自 source file raw content。`hash` 由按 `relativePath` 排序后的 file fingerprints 计算。
+
+排序是 fingerprint 契约的一部分。Include graph traversal order、filesystem listing order 或 parser internal order 不得影响 source set hash。
+
+`mtimeMs` 是快速变化线索。`contentHash` 是内容事实。Runtime 可以使用 `mtimeMs` 做快速预检，但 freshness 判定必须以 content hash 和 projection fingerprint 条件为准。
+
+Source set 包含 entry file、frontmatter、chapters、backmatter、shared attributes 和递归 include 到达的 source files。只贡献 attributes 或其它非结构节点的 source file 仍属于 source set。
+
+Source set 构造失败返回 `SOURCE_SET_FAILED`。失败时 project mode query 不得读取旧 TTL 回答当前查询。

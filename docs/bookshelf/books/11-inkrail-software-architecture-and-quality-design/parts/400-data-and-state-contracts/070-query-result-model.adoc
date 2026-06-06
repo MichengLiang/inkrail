@@ -1,0 +1,99 @@
+[#query-result-model.data-model, owner=query-runtime]
+== Query Result Model
+
+Query result model 是 SPARQL 执行后的内部结构化结果。它独立于 CLI output surface。
+
+[source,typescript]
+----
+type QueryMode = "project" | "ttl-only";
+
+type QueryResult =
+  | SelectQueryResult
+  | AskQueryResult
+  | GraphQueryResult;
+
+type QueryResultBase = {
+  mode: QueryMode;
+  query: {
+    kind: "select" | "ask" | "construct" | "describe";
+    source: "raw" | "built-in";
+    variables?: string[];
+  };
+};
+----
+
+SELECT result 保存 variables 和 rows：
+
+[source,typescript]
+----
+type SelectQueryResult = QueryResultBase & {
+  query: {
+    kind: "select";
+    source: "raw" | "built-in";
+    variables: string[];
+  };
+  rows: Array<Record<string, RdfTermJson>>;
+};
+----
+
+ASK result 保存 boolean：
+
+[source,typescript]
+----
+type AskQueryResult = QueryResultBase & {
+  query: {
+    kind: "ask";
+    source: "raw" | "built-in";
+  };
+  value: boolean;
+};
+----
+
+CONSTRUCT 和 DESCRIBE result 保存 quads：
+
+[source,typescript]
+----
+type GraphQueryResult = QueryResultBase & {
+  query: {
+    kind: "construct" | "describe";
+    source: "raw" | "built-in";
+  };
+  quads: RdfQuadJson[];
+};
+----
+
+Project mode result 扩展 book 和 projection 信息：
+
+[source,typescript]
+----
+type ProjectQueryEnvelope = {
+  mode: "project";
+  book: {
+    id: BookId;
+    bookshelf: BookshelfId;
+  };
+  projection: {
+    format: "rdf12";
+    path: ProjectRelativePath;
+    freshness: "fresh" | "refreshed";
+  };
+  result: QueryResult;
+};
+----
+
+TTL-only result 不包含 book 和 freshness 声明：
+
+[source,typescript]
+----
+type TtlOnlyQueryEnvelope = {
+  mode: "ttl-only";
+  ttl: {
+    path: ProjectRelativePath | AbsolutePath;
+  };
+  result: QueryResult;
+};
+----
+
+Oxigraph adapter 返回值必须被分类后进入 Query result model。Runtime 不向 public API 暴露 `Store.query()` 的原始 union return type。
+
+Query kind classification 来源于 Oxigraph 返回值和调用输入。Boolean 返回 ASK。`Map<string, Term>[]` 返回 SELECT。`Quad[]` 返回 CONSTRUCT 或 DESCRIBE，kind 由 query classifier 或调用输入决定。Runtime 默认不请求 string `results_format`，以保留 RDF term structure。

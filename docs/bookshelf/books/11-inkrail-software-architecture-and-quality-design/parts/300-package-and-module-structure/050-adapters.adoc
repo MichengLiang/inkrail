@@ -1,0 +1,39 @@
+[#adapters.module-contract, owner=adapter-runtime]
+== Adapters
+
+Adapter 封装外部能力和运行环境。Adapter 的输出必须转换为 `inkrail` 内部对象。
+
+[cols="1,3,3", options="header"]
+|===
+|Adapter |外部对象 |内部契约
+
+|`filesystem.ts`
+|Node filesystem
+|`FileSystem` interface、path existence、read/write text、mkdirp、stat、realpath。
+
+|`toml.ts`
+|TOML parser/stringifier
+|Raw config parse result 和 serialized config text。
+
+|`abundant-tree.ts`
+|`asciidoc-abundant-tree`
+|Book-entry parse、source files、RDF12 TTL、RDF12 JSON-LD、projector identity。
+
+|`workspace-initializer.ts`
+|`create-asciidoc-multi-book-workspace`
+|标准书架初始化结果、fixed template output path、upstream error mapping。
+
+|`oxigraph.ts`
+|Oxigraph Store
+|TTL load、SPARQL query、query result classification、RDF term conversion。
+
+|`process-runner.ts`
+|Node child process
+|Package script dispatch result、stdout、stderr、exit status。
+|===
+
+Adapter 是外部依赖变化的隔离层。上游 package 版本、API 形状或错误消息变化时，优先修改 adapter 和 adapter contract tests。
+
+Adapter 不定义 `inkrail` domain identity。`asciidoc-abundant-tree` adapter 不定义 book selection。Workspace initializer adapter 不定义 project memory。Oxigraph adapter 不定义 built-in query action。
+
+Adapter contract tests 使用真实依赖。Application service tests 可以使用 fake adapters。两类测试不得互相替代。

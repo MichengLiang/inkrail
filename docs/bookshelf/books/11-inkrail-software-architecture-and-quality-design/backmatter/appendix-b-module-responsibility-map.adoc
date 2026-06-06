@@ -1,0 +1,38 @@
+= 附录 B：Module Responsibility Map
+
+[cols="1,2,2", options="header"]
+|===
+|Module area |Responsibility |Forbidden responsibility
+
+|`core/`
+|Pure models, rules, validation, serialization targets.
+|Process IO、filesystem IO、external package calls、stdout/stderr.
+
+|`services/`
+|Use-case orchestration over core and adapters.
+|CLI formatting、commander parsing、upstream internal imports.
+
+|`adapters/`
+|External package and runtime environment boundary.
+|Domain identity、query action semantics、project config rules.
+
+|`commands/`
+|CLI option to service input mapping.
+|Freshness decision、SPARQL execution、RDF term serialization.
+
+|`io/`
+|CLI JSON、pretty、diagnostic projection.
+|Project loading、projection generation、query execution.
+
+|`cli.ts`
+|Command parser and `CliRunResult` assembly.
+|Domain rule ownership.
+
+|`bin.ts`
+|Node process entry.
+|Business logic.
+
+|`test-support/`
+|Fake adapters and fixture helpers.
+|Public package export.
+|===

@@ -1,0 +1,18 @@
+[#module-roles.module-contract]
+== 模块 Role
+
+`inkrail` 源码模块按职责分层。模块 role 描述模块在 runtime 中承担的身份。
+
+[horizontal]
+Domain core:: 定义纯对象、规则、类型和可确定函数。Domain core 不读取进程参数，不写 stdout，不执行外部命令，不 import 上游 parser 内部模块。
+Application service:: 组合 domain core 与 adapters，形成可由 public API 和 CLI 共同消费的用例。Application service 可以读取文件系统抽象，可以调用 adapters，可以返回结构化 result。
+Adapter:: 封装外部能力或运行环境。Adapter 负责把上游 package、文件系统、进程、Oxigraph 或 package script 转换为 `inkrail` 内部契约。
+Command handler:: 把 CLI 参数映射为 application service 输入。Command handler 不持有 domain 语义，不直接构造 RDF term，不直接判断 projection freshness。
+Output projector:: 把结构化 result 投影为 CLI JSON、pretty table、stderr diagnostic 或测试观察表面。Output projector 不执行查询。
+Test support:: 提供 fixture、fake adapter 和测试辅助对象。Test support 不进入发布公共 API。
+
+模块只能承担与自身 role 相符的职责。一个文件可以包含多个小函数，但不能跨越 role 边界混合进程输入、domain rule、外部 adapter 和输出投影。
+
+Role 边界服务可替换性。Oxigraph adapter 可以替换查询执行器而不改变 public API。Workspace initializer adapter 可以调整上游集成方式而不改变 project config model。CLI 可以替换 commander 解析器而不改变 application service。
+
+Role 边界也服务测试。Domain core 通过纯单元测试锁定。Application service 通过 fake adapter 和 fixture 测试锁定。Adapter 通过真实依赖 contract test 锁定。Command handler 和 output projector 通过 CLI surface test 锁定。
