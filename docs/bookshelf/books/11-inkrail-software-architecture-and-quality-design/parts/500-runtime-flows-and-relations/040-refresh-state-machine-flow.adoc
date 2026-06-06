@@ -1,7 +1,7 @@
 [#refresh-state-machine-flow.runtime-flow, owner=projection-runtime]
-== Refresh State Machine Flow
+== 刷新状态机运行流
 
-Refresh state machine flow 在 project mode query 和 explicit `refresh` command 中复用。它实现 xref:../10-inkrail-cli-design/book.adoc#refresh-state-machine[10 号书刷新状态机, rel=implements-contract]。
+刷新状态机运行流在 project mode query 和 explicit `refresh` command 中复用。它实现 xref:../10-inkrail-cli-design/book.adoc#refresh-state-machine[10 号书刷新状态机, rel=implements-contract]。
 
 [source,text]
 ----
@@ -22,7 +22,7 @@ refresh input
   -> return refresh result
 ----
 
-Freshness decision checks:
+Freshness decision 检查以下条件：
 
 * Book entry exists.
 * Current source set can be constructed.
@@ -35,6 +35,6 @@ Freshness decision checks:
 
 `refresh --projection rdf12` refreshes TTL state. `refresh --projection rdf12-json-ld` refreshes JSON-LD state. `refresh --projection all` refreshes both formats with independent state records.
 
-Project mode query requires only RDF12 freshness. JSON-LD freshness is not a query precondition.
+Project mode query 只要求 RDF12 freshness。JSON-LD freshness 不是 query precondition。
 
-Projection success followed by query failure does not roll back projection artifact or state. Query failure belongs to query execution layer.
+Projection success 后发生 query failure 时，不回滚 projection artifact 或 state。Query failure 属于 query execution layer。

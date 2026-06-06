@@ -1,7 +1,7 @@
 [#built-in-action-flow.runtime-flow, owner=query-runtime]
-== Built-in Action Flow
+== 内置动作流
 
-Built-in action flow maps commandized author actions to SPARQL templates. It implements xref:../10-inkrail-cli-design/book.adoc#query-template-contract[10 号书查询模板契约, rel=implements-contract] and sources SPARQL semantics from xref:../08-rdf12-heading-projection-query-workflow/book.adoc#query-library[08 号书查询语句集, rel=sources-query-from]。
+内置动作流把命令化 author actions 映射为 SPARQL templates。它实现 xref:../10-inkrail-cli-design/book.adoc#query-template-contract[10 号书查询模板契约, rel=implements-contract]，并从 xref:../08-rdf12-heading-projection-query-workflow/book.adoc#query-library[08 号书查询语句集, rel=sources-query-from] 取得 SPARQL 语义。
 
 [source,text]
 ----
@@ -14,19 +14,19 @@ built-in action input
   -> return action result
 ----
 
-Action definition includes:
+Action definition 包含：
 
-* Action id.
-* CLI command path.
-* Query kind.
-* Parameter schema.
-* SPARQL template.
-* SELECT variables when query kind is select.
-* Sort contract.
-* Source workflow reference.
+* Action id。
+* CLI command path。
+* Query kind。
+* Parameter schema。
+* SPARQL template。
+* Query kind 为 select 时的 SELECT variables。
+* Sort contract。
+* Source workflow reference。
 
-`--print-query` stops after SPARQL rendering. It does not resolve project context, read TTL, run refresh state machine or execute SPARQL.
+`--print-query` 在 SPARQL rendering 之后停止。它不 resolve project context，不 read TTL，不 run refresh state machine，不 execute SPARQL。
 
-Action parameters only replace documented literal placeholders or scope labels. Action parameter handling cannot change query fact boundary, variables, sorting, `OPTIONAL`、`FILTER NOT EXISTS`、`GROUP BY`、`HAVING` or property path semantics.
+Action parameters 只替换已记录的 literal placeholders 或 scope labels。Action parameter handling 不得改变 query fact boundary、variables、sorting、`OPTIONAL`、`FILTER NOT EXISTS`、`GROUP BY`、`HAVING` 或 property path semantics。
 
-Built-in action result uses same query result model as raw query. Built-in action identity is recorded in `query.source = "built-in"` and action metadata.
+Built-in action result 使用与 raw query 相同的 query result model。Built-in action identity 记录在 `query.source = "built-in"` 和 action metadata 中。

@@ -5,19 +5,19 @@
 |Module area |Responsibility |Forbidden responsibility
 
 |`core/`
-|Pure models, rules, validation, serialization targets.
+|纯模型、规则、validation 和 serialization targets。
 |Process IO、filesystem IO、external package calls、stdout/stderr.
 
 |`services/`
-|Use-case orchestration over core and adapters.
+|围绕 core 与 adapters 编排 use-case。
 |CLI formatting、commander parsing、upstream internal imports.
 
 |`adapters/`
-|External package and runtime environment boundary.
+|External package 与 runtime environment boundary。
 |Domain identity、query action semantics、project config rules.
 
 |`commands/`
-|CLI option to service input mapping.
+|CLI option 到 service input 的映射。
 |Freshness decision、SPARQL execution、RDF term serialization.
 
 |`io/`
@@ -25,14 +25,14 @@
 |Project loading、projection generation、query execution.
 
 |`cli.ts`
-|Command parser and `CliRunResult` assembly.
-|Domain rule ownership.
+|Command parser 与 `CliRunResult` assembly。
+|Domain rule ownership。
 
 |`bin.ts`
-|Node process entry.
-|Business logic.
+|Node process entry。
+|Business logic。
 
 |`test-support/`
-|Fake adapters and fixture helpers.
-|Public package export.
+|Fake adapters 与 fixture helpers。
+|Public package export。
 |===

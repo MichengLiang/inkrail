@@ -1,7 +1,7 @@
 [#contract-test-matrix.test-contract, owner=quality]
-== Contract Test Matrix
+== 契约测试矩阵
 
-Contract test matrix maps 10 号书 contracts to architecture test locations.
+契约测试矩阵把 10 号书 contracts 映射到 architecture test locations。
 
 [cols="2,2,2", options="header"]
 |===
@@ -56,4 +56,4 @@ Contract test matrix maps 10 号书 contracts to architecture test locations.
 |Script validation、stdout/stderr forwarding、non-zero status mapping.
 |===
 
-Appendix D expands this matrix into a review checklist. The appendix does not replace this chapter's contract.
+附录 D 把本矩阵展开为 review checklist。附录不替代本章契约。

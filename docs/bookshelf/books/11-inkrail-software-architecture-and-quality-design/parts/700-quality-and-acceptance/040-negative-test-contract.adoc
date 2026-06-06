@@ -1,9 +1,9 @@
 [#negative-test-contract.test-contract, owner=quality]
-== Negative Test Contract
+== 负契约测试
 
-Negative tests verify that invalid states do not pass silently.
+Negative tests 验证 invalid states 不会静默通过。
 
-Config negative tests:
+Config negative tests：
 
 * Invalid book id.
 * Duplicate bookshelf id.
@@ -15,7 +15,7 @@ Config negative tests:
 * Standard profile declares derived fields.
 * Custom profile omits required paths.
 
-Runtime negative tests:
+Runtime negative tests：
 
 * Project config not found.
 * Book not found.
@@ -26,9 +26,9 @@ Runtime negative tests:
 * TTL load failure.
 * Query read failure.
 * Query execution failure.
-* Stale projection cannot be refreshed.
+* Stale projection 不能刷新。
 
-Bookshelf negative tests:
+Bookshelf negative tests：
 
 * Init target is file.
 * Init target is non-empty without force.
@@ -38,4 +38,4 @@ Bookshelf negative tests:
 * Missing `tools/adoc-books.mjs`.
 * Non-zero local runtime exit status.
 
-Negative tests must assert stable error code and recovery-relevant details. They should not assert unstable upstream error message text unless adapter contract defines that text.
+Negative tests 必须断言 stable error code 和 recovery-relevant details。除非 adapter contract 定义了上游错误消息文本，否则 negative tests 不应断言不稳定的 upstream error message text。

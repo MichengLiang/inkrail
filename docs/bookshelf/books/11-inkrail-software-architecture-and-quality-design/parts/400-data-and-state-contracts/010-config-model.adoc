@@ -1,5 +1,5 @@
 [#config-model.data-model, owner=project-memory]
-== Config Model
+== 配置模型
 
 Config model 表达 `.inkrail/config.toml` 的当前项目记忆。它承载 project、bookshelves 和 books 三类对象。
 

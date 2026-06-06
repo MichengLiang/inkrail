@@ -1,7 +1,7 @@
 [#ttl-only-query-flow.runtime-flow, owner=query-runtime]
-== TTL-only Query Flow
+== TTL-only 查询流
 
-TTL-only query flow 直接查询调用者提供的 Turtle 文件。该 flow 实现 xref:../10-inkrail-cli-design/book.adoc#query-modes[10 号书 TTL-only mode, rel=implements-contract]。
+TTL-only 查询流直接查询调用者提供的 Turtle 文件。该运行流实现 xref:../10-inkrail-cli-design/book.adoc#query-modes[10 号书 TTL-only mode, rel=implements-contract]。
 
 [source,text]
 ----

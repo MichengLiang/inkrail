@@ -1,5 +1,5 @@
 [#state-store.data-model, owner=projection-runtime]
-== State Store
+== State Store 模型
 
 State store 位于 `.inkrail/state/`。它保存 project mode 下上次成功 source set fingerprint 和 projection fingerprint。
 

@@ -1,5 +1,5 @@
 [#source-set-fingerprint.data-model, owner=projection-runtime]
-== Source Set Fingerprint
+== Source Set 指纹
 
 Source set fingerprint 描述 book-entry projection 实际到达的 source files。它由 `asciidoc-abundant-tree` book-entry parse result 的 source file reconstruction surface 和 filesystem metadata 共同构造。
 

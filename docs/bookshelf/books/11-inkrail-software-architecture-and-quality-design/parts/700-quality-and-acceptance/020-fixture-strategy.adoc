@@ -1,18 +1,18 @@
 [#fixture-strategy.test-contract, owner=quality]
-== Fixture Strategy
+== Fixture 策略
 
-Fixtures provide stable evidence surfaces for architecture contracts.
+Fixtures 为 architecture contracts 提供稳定 evidence surfaces。
 
 [horizontal]
-Minimal project fixture:: Contains `.inkrail/config.toml` and no bookshelf. Used for config、project discovery and init tests.
-Minimal standard bookshelf fixture:: Contains catalog、books、shared、package scripts and one or more book entries. Used for profile path derivation、refresh and query tests.
-Book-entry source fixture:: Contains entry file、frontmatter、chapters、backmatter and shared attributes. Used for source set and projection tests.
-Stale projection fixture:: Contains source files、old state and old TTL. Used for freshness tests.
-RDF term fixture:: Contains TTL with literal、named node、blank node and quad term evidence. Used for Oxigraph and RDF term JSON tests.
-Query action fixture:: Contains RDF facts needed by built-in actions. Used for registry and CLI command tests.
+Minimal project fixture:: 包含 `.inkrail/config.toml`，且不包含 bookshelf。用于 config、project discovery 和 init tests。
+Minimal standard bookshelf fixture:: 包含 catalog、books、shared、package scripts 和一个或多个 book entries。用于 profile path derivation、refresh 和 query tests。
+Book-entry source fixture:: 包含 entry file、frontmatter、chapters、backmatter 和 shared attributes。用于 source set 和 projection tests。
+Stale projection fixture:: 包含 source files、old state 和 old TTL。用于 freshness tests。
+RDF term fixture:: 包含带有 literal、named node、blank node 和 quad term evidence 的 TTL。用于 Oxigraph 和 RDF term JSON tests。
+Query action fixture:: 包含 built-in actions 所需的 RDF facts。用于 registry 和 CLI command tests。
 
-Fixtures live under package test fixture directories or project-local `tmp/` during test execution. Tests must not scan or mutate workspace-external paths.
+Fixtures 在 test execution 期间位于 package test fixture directories 或 project-local `tmp/`。Tests 不得扫描或修改 workspace-external paths。
 
-Fixture source files should be small and purposeful. A fixture exists to verify a contract, not to imitate a full user project.
+Fixture source files 应当小而有明确目的。Fixture 的存在理由是验证 contract，而不是模拟完整 user project。
 
-Generated artifacts in fixtures must be either checked in as explicit expected artifacts or generated inside test setup. Tests must not silently depend on stale build output from previous runs.
+Fixture 中的 generated artifacts 必须作为 explicit expected artifacts 提交，或在 test setup 内生成。Tests 不得静默依赖 previous runs 留下的 stale build output。

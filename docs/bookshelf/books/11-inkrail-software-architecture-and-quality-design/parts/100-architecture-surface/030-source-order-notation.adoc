@@ -27,9 +27,14 @@ parts/300-package-and-module-structure/
 
 [source,asciidoc]
 ----
-[#oxigraph-adapter.adapter-contract, owner=query-runtime, package=oxigraph]
-== Oxigraph Adapter
+id: oxigraph-adapter
+role: adapter-contract
+owner: query-runtime
+package: oxigraph
+heading: Oxigraph 适配器
 ----
+
+上例使用字段化写法描述标题元数据，避免示例锚点或示例标题进入本书目录与 xref 图。实际章节使用 AsciiDoc attribute list 和 heading line。
 
 本书采用以下 role：
 

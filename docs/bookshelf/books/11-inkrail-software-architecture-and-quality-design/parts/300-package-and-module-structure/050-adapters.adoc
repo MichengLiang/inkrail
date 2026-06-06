@@ -1,5 +1,5 @@
 [#adapters.module-contract, owner=adapter-runtime]
-== Adapters
+== 适配器
 
 Adapter 封装外部能力和运行环境。Adapter 的输出必须转换为 `inkrail` 内部对象。
 

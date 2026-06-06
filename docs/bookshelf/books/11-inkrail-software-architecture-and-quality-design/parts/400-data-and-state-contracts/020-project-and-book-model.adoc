@@ -1,5 +1,5 @@
 [#project-and-book-model.data-model, owner=project-memory]
-== Project 与 Book Model
+== Project 与 Book 模型
 
 Project context 描述 `.inkrail/config.toml` 所在项目。
 

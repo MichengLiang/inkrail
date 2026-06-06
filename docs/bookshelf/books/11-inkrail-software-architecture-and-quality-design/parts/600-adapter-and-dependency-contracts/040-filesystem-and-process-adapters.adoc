@@ -1,5 +1,5 @@
 [#filesystem-and-process-adapters.adapter-contract, owner=adapter-runtime]
-== Filesystem 与 Process Adapters
+== Filesystem 与 Process 适配器
 
 Filesystem adapter 封装 Node filesystem。Process adapter 封装 child process execution。
 
@@ -37,6 +37,6 @@ type ProcessRunner = {
 
 Process result 保存 stdout、stderr、exit status 和 signal。Bookshelf runtime dispatch 把 process result 映射为 dispatch result 或 `BOOKSHELF_BUILD_FAILED`。
 
-Tests use fake filesystem and fake process runner for service tests. Adapter contract tests use real filesystem and real process execution within repository fixture directories.
+Service tests 使用 fake filesystem 和 fake process runner。Adapter contract tests 在 repository fixture directories 内使用真实 filesystem 和真实 process execution。
 
-Temporary test files belong under project or subproject `tmp/` or fixture directories. Tests must not create files in system temp directories or workspace-external paths unless a test explicitly verifies path rejection.
+Temporary test files 属于 project 或 subproject `tmp/`，也可以属于 fixture directories。Tests 不得在 system temp directories 或 workspace-external paths 创建文件，除非测试对象明确验证 path rejection。

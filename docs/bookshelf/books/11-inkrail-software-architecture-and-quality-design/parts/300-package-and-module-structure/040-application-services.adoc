@@ -1,5 +1,5 @@
 [#application-services.module-contract, owner=application-runtime]
-== Application Services
+== Application Services 模块
 
 Application services 把 domain core 规则和 adapters 组合为可调用用例。Public API 和 CLI command handler 共同消费 application services。
 

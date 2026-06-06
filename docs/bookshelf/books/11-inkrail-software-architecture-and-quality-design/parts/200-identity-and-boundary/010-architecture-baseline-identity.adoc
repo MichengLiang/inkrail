@@ -1,11 +1,11 @@
 [#architecture-baseline-identity.architecture-object]
-== Architecture Baseline 身份
+== 架构基线身份
 
-本书是 `inkrail` runtime 的 architecture baseline。它定义实现前必须成立的软件结构、公共契约承载位置、模块职责、依赖方向、运行数据流和工程质量门禁。
+本书是 `inkrail` runtime 的架构基线。它定义实现前必须成立的软件结构、公共契约承载位置、模块职责、依赖方向、运行数据流和工程质量门禁。
 
-Architecture baseline 的上游输入是 xref:../10-inkrail-cli-design/book.adoc[10 号书需求契约, rel=depends-on]。10 号书定义 `inkrail` 应当对消费者承诺什么；本书定义这些承诺由哪些工程对象承担。
+架构基线的上游输入是 xref:../10-inkrail-cli-design/book.adoc[10 号书需求契约, rel=depends-on]。10 号书定义 `inkrail` 应当对消费者承诺什么；本书定义这些承诺由哪些工程对象承担。
 
-Architecture baseline 的下游消费者是 implementation WBS。Implementation WBS 可以引用本书拆分工作包、安排提交顺序和记录审核证据。Implementation WBS 不得用执行阶段、批次编号或局部实现便利改写本书定义的对象边界。
+架构基线的下游消费者是 implementation WBS。Implementation WBS 可以引用本书拆分工作包、安排提交顺序和记录审核证据。Implementation WBS 不得用执行阶段、批次编号或局部实现便利改写本书定义的对象边界。
 
 本书属于 current body。它描述当前可依赖的架构事实，不记录实现过程状态。工作包状态、允许失败集合、审核打回、提交 hash 和关闭记录属于后续治理材料。
 

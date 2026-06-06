@@ -60,4 +60,4 @@
 |`pnpm --filter inkrail pack:check`
 |===
 
-This matrix is a review surface for implementation WBS. It does not list work package status.
+本矩阵是 implementation WBS 的审核查找表面。它不记录 work package 状态。

@@ -1,5 +1,5 @@
 [#core-domain-modules.module-contract, owner=domain-core]
-== Core Domain Modules
+== Domain Core 模块
 
 Domain core 保存不依赖进程环境的对象和规则。
 

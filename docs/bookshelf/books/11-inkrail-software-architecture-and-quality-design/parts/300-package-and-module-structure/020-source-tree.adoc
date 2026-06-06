@@ -1,5 +1,5 @@
 [#source-tree.module-contract, owner=package-runtime]
-== Source Tree
+== 源码树
 
 `src/` 按 module role 分区。目录名表达模块身份，不表达实现批次。
 

@@ -1,6 +1,6 @@
 = 附录 C：Error 与 Exit Code Map
 
-Domain error code is the recovery index. Exit code is CLI projection.
+Domain error code 是恢复索引。Exit code 是 CLI projection。
 
 [cols="1,1,3", options="header"]
 |===
@@ -8,83 +8,83 @@ Domain error code is the recovery index. Exit code is CLI projection.
 
 |`BOOK_REQUIRED`
 |3
-|Pass `--book` or set `project.default_book`.
+|传入 `--book` 或设置 `project.default_book`。
 
 |`BOOK_NOT_FOUND`
 |3
-|Check registered book and standard book entry.
+|检查 registered book 与 standard book entry。
 
 |`BOOK_CONFIG_INVALID`
 |4
-|Fix `.inkrail/config.toml`.
+|修正 `.inkrail/config.toml`。
 
 |`WORKSPACE_NOT_FOUND`
 |3
-|Check bookshelf root.
+|检查 bookshelf root。
 
 |`BOOKSHELF_INIT_TARGET_INVALID`
 |3
-|Use missing or directory target path.
+|使用不存在的 target path 或 directory target path。
 
 |`BOOKSHELF_INIT_TARGET_NOT_EMPTY`
 |3
-|Use empty directory or pass `--force`.
+|使用 empty directory 或传入 `--force`。
 
 |`BOOKSHELF_NOT_FOUND`
 |3
-|Use registered bookshelf id.
+|使用 registered bookshelf id。
 
 |`BOOKSHELF_PROFILE_UNSUPPORTED`
 |4
-|Use standard profile for runtime dispatch.
+|runtime dispatch 使用 standard profile。
 
 |`BOOKSHELF_SCRIPT_NOT_FOUND`
 |5
-|Fix bookshelf `package.json`.
+|修正 bookshelf `package.json`。
 
 |`BOOKSHELF_RUNTIME_NOT_FOUND`
 |5
-|Restore `tools/adoc-books.mjs`.
+|恢复 `tools/adoc-books.mjs`。
 
 |`BOOKSHELF_BUILD_FAILED`
 |5
-|Read forwarded local runtime output.
+|读取 forwarded local runtime output。
 
 |`BOOK_ENTRY_NOT_FOUND`
 |4
-|Create or fix book entry path.
+|创建或修正 book entry path。
 
 |`SOURCE_SET_FAILED`
 |5
-|Fix include graph or documentRoot boundary.
+|修正 include graph 或 documentRoot boundary。
 
 |`PROJECTION_FAILED`
 |5
-|Fix source file or projector capability issue.
+|修正 source file 或 projector capability issue。
 
 |`TTL_READ_FAILED`
 |4
-|Check TTL path and permissions.
+|检查 TTL path 与 permissions。
 
 |`TTL_LOAD_FAILED`
 |5
-|Regenerate or fix Turtle.
+|重新生成或修正 Turtle。
 
 |`QUERY_READ_FAILED`
 |4
-|Check query argument, file or stdin.
+|检查 query argument、file 或 stdin。
 
 |`QUERY_FAILED`
 |5
-|Fix SPARQL or query capability assumption.
+|修正 SPARQL 或 query capability assumption。
 
 |`STALE_PROJECTION`
 |5
-|Fix refresh blocker; stale TTL cannot answer project query.
+|修复 refresh blocker；stale TTL 不得回答 project query。
 
 |`TOOL_NOT_FOUND`
 |5
-|Install or configure required tool.
+|安装或配置 required tool。
 |===
 
-Implementation may refine exit code groups. Refinement must preserve stable domain error codes.
+实现阶段可以细化 exit code groups。细化结果必须保留稳定 domain error codes。

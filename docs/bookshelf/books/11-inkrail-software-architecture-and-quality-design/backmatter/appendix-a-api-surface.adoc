@@ -1,4 +1,4 @@
-= 附录 A：Public API Surface
+= 附录 A：公共 API 表面
 
 [cols="1,2,2,2", options="header"]
 |===
@@ -55,4 +55,4 @@
 |CLI built-ins、library
 |===
 
-This appendix is a lookup surface. API definitions remain in xref:parts/300-package-and-module-structure/070-public-exports.adoc[Public Exports].
+本附录是查找表面。API 定义仍以 xref:public-exports[公共导出] 为准。

@@ -1,5 +1,5 @@
 [#projection-fingerprint.data-model, owner=projection-runtime]
-== Projection Fingerprint
+== Projection 指纹
 
 Projection fingerprint 描述一个 projection artifact 与其输入、投影器和选项之间的关系。
 

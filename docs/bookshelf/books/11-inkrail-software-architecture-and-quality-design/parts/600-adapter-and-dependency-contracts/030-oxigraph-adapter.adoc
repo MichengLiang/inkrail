@@ -1,5 +1,5 @@
 [#oxigraph-adapter.adapter-contract, owner=query-runtime, package=oxigraph]
-== Oxigraph Adapter
+== Oxigraph 适配器
 
 Oxigraph adapter 封装本地 SPARQL 查询执行器。Public API 不暴露 Oxigraph Store。
 
@@ -10,7 +10,7 @@ Adapter contract：
 * 执行 SELECT、ASK、CONSTRUCT 和 DESCRIBE 查询。
 * 支持 property path 查询。
 * 保留 RDF/JS term structure。
-* 把 RDF/JS term 转换为 xref:parts/400-data-and-state-contracts/080-rdf-term-json.adoc[RDF term JSON, rel=projects-to]。
+* 把 RDF/JS term 转换为 xref:rdf-term-json[RDF Term JSON 模型, rel=projects-to]。
 * 把 TTL load failure 映射为 `TTL_LOAD_FAILED`。
 * 把 SPARQL execution failure 映射为 `QUERY_FAILED`。
 

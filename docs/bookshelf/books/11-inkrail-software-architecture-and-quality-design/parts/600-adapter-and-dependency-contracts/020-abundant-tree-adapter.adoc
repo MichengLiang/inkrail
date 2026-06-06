@@ -1,5 +1,5 @@
 [#abundant-tree-adapter.adapter-contract, owner=projection-runtime, package=asciidoc-abundant-tree]
-== asciidoc-abundant-tree Adapter
+== asciidoc-abundant-tree 适配器
 
 `asciidoc-abundant-tree` adapter 集成 book-entry parser、source coordinate recovery 和 RDF12 projector。
 

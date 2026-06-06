@@ -1,5 +1,5 @@
 [#path-model.data-model, owner=project-memory]
-== Path Model
+== 路径模型
 
 Path model 区分 authored path、display path 和 operation path。
 
@@ -41,4 +41,4 @@ Standard profile 的派生路径如下：
 |`books/<book-id>/**/*.adoc`, `shared/**/*.adoc`
 |===
 
-Watch paths are globs. Source set paths are concrete source file paths. Watch globs do not define source set membership.
+Watch paths 是 glob 表面。Source set paths 是具体 source file path。Watch globs 不定义 source set membership。

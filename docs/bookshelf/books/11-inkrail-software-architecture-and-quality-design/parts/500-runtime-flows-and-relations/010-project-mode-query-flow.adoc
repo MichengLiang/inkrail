@@ -1,7 +1,7 @@
 [#project-mode-query-flow.runtime-flow, owner=query-runtime]
-== Project Mode Query Flow
+== Project Mode 查询流
 
-Project mode query flow 实现 xref:../10-inkrail-cli-design/book.adoc#query-modes[10 号书 Project mode, rel=implements-contract]。该 flow 在查询前确保 RDF12 TTL 代表当前 target book source set。
+Project mode 查询流实现 xref:../10-inkrail-cli-design/book.adoc#query-modes[10 号书 Project mode, rel=implements-contract]。该运行流在查询前确保 RDF12 TTL 代表当前 target book source set。
 
 [source,text]
 ----
@@ -20,7 +20,7 @@ queryProjectBook input
 
 输入包括 cwd、optional project path、optional book id、raw query 或 built-in action。输出是 project query envelope。失败输出是 `InkrailFailure`。
 
-Project context、normalized config、target book selection 和 path derivation 使用 domain core 规则。Refresh RDF12 projection 使用 xref:refresh-state-machine-flow[刷新状态机, rel=depends-on]。SPARQL execution 使用 xref:oxigraph-adapter[Oxigraph Adapter, rel=uses-adapter]。
+Project context、normalized config、target book selection 和 path derivation 使用 domain core 规则。Refresh RDF12 projection 使用 xref:refresh-state-machine-flow[刷新状态机, rel=depends-on]。SPARQL execution 使用 xref:oxigraph-adapter[Oxigraph 适配器, rel=uses-adapter]。
 
 Project mode 不接受 stale TTL fallback。Refresh 失败、TTL 缺失、TTL load 失败或 query execution 失败都阻止当前查询结果产生。
 

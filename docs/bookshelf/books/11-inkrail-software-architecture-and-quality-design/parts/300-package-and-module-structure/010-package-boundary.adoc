@@ -1,5 +1,5 @@
 [#package-boundary.module-contract, owner=package-runtime]
-== Package Boundary
+== 包边界
 
 `packages/inkrail` 是 `inkrail` runtime 的 npm package 边界。该 package 同时发布 public library API 和 CLI binary。
 
@@ -37,4 +37,4 @@ docs/bookshelf/build/
 node_modules/
 ----
 
-Package boundary 的证据表面是 `npm pack --dry-run` 或 `pnpm pack --dry-run`。Architecture acceptance 要求 package boundary test 检查 required files 和 forbidden files。
+Package boundary 的证据表面是 `npm pack --dry-run` 或 `pnpm pack --dry-run`。架构验收要求 package boundary test 检查 required files 和 forbidden files。

@@ -1,18 +1,18 @@
 [#version-and-capability-locks.adapter-contract, owner=quality]
-== Version 与 Capability Locks
+== 版本与能力锁定
 
-Runtime dependency versions are package-level facts. Capability locks are test-level facts.
+Runtime dependency versions 是 package-level facts。Capability locks 是 test-level facts。
 
 `inkrail` package manifest declares runtime dependencies for `commander`、`smol-toml` or equivalent TOML parser、`zod` or equivalent validation library、`asciidoc-abundant-tree`、`create-asciidoc-multi-book-workspace` and `oxigraph`。
 
-Version ranges alone do not prove capability. Adapter contract tests lock required behavior:
+Version ranges 不能单独证明 capability。Adapter contract tests 锁定以下必需行为：
 
-* Workspace initializer creates standard workspace and preserves unknown files under force.
-* `asciidoc-abundant-tree` parses book-entry input and exposes `sourceFiles`.
-* `asciidoc-abundant-tree` produces RDF12 TTL and RDF12 JSON-LD from book-entry document.
-* Oxigraph loads RDF12 TTL and executes SELECT、ASK、CONSTRUCT or DESCRIBE.
-* Oxigraph preserves Quad term structure for triple term query results.
+* Workspace initializer 创建 standard workspace，并在 force 模式下保留未知文件。
+* `asciidoc-abundant-tree` 解析 book-entry input，并暴露 `sourceFiles`。
+* `asciidoc-abundant-tree` 从 book-entry document 生成 RDF12 TTL 和 RDF12 JSON-LD。
+* Oxigraph 加载 RDF12 TTL，并执行 SELECT、ASK、CONSTRUCT 或 DESCRIBE。
+* Oxigraph 为 triple term query results 保留 Quad term structure。
 
-Projector identity enters projection fingerprint. Query engine version does not enter projection fingerprint, because it does not generate projection artifacts. Query engine version can enter diagnostics and doctor output.
+Projector identity 进入 projection fingerprint。Query engine version 不进入 projection fingerprint，因为 query engine 不生成 projection artifacts。Query engine version 可以进入 diagnostics 和 doctor output。
 
-Dependency upgrades require running adapter contract tests and package boundary tests. A version bump without capability evidence cannot support architecture completion.
+Dependency upgrades 必须运行 adapter contract tests 和 package boundary tests。缺少 capability evidence 的 version bump 不能作为架构完成证据。

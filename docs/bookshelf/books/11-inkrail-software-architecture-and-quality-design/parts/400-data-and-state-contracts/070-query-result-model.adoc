@@ -1,5 +1,5 @@
 [#query-result-model.data-model, owner=query-runtime]
-== Query Result Model
+== Query Result 模型
 
 Query result model 是 SPARQL 执行后的内部结构化结果。它独立于 CLI output surface。
 

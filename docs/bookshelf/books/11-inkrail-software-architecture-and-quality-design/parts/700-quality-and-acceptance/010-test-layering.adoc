@@ -1,22 +1,22 @@
 [#test-layering.test-contract, owner=quality]
-== Test Layering
+== 测试分层
 
-`inkrail` tests follow module role boundaries.
+`inkrail` tests 遵循 module role boundaries。
 
 [cols="1,2,3", options="header"]
 |===
 |Layer |Target |Evidence
 
 |Core unit tests
-|Pure domain rules and data serializers.
+|Pure domain rules 与 data serializers。
 |Config validation、path validation、book selection、fingerprint hash、freshness decision、query action rendering、RDF term JSON conversion.
 
 |Service integration tests
-|Application services with fake adapters.
+|带 fake adapters 的 application services。
 |Project load、init、refresh decision、projection write、query flow branching、failure propagation.
 
 |Adapter contract tests
-|Real external dependencies and runtime environment.
+|真实 external dependencies 与 runtime environment。
 |Workspace initializer output、abundant-tree book-entry projection、Oxigraph query execution、process runner script dispatch.
 
 |CLI surface tests
@@ -24,14 +24,14 @@
 |Argument parsing、JSON/pretty output、exit code、usage failure、`--print-query` stop point.
 
 |End-to-end fixture tests
-|Full runtime path on minimal standard bookshelf.
-|Init/register/book/refresh/query/built-in action closure.
+|Minimal standard bookshelf 上的 full runtime path。
+|Init/register/book/refresh/query/built-in action closure。
 
 |Package boundary tests
-|Published package content.
+|Published package content。
 |`pnpm pack --dry-run` required and forbidden files.
 |===
 
-Lower layer tests do not replace higher layer tests. Adapter contract tests prove dependency capability; they do not prove service branching. CLI tests prove command projection; they do not prove domain rule completeness.
+Lower layer tests 不替代 higher layer tests。Adapter contract tests 证明 dependency capability；它们不证明 service branching。CLI tests 证明 command projection；它们不证明 domain rule completeness。
 
-Tests must identify the object they verify. A test named only after a command is insufficient when the asserted behavior belongs to config model、freshness model、RDF term model or adapter contract.
+Tests 必须标识其验证对象。当断言行为属于 config model、freshness model、RDF term model 或 adapter contract 时，只按 command 命名的测试不足以表达对象边界。

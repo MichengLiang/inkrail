@@ -1,7 +1,7 @@
 [#bookshelf-initialization-flow.runtime-flow, owner=project-memory]
-== Bookshelf Initialization Flow
+== 书架初始化流
 
-Bookshelf initialization flow creates a standard AsciiDoc multi-book workspace through workspace initializer adapter and optionally registers it in project memory.
+书架初始化流通过 workspace initializer adapter 创建标准 AsciiDoc multi-book workspace，并按调用参数把书架登记到 project memory。
 
 [source,text]
 ----
@@ -15,16 +15,16 @@ bookshelf init input
   -> return initialization result
 ----
 
-Target path rules:
+Target path rules：
 
 * Missing target directory is created.
 * Existing empty directory is used.
 * Existing non-directory path fails with `BOOKSHELF_INIT_TARGET_INVALID`.
 * Existing non-empty directory without `--force` fails with `BOOKSHELF_INIT_TARGET_NOT_EMPTY`.
-* `--force` overwrites fixed template output paths and preserves unknown user files.
+* `--force` 覆盖 fixed template output paths，并保留未知用户文件。
 
-The standard workspace content comes from `create-asciidoc-multi-book-workspace`. `inkrail` does not copy maintainer source, tests, release configuration or design documents into generated workspace.
+Standard workspace content 来源于 `create-asciidoc-multi-book-workspace`。`inkrail` 不把 maintainer source、tests、release configuration 或 design documents 复制到 generated workspace。
 
-`--register <bookshelf-id>` writes `[[bookshelves]]` with profile `inkrail-asciidoc-multi-book` and root equal to target path relative to project root.
+`--register <bookshelf-id>` 写入 `[[bookshelves]]`，其中 profile 为 `inkrail-asciidoc-multi-book`，root 为 target path 相对于 project root 的路径。
 
-Bookshelf initialization does not register sample books. Book registration remains explicit.
+Bookshelf initialization 不登记 sample books。Book registration 保持显式。

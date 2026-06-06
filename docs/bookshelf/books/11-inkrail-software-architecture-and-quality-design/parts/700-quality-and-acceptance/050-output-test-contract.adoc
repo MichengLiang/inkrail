@@ -1,31 +1,31 @@
 [#output-test-contract.test-contract, owner=quality]
-== Output Test Contract
+== 输出测试契约
 
-Output tests verify consumer projections.
+Output tests 验证 consumer projections。
 
-Pretty output tests must verify:
+Pretty output tests 必须验证：
 
-* Successful result writes stdout.
-* Refresh event writes stderr.
-* Failure writes stderr.
-* SELECT table uses SPARQL variable names.
-* ASK table uses `ask`.
-* CONSTRUCT/DESCRIBE surface renders RDF term text.
-* Failure output includes stable error code.
-* Failure output omits stack trace by default.
+* Successful result 写入 stdout。
+* Refresh event 写入 stderr。
+* Failure 写入 stderr。
+* SELECT table 使用 SPARQL variable names。
+* ASK table 使用 `ask`。
+* CONSTRUCT/DESCRIBE surface 渲染 RDF term text。
+* Failure output 包含 stable error code。
+* Failure output 默认省略 stack trace。
 
-JSON output tests must verify:
+JSON output tests 必须验证：
 
-* Success envelope has `ok: true` and `data`.
-* Failure envelope has `ok: false` and `error`.
-* Failure JSON writes stderr.
-* Project result contains mode、book、projection and query metadata.
-* TTL-only result does not contain book freshness claims.
-* SELECT rows preserve RDF term JSON.
-* ASK uses `value`.
-* CONSTRUCT/DESCRIBE uses `quads`.
-* Quad term is not converted to string.
+* Success envelope 包含 `ok: true` 和 `data`。
+* Failure envelope 包含 `ok: false` 和 `error`。
+* Failure JSON 写入 stderr。
+* Project result 包含 mode、book、projection 和 query metadata。
+* TTL-only result 不包含 book freshness claims。
+* SELECT rows 保留 RDF term JSON。
+* ASK 使用 `value`。
+* CONSTRUCT/DESCRIBE 使用 `quads`。
+* Quad term 不转换为 string。
 
-Output tests use CLI surface. Public API tests separately verify raw structured result.
+Output tests 使用 CLI surface。Public API tests 单独验证 raw structured result。
 
-Command output must not include tutorial text. README and user guide carry teaching material.
+Command output 不得包含 tutorial text。README 和 user guide 承载 teaching material。

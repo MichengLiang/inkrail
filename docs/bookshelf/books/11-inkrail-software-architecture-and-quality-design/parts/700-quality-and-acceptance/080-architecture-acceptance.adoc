@@ -1,19 +1,19 @@
 [#architecture-acceptance.quality-gate]
-== Architecture Acceptance
+== 架构验收
 
-This architecture baseline is acceptable when the following statements are true:
+架构基线满足以下条件时，才具备进入 implementation WBS 的资格：
 
-* Every constitutive condition from 10 号书 has an architecture carrier in this book.
-* Public library API and CLI consumer boundary are explicit.
-* Domain core、application services、adapters、commands and output projectors have separate responsibilities.
-* Config、project、book、path、fingerprint、state、query result and RDF term JSON models are defined.
-* Project mode、TTL-only mode and explicit projection mode have separate runtime flows.
-* Refresh state machine forbids stale projection fallback.
-* Built-in action flow sources SPARQL semantics from 08 号书.
-* Workspace initializer、asciidoc-abundant-tree and Oxigraph enter runtime through adapters.
-* Test layering, fixture strategy, negative tests, output tests and package gates are defined.
-* Backmatter provides API surface, module responsibility map, error mapping and test matrix for implementation WBS.
+* 10 号书的每个构成性条件都有架构承载对象。
+* Public library API 与 CLI consumer 边界明确。
+* Domain core、application services、adapters、commands 和 output projectors 职责分离。
+* Config、project、book、path、fingerprint、state、query result 和 RDF term JSON 模型已定义。
+* Project mode、TTL-only mode 和 explicit projection mode 拥有独立 runtime flow。
+* Refresh state machine 禁止 stale projection fallback。
+* Built-in action flow 的 SPARQL 语义来源于 08 号书。
+* Workspace initializer、asciidoc-abundant-tree 和 Oxigraph 通过 adapters 进入 runtime。
+* Test layering、fixture strategy、negative tests、output tests 和 package gates 已定义。
+* Backmatter 为 implementation WBS 提供 API surface、module responsibility map、error mapping 和 test matrix。
 
-Architecture acceptance does not require implementation files to exist. It requires the architecture baseline to be sufficient for implementation WBS without unresolved object boundaries.
+架构验收不要求实现文件已经存在。架构验收要求本书足以支撑 implementation WBS，且不存在未归档的对象边界缺口。
 
-If implementation discovers a missing architecture object, the discovery must be returned to this book or to a successor architecture revision before work packages depend on it.
+实现活动发现缺失架构对象时，该发现必须回到本书或后继架构修订。Work package 不得依赖未进入架构基线的对象。

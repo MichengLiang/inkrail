@@ -1,9 +1,9 @@
 [#build-lint-package-gates.quality-gate, owner=quality]
-== Build、Lint 与 Package Gates
+== Build、Lint 与 Package 门禁
 
-Runtime package must expose stable check commands.
+Runtime package 必须暴露 stable check commands。
 
-Required gates:
+必需门禁：
 
 [source,bash]
 ----
@@ -13,20 +13,20 @@ pnpm --filter inkrail build
 pnpm --filter inkrail pack:check
 ----
 
-TypeScript project should use Biome for lint and formatting when runtime source exists:
+Runtime source 存在时，TypeScript project 应当使用 Biome 执行 lint 和 formatting：
 
 [source,bash]
 ----
 pnpm --filter inkrail lint
 ----
 
-Full workspace check should include runtime checks and docs bookshelf checks:
+Full workspace check 应当包含 runtime checks 和 docs bookshelf checks：
 
 [source,bash]
 ----
 pnpm check
 ----
 
-Package gate verifies `dist/` and type declarations are generated, CLI bin points to built file, package exports resolve, and publish boundary excludes forbidden files.
+Package gate 验证 `dist/` 和 type declarations 已生成、CLI bin 指向 built file、package exports 可解析，并验证 publish boundary 排除 forbidden files。
 
-Build gate does not prove architecture contract alone. Contract tests and adapter tests provide behavioral evidence.
+Build gate 不能单独证明 architecture contract。Contract tests 和 adapter tests 提供 behavioral evidence。

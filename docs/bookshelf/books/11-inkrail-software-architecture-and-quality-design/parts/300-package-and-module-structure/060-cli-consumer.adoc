@@ -1,5 +1,5 @@
 [#cli-consumer.module-contract, owner=cli-surface, surface=cli]
-== CLI Consumer
+== CLI 消费者
 
 CLI consumer 由 `bin.ts`、`cli.ts`、`commands/` 和 `io/` 承担。它消费 public API 和 application services。
 

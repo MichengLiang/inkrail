@@ -1,30 +1,30 @@
 [#documentation-quality.quality-gate, owner=quality]
-== Documentation Quality
+== 文档质量
 
-Documentation surfaces are part of runtime quality.
+Documentation surfaces 属于 runtime quality。
 
-README must explain:
+README 必须说明：
 
-* Tool identity.
-* Install and command entry.
-* Project initialization.
-* Bookshelf initialization and registration.
-* Book registration and default book.
-* Basic query examples.
-* Config file location.
-* Source-aware output.
-* Boundary statements.
+* Tool identity。
+* Install 与 command entry。
+* Project initialization。
+* Bookshelf initialization 与 registration。
+* Book registration 与 default book。
+* Basic query examples。
+* Config file location。
+* Source-aware output。
+* Boundary statements。
 
-User guide must explain:
+User guide 必须说明：
 
-* Project mode refresh behavior.
-* TTL-only mode freshness boundary.
-* Explicit projection mode state boundary.
-* Source coordinate fields.
-* Reading query result back into source files.
-* Built-in query action groups.
-* Structural facts versus quality judgments.
+* Project mode refresh behavior。
+* TTL-only mode freshness boundary。
+* Explicit projection mode state boundary。
+* Source coordinate fields。
+* 从 query result 回读 source files 的方法。
+* Built-in query action groups。
+* Structural facts 与 quality judgments 的边界。
 
-Design books define object contracts and architecture contracts. README and user guide explain usage surfaces. Command output does not carry source coordinate tutorial text.
+Design books 定义 object contracts 和 architecture contracts。README 与 user guide 说明 usage surfaces。Command output 不承载 source coordinate tutorial text。
 
-Documentation tests must at least verify that README examples reference supported commands and that no documentation promises cross-book union query、payload business interpretation、remote federation or stale TTL fallback.
+Documentation tests 至少必须验证 README examples 引用 supported commands，并验证文档不承诺 cross-book union query、payload business interpretation、remote federation 或 stale TTL fallback。

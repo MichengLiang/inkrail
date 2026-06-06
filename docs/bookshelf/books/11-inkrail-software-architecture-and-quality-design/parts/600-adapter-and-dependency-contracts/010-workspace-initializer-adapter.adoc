@@ -1,5 +1,5 @@
 [#workspace-initializer-adapter.adapter-contract, owner=bookshelf-runtime, package=create-asciidoc-multi-book-workspace]
-== Workspace Initializer Adapter
+== Workspace Initializer 适配器
 
 Workspace initializer adapter 集成 `create-asciidoc-multi-book-workspace`。该 adapter 创建标准 AsciiDoc multi-book workspace，并把上游错误映射为 `inkrail` 错误码。
 

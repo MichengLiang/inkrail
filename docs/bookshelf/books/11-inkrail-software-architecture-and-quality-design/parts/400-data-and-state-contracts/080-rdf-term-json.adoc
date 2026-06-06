@@ -1,5 +1,5 @@
 [#rdf-term-json.data-model, owner=query-runtime, surface=json-output]
-== RDF Term JSON
+== RDF Term JSON 模型
 
 RDF term JSON 是 public API 和 CLI JSON 共同使用的 RDF term 表示。它保留 RDF/JS term 结构，避免把 NamedNode、Literal、BlankNode、DefaultGraph、Variable 或 Quad term 压成字符串。
 

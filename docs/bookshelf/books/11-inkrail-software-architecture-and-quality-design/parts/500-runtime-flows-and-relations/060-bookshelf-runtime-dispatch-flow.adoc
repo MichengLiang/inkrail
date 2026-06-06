@@ -1,7 +1,7 @@
 [#bookshelf-runtime-dispatch-flow.runtime-flow, owner=bookshelf-runtime]
-== Bookshelf Runtime Dispatch Flow
+== 书架 Runtime 调度流
 
-Bookshelf runtime dispatch flow executes standard bookshelf local package scripts. It implements xref:../10-inkrail-cli-design/book.adoc#bookshelf-build-dispatch[10 号书书架本地构建调度, rel=implements-contract]。
+书架 Runtime 调度流执行标准书架本地 package scripts。它实现 xref:../10-inkrail-cli-design/book.adoc#bookshelf-build-dispatch[10 号书书架本地构建调度, rel=implements-contract]。
 
 [source,text]
 ----
@@ -16,8 +16,8 @@ bookshelf runtime input
   -> return dispatch result
 ----
 
-Supported actions are `build`、`check` 和 `clean`。Dispatch uses registered `bookshelves.root` as process cwd.
+支持的 actions 是 `build`、`check` 和 `clean`。Dispatch 使用登记的 `bookshelves.root` 作为 process cwd。
 
-Unknown bookshelf returns `BOOKSHELF_NOT_FOUND`。Non-standard profile returns `BOOKSHELF_PROFILE_UNSUPPORTED`。Missing package script returns `BOOKSHELF_SCRIPT_NOT_FOUND`。Missing `tools/adoc-books.mjs` returns `BOOKSHELF_RUNTIME_NOT_FOUND`。Non-zero script status returns `BOOKSHELF_BUILD_FAILED`。
+未知 bookshelf 返回 `BOOKSHELF_NOT_FOUND`。Non-standard profile 返回 `BOOKSHELF_PROFILE_UNSUPPORTED`。缺失 package script 返回 `BOOKSHELF_SCRIPT_NOT_FOUND`。缺失 `tools/adoc-books.mjs` 返回 `BOOKSHELF_RUNTIME_NOT_FOUND`。Non-zero script status 返回 `BOOKSHELF_BUILD_FAILED`。
 
-Bookshelf runtime dispatch does not write RDF projection state. Project mode query does not implicitly execute bookshelf local `build`、`check` 或 `clean`。
+Bookshelf runtime dispatch 不写 RDF projection state。Project mode query 不隐式执行 bookshelf local `build`、`check` 或 `clean`。
