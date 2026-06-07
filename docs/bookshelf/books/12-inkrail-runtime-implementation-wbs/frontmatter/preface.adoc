@@ -1,7 +1,7 @@
 == 前言
 
-本书位于 xref:../10-inkrail-cli-design/book.adoc[10 号需求契约, rel=depends-on] 与 xref:../11-inkrail-software-architecture-and-quality-design/book.adoc[11 号架构基线, rel=depends-on] 之后。10 号书定义 `inkrail` 应当成立的对象契约；11 号书定义这些契约的工程承载位置；本书定义实现活动如何被拆分、执行、审核和关闭。
+本书位于 xref:{book-10}[10 号需求契约, rel=depends-on] 与 xref:{book-11}[11 号架构基线, rel=depends-on] 之后。10 号书定义 `inkrail` 应当成立的对象契约；11 号书定义这些契约的工程承载位置；本书定义实现活动如何被拆分、执行、审核和关闭。
 
-本书还引用 xref:../08-rdf12-heading-projection-query-workflow/book.adoc[08 号 RDF 投影查询工作流, rel=depends-on] 作为内置查询动作的 SPARQL 语义来源，引用 `asciidoc-abundant-tree`、`create-asciidoc-multi-book-workspace`、Oxigraph 和 Rootward TypeScript template 作为实现依据和工程参考。
+本书还引用 xref:{book-08}[08 号 RDF 投影查询工作流, rel=depends-on] 作为内置查询动作的 SPARQL 语义来源，引用 `asciidoc-abundant-tree`、`create-asciidoc-multi-book-workspace`、Oxigraph 和 Rootward TypeScript template 作为实现依据和工程参考。
 
 本书使用结构化书写约定。章节 role 标明治理对象身份；xref relation predicate 标明依赖、实现、验证、解锁和关闭关系；named attributes 保存工作包编号、责任域、公共表面和依赖包等附加字段。

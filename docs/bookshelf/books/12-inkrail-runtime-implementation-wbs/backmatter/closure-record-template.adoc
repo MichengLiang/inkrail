@@ -7,7 +7,7 @@
 
 [horizontal]
 关闭对象:: `12-inkrail-runtime-implementation-wbs`
-目标 body 依据:: xref:../10-inkrail-cli-design/book.adoc[10 号 inkrail CLI 设计书] 与 xref:../11-inkrail-software-architecture-and-quality-design/book.adoc[11 号软件架构与工程质量设计书]
+目标 body 依据:: xref:{book-10}[10 号 inkrail CLI 设计书] 与 xref:{book-11}[11 号软件架构与工程质量设计书]
 材料体系依据:: `100_body` 与 `200_lab` 材料体系设计
 
 == 最终提交

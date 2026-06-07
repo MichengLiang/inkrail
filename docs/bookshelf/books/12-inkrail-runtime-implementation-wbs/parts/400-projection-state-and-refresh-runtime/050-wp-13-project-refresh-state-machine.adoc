@@ -5,7 +5,7 @@
 
 上游门槛:: xref:wp-10-source-set-and-projection-fingerprints[WP-10, rel=blocks-on] 与 xref:wp-11-state-store-and-refresh-decision[WP-11, rel=blocks-on] 通过。
 
-上下文闭包:: 10 号 `refresh-state-machine`；11 号 `refresh-state-machine-flow`、`project-mode-query-flow`、`state-store`。
+上下文闭包:: xref:{book-10}#refresh-state-machine[10 号 refresh state machine]；xref:{book-11}#refresh-state-machine-flow[11 号 refresh state machine flow]、xref:{book-11}#project-mode-query-flow[project mode query flow] 和 xref:{book-11}#state-store[state store]。
 
 文件边界::
 
@@ -19,7 +19,7 @@ packages/inkrail/src/**/*.{test,spec}.ts
 
 实施任务:: 按项目上下文、config、target book、path derivation、source set、fingerprint、state、artifact、freshness decision、projection、state write 的顺序执行。`refresh --projection rdf12/jsonld/all` 分别刷新对应 format。Project mode query 只要求 RDF12 freshness。
 
-测试任务:: 覆盖 book entry missing、source set failed、TTL missing、stale TTL、documentRoot/options/projector mismatch、projection failed、JSON-LD 独立 refresh、query only requires RDF12 freshness、no stale fallback。
+测试任务:: 覆盖 book entry missing、source set failed、TTL missing、stale TTL、documentRoot/options/projector mismatch、projection failed、JSON-LD 独立 refresh、query only requires RDF12 freshness 和禁止 stale TTL fallback。
 
 验证命令::
 
@@ -29,6 +29,12 @@ pnpm --filter inkrail test
 pnpm --filter inkrail typecheck
 ----
 
+提交规则:: 实现提交只包含本工作包文件边界内的源码、测试、文档、fixture 或配置修改。审核证据提交只包含本工作包 review package、状态台账和必要的计划书记录更新。文件边界外修改必须写入审核包的受审例外。
+
+审核规则:: 审核者必须核对目标依据、文件边界、实际命令、命令结果、未处理对象去向、全局打回条件和解锁关系。缺少提交 hash、review package 或实际命令结果时，本工作包不得进入 `通过`。
+
 验收标准:: Project mode 已知 stale 时只能刷新或失败。Refresh events 结构化返回。JSON-LD freshness 不阻塞 query。
 
 打回条件:: 刷新失败后旧 TTL 继续 query；JSON-LD freshness 成为 query 前置；查询失败回滚成功 projection；状态机步骤被 command handler 持有。
+
+解锁关系:: 本工作包通过后解锁 xref:wp-14-oxigraph-adapter-and-query-classifier[WP-14, rel=unlocks] 和 xref:wp-16-raw-query-modes[WP-16, rel=unlocks]。

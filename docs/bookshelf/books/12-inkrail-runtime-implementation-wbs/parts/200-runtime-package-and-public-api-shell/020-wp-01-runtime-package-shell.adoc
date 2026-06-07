@@ -5,7 +5,7 @@
 
 上游门槛:: xref:wp-00-baseline-gates-and-review-infrastructure[WP-00, rel=blocks-on] 通过。当前 package 只有 metadata files。
 
-上下文闭包:: 11 号 `source-tree`、`package-boundary`、`public-exports`、`cli-consumer`、`build-lint-package-gates`；Rootward template `package.json`、`tsconfig.json`、`tsdown.config.ts`、`vitest.config.ts`、`src/bin.ts`、`src/cli.ts`；当前 `packages/inkrail/package.json`。
+上下文闭包:: xref:{book-11}#source-tree[11 号 source tree]、xref:{book-11}#package-boundary[package boundary]、xref:{book-11}#public-exports[public exports]、xref:{book-11}#cli-consumer[CLI consumer] 和 xref:{book-11}#build-lint-package-gates[build/lint/package gates]；Rootward template `package.json`、`tsconfig.json`、`tsdown.config.ts`、`vitest.config.ts`、`src/bin.ts`、`src/cli.ts`；当前 `packages/inkrail/package.json`。
 
 文件边界::
 
@@ -41,6 +41,10 @@ pnpm --filter inkrail build
 pnpm --filter inkrail pack:check
 pnpm check
 ----
+
+提交规则:: 实现提交只包含本工作包文件边界内的源码、测试、文档、fixture 或配置修改。审核证据提交只包含本工作包 review package、状态台账和必要的计划书记录更新。文件边界外修改必须写入审核包的受审例外。
+
+审核规则:: 审核者必须核对目标依据、文件边界、实际命令、命令结果、未处理对象去向、全局打回条件和解锁关系。缺少提交 hash、review package 或实际命令结果时，本工作包不得进入 `通过`。
 
 验收标准:: Runtime shell 可构建、可测试、可 dry-run pack。Public exports 不再只有 `./package.json`。CLI bin 不包含业务逻辑。
 

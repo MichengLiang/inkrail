@@ -5,7 +5,7 @@
 
 上游门槛:: xref:wp-13-project-refresh-state-machine[WP-13, rel=blocks-on] 与 xref:wp-14-oxigraph-adapter-and-query-classifier[WP-14, rel=blocks-on] 通过。
 
-上下文闭包:: 10 号 `query-modes`；11 号 `project-mode-query-flow`、`ttl-only-query-flow`、`query-api`。
+上下文闭包:: xref:{book-10}#query-modes[10 号 query modes]；xref:{book-11}#project-mode-query-flow[11 号 project mode query flow]、xref:{book-11}#ttl-only-query-flow[TTL-only query flow] 和 xref:{book-11}#query-result-model[query result model]。
 
 文件边界::
 
@@ -18,7 +18,7 @@ packages/inkrail/src/**/*.{test,spec}.ts
 
 实施任务:: Project mode 支持 query argument、`--file` 和 `--stdin`，并在 query 前执行 RDF12 refresh state machine。TTL-only mode 支持 `--ttl` 加 query argument、file 或 stdin，不查 project，不 refresh，不 state，不声明 freshness。
 
-测试任务:: 覆盖三种 query input surface、query read failure、project mode refresh before query、TTL-only no project lookup、TTL-only failure surfaces、mode-specific envelope。
+测试任务:: 覆盖三种 query input surface、query read failure、project mode query 前的 refresh、TTL-only mode 不查找 project、TTL-only failure surfaces 和 mode-specific envelope。
 
 验证命令::
 
@@ -27,6 +27,10 @@ packages/inkrail/src/**/*.{test,spec}.ts
 pnpm --filter inkrail test
 pnpm --filter inkrail typecheck
 ----
+
+提交规则:: 实现提交只包含本工作包文件边界内的源码、测试、文档、fixture 或配置修改。审核证据提交只包含本工作包 review package、状态台账和必要的计划书记录更新。文件边界外修改必须写入审核包的受审例外。
+
+审核规则:: 审核者必须核对目标依据、文件边界、实际命令、命令结果、未处理对象去向、全局打回条件和解锁关系。缺少提交 hash、review package 或实际命令结果时，本工作包不得进入 `通过`。
 
 验收标准:: Project result 包含 book/projection/freshness。TTL-only result 不包含 book/freshness。Query input priority 和错误码稳定。
 

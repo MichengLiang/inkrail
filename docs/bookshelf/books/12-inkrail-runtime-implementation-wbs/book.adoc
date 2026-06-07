@@ -9,6 +9,9 @@ v0.1.0, 2026-06
 :experimental:
 :idprefix:
 :idseparator: -
+:book-08: ../08-rdf12-heading-projection-query-workflow/book.adoc
+:book-10: ../10-inkrail-cli-design/book.adoc
+:book-11: ../11-inkrail-software-architecture-and-quality-design/book.adoc
 
 include::../../shared/attributes.adoc[]
 

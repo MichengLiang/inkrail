@@ -5,7 +5,7 @@
 
 上游门槛:: xref:wp-01-runtime-package-shell[WP-01, rel=blocks-on] 通过。
 
-上下文闭包:: 10 号 `error-semantics` 与 `output-surfaces`；11 号 `result-and-error-api`、`output-projection-flow`、`output-test-contract`；Rootward `src/core/errors.ts`、`src/core/result.ts`、`src/io/output.ts`。
+上下文闭包:: xref:{book-10}#error-semantics[10 号错误语义] 与 xref:{book-10}#output-surfaces[输出表面]；xref:{book-11}#query-result-model[11 号 query result model]、xref:{book-11}#output-projection-flow[output projection flow] 和 xref:{book-11}#output-test-contract[output test contract]；Rootward `src/core/errors.ts`、`src/core/result.ts`、`src/io/output.ts`。
 
 文件边界::
 
@@ -34,8 +34,12 @@ pnpm --filter inkrail typecheck
 pnpm --filter inkrail lint
 ----
 
+提交规则:: 实现提交只包含本工作包文件边界内的源码、测试、文档、fixture 或配置修改。审核证据提交只包含本工作包 review package、状态台账和必要的计划书记录更新。文件边界外修改必须写入审核包的受审例外。
+
+审核规则:: 审核者必须核对目标依据、文件边界、实际命令、命令结果、未处理对象去向、全局打回条件和解锁关系。缺少提交 hash、review package 或实际命令结果时，本工作包不得进入 `通过`。
+
 验收标准:: Public failure object 不使用 `CliError` 作为 domain 类型名。Exit code 只存在于 CLI projection。所有 10 号错误码有稳定 code surface。
 
 打回条件:: Failure object 命名为 CLI-only domain；failure JSON 写 stdout；pretty failure 输出 stack trace；error code 覆盖不全；output projector 执行 query 或 project loading。
 
-解锁关系:: 本工作包通过后解锁后续 CLI surface tests 与所有 service failure propagation tests。
+解锁关系:: 本工作包通过后解锁 xref:wp-03-public-api-export-surface[WP-03, rel=unlocks]、xref:wp-04-config-schema-and-project-context[WP-04, rel=unlocks] 和后续 service failure propagation tests。

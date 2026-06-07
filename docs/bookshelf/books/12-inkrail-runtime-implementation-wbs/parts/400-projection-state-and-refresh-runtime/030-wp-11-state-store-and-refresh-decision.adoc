@@ -5,7 +5,7 @@
 
 上游门槛:: xref:wp-10-source-set-and-projection-fingerprints[WP-10, rel=blocks-on] 通过。
 
-上下文闭包:: 10 号 `refresh-state-machine`；11 号 `state-store`、`refresh-state-machine-flow`、`projection-fingerprint`。
+上下文闭包:: xref:{book-10}#refresh-state-machine[10 号 refresh state machine]；xref:{book-11}#state-store[11 号 state store]、xref:{book-11}#refresh-state-machine-flow[refresh state machine flow] 和 xref:{book-11}#projection-fingerprint[projection fingerprint]。
 
 文件边界::
 
@@ -29,6 +29,10 @@ packages/inkrail/src/**/*.{test,spec}.ts
 pnpm --filter inkrail test
 pnpm --filter inkrail typecheck
 ----
+
+提交规则:: 实现提交只包含本工作包文件边界内的源码、测试、文档、fixture 或配置修改。审核证据提交只包含本工作包 review package、状态台账和必要的计划书记录更新。文件边界外修改必须写入审核包的受审例外。
+
+审核规则:: 审核者必须核对目标依据、文件边界、实际命令、命令结果、未处理对象去向、全局打回条件和解锁关系。缺少提交 hash、review package 或实际命令结果时，本工作包不得进入 `通过`。
 
 验收标准:: State file 不替代 projection artifact。TTL 与 JSON-LD state 独立。State write 在 artifact 写入和 outputHash 计算后发生。
 

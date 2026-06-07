@@ -5,7 +5,7 @@
 
 上游门槛:: xref:wp-16-raw-query-modes[WP-16, rel=blocks-on] 通过。
 
-上下文闭包:: 10 号 `query-template-contract`、`appendix-c-query-action-map`；08 号 `query-library`、标题查询、结构查询、xref 查询、degree/neighborhood 查询、audit 查询；11 号 `built-in-action-flow`。
+上下文闭包:: xref:{book-10}#query-template-contract[10 号 query template contract]、xref:{book-10}#heading-actions[heading actions]、xref:{book-10}#structure-actions[structure actions]、xref:{book-10}#xref-actions[xref actions]、xref:{book-10}#degree-and-neighborhood-actions[degree/neighborhood actions] 和 xref:{book-10}#audit-actions[audit actions]；xref:{book-08}#query-library[08 号 query library]、xref:{book-08}#heading-location-and-slices[heading location]、xref:{book-08}#structural-scope-queries[structural scope]、xref:{book-08}#xref-edge-queries[xref edge]、xref:{book-08}#xref-degree-queries[xref degree]、xref:{book-08}#xref-neighborhood-queries[xref neighborhood] 和 xref:{book-08}#quality-audit-queries[quality audit]；xref:{book-11}#built-in-action-flow[11 号 built-in action flow]。
 
 文件边界::
 
@@ -27,6 +27,10 @@ packages/inkrail/src/**/*.{test,spec}.ts
 pnpm --filter inkrail test
 pnpm --filter inkrail typecheck
 ----
+
+提交规则:: 实现提交只包含本工作包文件边界内的源码、测试、文档、fixture 或配置修改。审核证据提交只包含本工作包 review package、状态台账和必要的计划书记录更新。文件边界外修改必须写入审核包的受审例外。
+
+审核规则:: 审核者必须核对目标依据、文件边界、实际命令、命令结果、未处理对象去向、全局打回条件和解锁关系。缺少提交 hash、review package 或实际命令结果时，本工作包不得进入 `通过`。
 
 验收标准:: Registry 是 built-in action 语义唯一来源。CLI command mapping 只消费 registry。`--print-query` 在 render 后停止。
 

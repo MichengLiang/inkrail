@@ -5,7 +5,7 @@
 
 上游门槛:: xref:wp-05-book-selection-and-path-derivation[WP-05, rel=blocks-on] 与 xref:wp-06-project-memory-mutation-services[WP-06, rel=blocks-on] 通过。
 
-上下文闭包:: 10 号 `standard-bookshelf-template` 与 `initialization-contract`；11 号 `workspace-initializer-adapter`、`bookshelf-initialization-flow`；上游 `micheng-ts/projects/asciidoc-multi-book-workspace/package.json`、`src/index.ts`、`src/init-workspace.ts`。
+上下文闭包:: xref:{book-10}#standard-bookshelf-template[10 号 standard bookshelf template] 与 xref:{book-10}#initialization-contract[initialization contract]；xref:{book-11}#workspace-initializer-adapter[11 号 workspace initializer adapter] 与 xref:{book-11}#bookshelf-initialization-flow[bookshelf initialization flow]；上游 `micheng-ts/projects/asciidoc-multi-book-workspace/package.json`、`src/index.ts`、`src/init-workspace.ts`。
 
 文件边界::
 
@@ -29,8 +29,12 @@ pnpm --filter inkrail test
 pnpm --filter inkrail typecheck
 ----
 
+提交规则:: 实现提交只包含本工作包文件边界内的源码、测试、文档、fixture 或配置修改。审核证据提交只包含本工作包 review package、状态台账和必要的计划书记录更新。文件边界外修改必须写入审核包的受审例外。
+
+审核规则:: 审核者必须核对目标依据、文件边界、实际命令、命令结果、未处理对象去向、全局打回条件和解锁关系。缺少提交 hash、review package 或实际命令结果时，本工作包不得进入 `通过`。
+
 验收标准:: 上游 initializer import 只存在于 adapter。Inkrail 不 vendor 标准模板。Register 行为不污染 books list。
 
 打回条件:: 使用上游 deep import；复制标准模板到 `inkrail` core；force 删除未知用户文件；sample books 自动进入 `[[books]]`。
 
-解锁关系:: 本工作包通过后解锁 E2E 标准书架 fixture。
+解锁关系:: 本工作包通过后为 xref:wp-20-end-to-end-fixture-and-contract-closure[WP-20, rel=precondition-for] 提供标准书架初始化前置。

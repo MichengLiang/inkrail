@@ -169,6 +169,34 @@ test("contractIssuesForWorkspace resolves xrefs from the book entry directory", 
   assert.deepEqual(issues, []);
 });
 
+test("contractIssuesForWorkspace recognizes typed explicit anchors", async () => {
+  const root = path.resolve("tmp", "test-fixtures", `contract-typed-anchor-${randomUUID()}`);
+  await writeAdoc(path.join(root, "catalog.adoc"), [
+    "= Catalog",
+    "",
+    "* xref:books/01-source/book.adoc[Source]",
+    "* xref:books/02-target/book.adoc[Target]"
+  ]);
+  await createMinimalBook(root, "01-source", [
+    "== Link",
+    "",
+    "See xref:../02-target/book.adoc#target-anchor[target]."
+  ]);
+  await writeAdoc(path.join(root, "books", "02-target", "book.adoc"), [
+    "= Target",
+    "Author <author@example.com>",
+    "v0.1, 2026-05",
+    ":doctype: book",
+    "",
+    "[#target-anchor.data-model, owner=test]",
+    "== Target Anchor"
+  ]);
+
+  const issues = await contractIssuesForWorkspace(root);
+
+  assert.deepEqual(issues, []);
+});
+
 test("workspaceContractIssuesForWorkspace stays useful after deleting canonical samples", async () => {
   const root = path.resolve("tmp", "test-fixtures", `reusable-contract-${randomUUID()}`);
   await writeAdoc(path.join(root, "catalog.adoc"), [

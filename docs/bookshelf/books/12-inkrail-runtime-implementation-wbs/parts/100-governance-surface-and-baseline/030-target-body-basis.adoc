@@ -8,15 +8,15 @@
 |依据 |路径或对象 |进入本书的位置
 
 |需求契约
-|xref:../10-inkrail-cli-design/book.adoc[10 号 inkrail CLI 设计书, rel=depends-on-body]
+|xref:{book-10}[10 号 inkrail CLI 设计书, rel=depends-on-body]
 |项目记忆、标准书架、路径推导、新鲜度、查询模式、输出表面、错误语义、内置动作和测试合同。
 
 |架构基线
-|xref:../11-inkrail-software-architecture-and-quality-design/book.adoc[11 号软件架构与工程质量设计书, rel=depends-on-body]
+|xref:{book-11}[11 号软件架构与工程质量设计书, rel=depends-on-body]
 |Public API、module roles、data models、runtime flows、adapter contracts 和 quality gates。
 
 |查询语义来源
-|xref:../08-rdf12-heading-projection-query-workflow/book.adoc[08 号 RDF 投影查询工作流, rel=sources-query-from]
+|xref:{book-08}[08 号 RDF 投影查询工作流, rel=sources-query-from]
 |Built-in action registry 的 SPARQL templates、variables、sorting、source coordinate 和审计事实边界。
 
 |材料治理规则
@@ -29,7 +29,7 @@
 
 |工程骨架参考
 |`projects/rootward/templates/typescript`
-|ESM package、bin entry、`runCli(args,{cwd})`、output projection、filesystem abstraction 和 test fixture pattern。
+|ESM package、bin entry、`runCli(args,{cwd})`、output projection、filesystem abstraction 和 test fixture 组织形态。
 
 |Projection dependency
 |`asciidoc-abundant-tree@0.1.12`

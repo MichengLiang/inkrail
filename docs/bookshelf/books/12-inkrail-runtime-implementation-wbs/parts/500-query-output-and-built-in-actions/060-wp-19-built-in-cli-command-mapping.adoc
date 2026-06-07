@@ -5,7 +5,7 @@
 
 上游门槛:: xref:wp-18-built-in-action-registry[WP-18, rel=blocks-on] 与 xref:wp-17-output-projection-surface[WP-17, rel=blocks-on] 通过。
 
-上下文闭包:: 10 号第五部内置查询动作与 appendix C；11 号 `built-in-action-flow`、`cli-consumer`；WP-18 registry。
+上下文闭包:: xref:{book-10}#source-action[10 号 source action]、xref:{book-10}#heading-actions[heading actions]、xref:{book-10}#structure-actions[structure actions]、xref:{book-10}#xref-actions[xref actions]、xref:{book-10}#degree-and-neighborhood-actions[degree/neighborhood actions] 和 xref:{book-10}#audit-actions[audit actions]；xref:{book-11}#built-in-action-flow[11 号 built-in action flow] 与 xref:{book-11}#cli-consumer[CLI consumer]；xref:wp-18-built-in-action-registry[WP-18 registry]。
 
 文件边界::
 
@@ -19,7 +19,7 @@ packages/inkrail/src/**/*.{test,spec}.ts
 
 实施任务:: 注册 source、outline、heading、labels、structure、xrefs、degree、neighborhood、audit commands。CLI parameters 映射到 registry parameter schema。支持 project mode 与适用的 TTL-only mode。`--print-query` 直接输出 rendered SPARQL。
 
-测试任务:: 覆盖每个 command path、参数映射、JSON/pretty mode、`--print-query` no project/read TTL/refresh/query、variables 与 registry 一致、unknown/invalid parameter failure。
+测试任务:: 覆盖每个 command path、参数映射、JSON/pretty mode、`--print-query` 不查找 project、不读取 TTL、不执行 refresh、不执行 query、variables 与 registry 一致、未知/非法 parameter failure。
 
 验证命令::
 
@@ -29,6 +29,12 @@ pnpm --filter inkrail test
 pnpm --filter inkrail typecheck
 ----
 
+提交规则:: 实现提交只包含本工作包文件边界内的源码、测试、文档、fixture 或配置修改。审核证据提交只包含本工作包 review package、状态台账和必要的计划书记录更新。文件边界外修改必须写入审核包的受审例外。
+
+审核规则:: 审核者必须核对目标依据、文件边界、实际命令、命令结果、未处理对象去向、全局打回条件和解锁关系。缺少提交 hash、review package 或实际命令结果时，本工作包不得进入 `通过`。
+
 验收标准:: Command handler 不拼 SPARQL。Command output 使用 WP-17 projection。Command set 与 10 号 appendix C 一致。
 
 打回条件:: CLI command 自己拥有 query semantics；`--print-query` 触发 refresh；command output variables 与 registry SELECT variables 不一致。
+
+解锁关系:: 本工作包通过后解锁 xref:wp-20-end-to-end-fixture-and-contract-closure[WP-20, rel=unlocks]。

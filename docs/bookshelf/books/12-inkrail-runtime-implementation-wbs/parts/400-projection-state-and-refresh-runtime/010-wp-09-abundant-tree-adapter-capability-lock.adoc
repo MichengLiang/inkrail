@@ -5,7 +5,7 @@
 
 上游门槛:: xref:wp-05-book-selection-and-path-derivation[WP-05, rel=blocks-on] 通过。
 
-上下文闭包:: 11 号 `abundant-tree-adapter`、`explicit-projection-flow`、`version-and-capability-locks`；上游 `src/index.ts` public exports；08 号 book-entry projection workflow。
+上下文闭包:: xref:{book-11}#abundant-tree-adapter[11 号 abundant-tree adapter]、xref:{book-11}#explicit-projection-flow[explicit projection flow] 和 xref:{book-11}#version-and-capability-locks[version/capability locks]；上游 `src/index.ts` public exports；xref:{book-08}#build-and-projection[08 号 build/projection workflow]。
 
 文件边界::
 
@@ -28,6 +28,10 @@ packages/inkrail/test/fixtures/**
 pnpm --filter inkrail test
 pnpm --filter inkrail typecheck
 ----
+
+提交规则:: 实现提交只包含本工作包文件边界内的源码、测试、文档、fixture 或配置修改。审核证据提交只包含本工作包 review package、状态台账和必要的计划书记录更新。文件边界外修改必须写入审核包的受审例外。
+
+审核规则:: 审核者必须核对目标依据、文件边界、实际命令、命令结果、未处理对象去向、全局打回条件和解锁关系。缺少提交 hash、review package 或实际命令结果时，本工作包不得进入 `通过`。
 
 验收标准:: Adapter capability 由 fixture test 锁定。上游 internals 不进入 Inkrail。Parser、include resolver、payload interpreter 不在 Inkrail 中实现。
 

@@ -5,7 +5,7 @@
 
 上游门槛:: xref:wp-04-config-schema-and-project-context[WP-04, rel=blocks-on] 与 xref:wp-05-book-selection-and-path-derivation[WP-05, rel=blocks-on] 通过。
 
-上下文闭包:: 10 号 `initialization-contract`、`project-config-model`；11 号 `initialization-api`、`application-services`、`documentation-quality`；Rootward init/status/config print tests as fixture pattern。
+上下文闭包:: xref:{book-10}#initialization-contract[10 号 initialization contract] 与 xref:{book-10}#project-config-model[project config model]；xref:{book-11}#application-services[11 号 application services]、xref:{book-11}#config-model[config model] 和 xref:{book-11}#documentation-quality[documentation quality]；Rootward init/status/config print tests 只提供 fixture 形态参考。
 
 文件边界::
 
@@ -34,6 +34,12 @@ pnpm --filter inkrail test
 pnpm --filter inkrail typecheck
 ----
 
+提交规则:: 实现提交只包含本工作包文件边界内的源码、测试、文档、fixture 或配置修改。审核证据提交只包含本工作包 review package、状态台账和必要的计划书记录更新。文件边界外修改必须写入审核包的受审例外。
+
+审核规则:: 审核者必须核对目标依据、文件边界、实际命令、命令结果、未处理对象去向、全局打回条件和解锁关系。缺少提交 hash、review package 或实际命令结果时，本工作包不得进入 `通过`。
+
 验收标准:: Project memory mutation 由 services 承担，CLI 只映射参数。Config serializer 不丢字段。Doctor diagnostics 结构化返回。
 
-打回条件:: `init` 创建 bookshelf；`init` 自动登记样本书；serializer 丢失 unknown-but-supported fields；doctor 输出教学文本或扩大公共契约。
+打回条件:: `init` 创建 bookshelf；`init` 自动登记样本书；serializer 丢失已支持但未知的配置字段；doctor 输出教学文本或扩大公共契约。
+
+解锁关系:: 本工作包通过后，与 xref:wp-05-book-selection-and-path-derivation[WP-05, rel=blocks-on] 共同解锁 xref:wp-07-workspace-initializer-adapter-and-bookshelf-init[WP-07, rel=unlocks] 和 xref:wp-08-bookshelf-runtime-dispatch[WP-08, rel=unlocks]。

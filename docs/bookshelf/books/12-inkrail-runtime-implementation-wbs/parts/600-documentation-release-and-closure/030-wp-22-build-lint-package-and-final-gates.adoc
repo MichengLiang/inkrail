@@ -5,7 +5,7 @@
 
 上游门槛:: xref:wp-21-readme-user-guide-and-docs-sync[WP-21, rel=blocks-on] 通过。
 
-上下文闭包:: 11 号 `build-lint-package-gates`、`architecture-acceptance`；package manifest scripts；docs bookshelf build/test commands。
+上下文闭包:: xref:{book-11}#build-lint-package-gates[11 号 build/lint/package gates] 与 xref:{book-11}#architecture-acceptance[architecture acceptance]；package manifest scripts；docs bookshelf build/test commands。
 
 文件边界::
 
@@ -18,6 +18,8 @@ docs/bookshelf/**
 
 实施任务:: 确认 scripts 稳定：typecheck、test、lint、build、pack:check、full check。验证 package exports、bin、types、dist、README、LICENSE、package.json。记录 pack dry-run required/forbidden files。
 
+测试任务:: 验证 final gate 命令实际运行并记录结果。检查 package dry-run 的 required files 与 forbidden files，检查 exports、bin、types 与 dist output 的一致性。
+
 验证命令::
 
 [source,bash]
@@ -29,6 +31,10 @@ pnpm --filter inkrail build
 pnpm --filter inkrail pack:check
 pnpm check
 ----
+
+提交规则:: 实现提交只包含本工作包文件边界内的源码、测试、文档、fixture 或配置修改。审核证据提交只包含本工作包 review package、状态台账和必要的计划书记录更新。文件边界外修改必须写入审核包的受审例外。
+
+审核规则:: 审核者必须核对目标依据、文件边界、实际命令、命令结果、未处理对象去向、全局打回条件和解锁关系。缺少提交 hash、review package 或实际命令结果时，本工作包不得进入 `通过`。
 
 验收标准:: 全部命令通过。Package dry-run 只包含允许发布文件。Bin 指向 built file。Exports 可解析。Docs build 与 runtime checks 同时通过。
 

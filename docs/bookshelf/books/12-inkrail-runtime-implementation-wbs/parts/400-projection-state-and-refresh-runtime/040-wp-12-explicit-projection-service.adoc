@@ -5,7 +5,7 @@
 
 上游门槛:: xref:wp-09-abundant-tree-adapter-capability-lock[WP-09, rel=blocks-on] 通过。
 
-上下文闭包:: 10 号 `rdf12-and-jsonld-projections`；11 号 `explicit-projection-flow`、`projection-api`、`abundant-tree-adapter`。
+上下文闭包:: xref:{book-10}#rdf12-and-jsonld-projections[10 号 RDF12/JSON-LD projections]；xref:{book-11}#explicit-projection-flow[11 号 explicit projection flow] 与 xref:{book-11}#abundant-tree-adapter[abundant-tree adapter]。
 
 文件边界::
 
@@ -29,6 +29,12 @@ pnpm --filter inkrail test
 pnpm --filter inkrail typecheck
 ----
 
+提交规则:: 实现提交只包含本工作包文件边界内的源码、测试、文档、fixture 或配置修改。审核证据提交只包含本工作包 review package、状态台账和必要的计划书记录更新。文件边界外修改必须写入审核包的受审例外。
+
+审核规则:: 审核者必须核对目标依据、文件边界、实际命令、命令结果、未处理对象去向、全局打回条件和解锁关系。缺少提交 hash、review package 或实际命令结果时，本工作包不得进入 `通过`。
+
 验收标准:: Explicit projection 是无项目状态的投影工具。Book-entry mode 是显式输入语义。State store 不受 explicit projection 影响。
 
 打回条件:: Explicit projection 写 `.inkrail/state`；根据 `:doctype: book` 隐式切换模式；未传 documentRoot 却执行 book-entry；读取 project config。
+
+解锁关系:: 本工作包通过后，explicit projection CLI 与 service surface 可供 WP-21 用户文档同步引用；project mode refresh 不依赖本工作包。

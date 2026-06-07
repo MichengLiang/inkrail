@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const CATALOG_BOOK_XREF_PATTERN = /xref:books\/([^/\]]+)\/book\.adoc(?:#[^\[]+)?\[/g;
 const XREF_PATTERN = /xref:([^\[#]+)(?:#([A-Za-z0-9_-]+))?\[/g;
-const ANCHOR_PATTERN = /^\[#([A-Za-z0-9_-]+)\]$/gm;
+const ANCHOR_PATTERN = /^\[#([A-Za-z0-9_-]+)(?:[.,][^\]]*)?\]$/gm;
 
 const REQUIRED_RESOURCES = new Map([
   [

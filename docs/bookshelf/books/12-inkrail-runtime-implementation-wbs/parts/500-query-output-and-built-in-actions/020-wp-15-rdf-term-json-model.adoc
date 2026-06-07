@@ -5,7 +5,7 @@
 
 上游门槛:: xref:wp-14-oxigraph-adapter-and-query-classifier[WP-14, rel=blocks-on] 通过。
 
-上下文闭包:: 10 号 `output-surfaces` RDF term 规则；11 号 `rdf-term-json`、`query-result-model`、`output-test-contract`。
+上下文闭包:: xref:{book-10}#output-surfaces[10 号 output surfaces 中的 RDF term 规则]；xref:{book-11}#rdf-term-json[11 号 RDF term JSON]、xref:{book-11}#query-result-model[query result model] 和 xref:{book-11}#output-test-contract[output test contract]。
 
 文件边界::
 
@@ -16,9 +16,9 @@ packages/inkrail/src/adapters/oxigraph.ts
 packages/inkrail/src/**/*.{test,spec}.ts
 ----
 
-实施任务:: Serialize NamedNode、Literal、BlankNode、DefaultGraph、Variable 和 Quad term。Literal 保留 datatype、language 和 direction 字段。Quad term 保留 subject、predicate、object、graph。Unknown term shape 返回 structured failure。
+实施任务:: Serialize NamedNode、Literal、BlankNode、DefaultGraph、Variable 和 Quad term。Literal 保留 datatype、language 和 direction 字段。Quad term 保留 subject、predicate、object、graph。未识别的 term shape 返回 structured failure。
 
-测试任务:: 覆盖所有 supported term classes、nested quad term、literal language/datatype、unknown term failure、pretty output 不改变 JSON contract。
+测试任务:: 覆盖所有 supported term classes、nested quad term、literal language/datatype、未识别 term failure、pretty output 不改变 JSON contract。
 
 验证命令::
 
@@ -28,8 +28,12 @@ pnpm --filter inkrail test
 pnpm --filter inkrail typecheck
 ----
 
+提交规则:: 实现提交只包含本工作包文件边界内的源码、测试、文档、fixture 或配置修改。审核证据提交只包含本工作包 review package、状态台账和必要的计划书记录更新。文件边界外修改必须写入审核包的受审例外。
+
+审核规则:: 审核者必须核对目标依据、文件边界、实际命令、命令结果、未处理对象去向、全局打回条件和解锁关系。缺少提交 hash、review package 或实际命令结果时，本工作包不得进入 `通过`。
+
 验收标准:: JSON output 保留 RDF/JS-compatible structure。Pretty renderer 可以短文本化，但机器 JSON 不丢结构。
 
-打回条件:: RDF term 压成 string；literal 丢 datatype/language；quad term 拆坏；unknown term 输出部分结果。
+打回条件:: RDF term 压成 string；literal 丢 datatype/language；quad term 拆坏；未识别 term 输出部分结果。
 
 解锁关系:: 本工作包通过后解锁 xref:wp-17-output-projection-surface[WP-17, rel=unlocks]。

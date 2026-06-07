@@ -5,7 +5,7 @@
 
 上游门槛:: xref:wp-05-book-selection-and-path-derivation[WP-05, rel=blocks-on]、xref:wp-06-project-memory-mutation-services[WP-06, rel=blocks-on] 和 xref:wp-07-workspace-initializer-adapter-and-bookshelf-init[WP-07, rel=blocks-on] 通过。
 
-上下文闭包:: 10 号 `bookshelf-build-dispatch`；11 号 `bookshelf-runtime-dispatch-flow`、`filesystem-and-process-adapters`；standard workspace package scripts。
+上下文闭包:: xref:{book-10}#bookshelf-build-dispatch[10 号 bookshelf build dispatch]；xref:{book-11}#bookshelf-runtime-dispatch-flow[11 号 bookshelf runtime dispatch flow] 与 xref:{book-11}#filesystem-and-process-adapters[filesystem/process adapters]；standard workspace package scripts。
 
 文件边界::
 
@@ -19,7 +19,7 @@ packages/inkrail/src/**/*.{test,spec}.ts
 
 实施任务:: Load project，resolve bookshelf，require standard profile，validate package script，validate `tools/adoc-books.mjs`，run script in bookshelf root，forward stdout/stderr/status into structured result。
 
-测试任务:: 覆盖 registered standard profile dispatch、unknown bookshelf、custom profile unsupported、missing package script、missing runtime script、non-zero status、stdout/stderr forwarding、dispatch 不写 RDF state、project query 不隐式 build/check/clean。
+测试任务:: 覆盖 registered standard profile dispatch、未知 bookshelf、custom profile unsupported、missing package script、missing runtime script、non-zero status、stdout/stderr forwarding、dispatch 不写 RDF state、project query 不隐式 build/check/clean。
 
 验证命令::
 
@@ -29,6 +29,12 @@ pnpm --filter inkrail test
 pnpm --filter inkrail typecheck
 ----
 
+提交规则:: 实现提交只包含本工作包文件边界内的源码、测试、文档、fixture 或配置修改。审核证据提交只包含本工作包 review package、状态台账和必要的计划书记录更新。文件边界外修改必须写入审核包的受审例外。
+
+审核规则:: 审核者必须核对目标依据、文件边界、实际命令、命令结果、未处理对象去向、全局打回条件和解锁关系。缺少提交 hash、review package 或实际命令结果时，本工作包不得进入 `通过`。
+
 验收标准:: Dispatch 只服务 standard profile。Process runner 是 adapter。Dispatch result 保留 stdout/stderr/status。RDF projection state 不受影响。
 
 打回条件:: Dispatch 写 `.inkrail/state`；query 隐式执行 bookshelf build；custom profile 被强行调度；non-zero local runtime status 被吞掉。
+
+解锁关系:: 本工作包通过后，书架 runtime dispatch 成为 xref:wp-20-end-to-end-fixture-and-contract-closure[WP-20, rel=precondition-for] 的可用前置；该工作包不解锁 projection runtime 工作包。

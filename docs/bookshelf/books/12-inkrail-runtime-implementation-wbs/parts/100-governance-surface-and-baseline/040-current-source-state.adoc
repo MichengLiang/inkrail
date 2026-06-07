@@ -10,7 +10,7 @@
 micheng-ts/projects/inkrail
 ----
 
-当前内部 Git 状态显示 `main...origin/main`，且只有 `docs/plans/` 处于未跟踪状态。该目录承载本次写作前的上下文资料；runtime package 未发生修改。
+本书创建提交为 `d56edd7d`。该提交新增本书、更新 catalog，并提交写作前上下文资料 `docs/plans/资料10.md`。提交后的内部 Git 状态为 `main...origin/main [ahead 1]`，工作树无未提交修改。
 
 `packages/inkrail` 当前只有：
 
@@ -23,6 +23,6 @@ package.json
 
 `packages/inkrail/package.json` 当前描述是 `inkrail CLI design specification package.`。当前 `exports` 只包含 `./package.json`。当前 `files` 只包含 `LICENSE` 和 `README.md`。当前 package 没有 `src/`、没有 CLI binary、没有 public library API、没有 runtime tests。
 
-根 `pnpm check` 已通过。该命令执行版本检查、docs bookshelf tests、docs build 和 package dry-run。当前 package dry-run 只发布 `LICENSE`、`README.md` 和 `package.json` 三个文件。
+根 `pnpm check` 在本书创建前后均可作为基线验证命令。该命令执行版本检查、docs bookshelf tests、docs build 和 package dry-run。当前 package dry-run 只发布 `LICENSE`、`README.md` 和 `package.json` 三个文件。
 
 本计划的 WP-01 才允许把 `packages/inkrail` 从 specification package 转为 runtime package shell。任何工作包不得在当前源码状态章节中预写 runtime 已存在的事实。

@@ -5,7 +5,7 @@
 
 上游门槛:: xref:wp-22-build-lint-package-and-final-gates[WP-22, rel=blocks-on] 通过。
 
-上下文闭包:: 材料体系 `closure-record`、`entry-rules`、`migration-cleanup`；本书 closure record template；10/11 号 body。
+上下文闭包:: 材料体系 `closure-record`、`entry-rules`、`migration-cleanup`；xref:closure-record-template[本书 closure record template]；xref:{book-10}[10 号 body] 与 xref:{book-11}[11 号 body]。
 
 文件边界::
 
@@ -31,6 +31,12 @@ pnpm --dir docs/bookshelf build
 pnpm check
 ----
 
+提交规则:: 实现提交只包含本工作包文件边界内的源码、测试、文档、fixture 或配置修改。审核证据提交只包含本工作包 review package、状态台账和必要的计划书记录更新。文件边界外修改必须写入审核包的受审例外。
+
+审核规则:: 审核者必须核对目标依据、文件边界、实际命令、命令结果、未处理对象去向、全局打回条件和解锁关系。缺少提交 hash、review package 或实际命令结果时，本工作包不得进入 `通过`。
+
 验收标准:: 本计划有关闭记录。未处理对象没有悬空项。10/11 号修订判断有依据。Catalog 不让关闭计划抢占 current body。
 
 打回条件:: 关闭记录写“后续再说”；实现发现 body 缺口但不进入新 lab 或 body revision；状态台账仍有无去向的未开始/打回项；closure record 未进入 book public surface。
+
+解锁关系:: 本工作包通过后关闭本 implementation WBS；后续实现变更必须开启新的 lab object 或进入已登记的 body revision。

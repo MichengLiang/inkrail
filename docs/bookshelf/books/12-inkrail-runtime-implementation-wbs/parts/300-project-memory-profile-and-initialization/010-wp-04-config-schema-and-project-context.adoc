@@ -5,7 +5,7 @@
 
 上游门槛:: xref:wp-02-result-failure-and-output-foundation[WP-02, rel=blocks-on] 与 xref:wp-03-public-api-export-surface[WP-03, rel=blocks-on] 通过。
 
-上下文闭包:: 10 号 `project-config-model`；11 号 `config-model`、`project-and-book-model`、`path-model`、`project-api`；Rootward config/project discovery tests as shape reference。
+上下文闭包:: xref:{book-10}#project-config-model[10 号 project config model]；xref:{book-11}#config-model[11 号 config model]、xref:{book-11}#project-and-book-model[project/book model]、xref:{book-11}#path-model[path model] 和 xref:{book-11}#application-services[application services]；Rootward config/project discovery tests 只提供测试形态参考。
 
 文件边界::
 
@@ -30,6 +30,10 @@ packages/inkrail/src/**/*.{test,spec}.ts
 pnpm --filter inkrail test
 pnpm --filter inkrail typecheck
 ----
+
+提交规则:: 实现提交只包含本工作包文件边界内的源码、测试、文档、fixture 或配置修改。审核证据提交只包含本工作包 review package、状态台账和必要的计划书记录更新。文件边界外修改必须写入审核包的受审例外。
+
+审核规则:: 审核者必须核对目标依据、文件边界、实际命令、命令结果、未处理对象去向、全局打回条件和解锁关系。缺少提交 hash、review package 或实际命令结果时，本工作包不得进入 `通过`。
 
 验收标准:: Config model 与 10/11 号一致。Path validation 是 core rule。Project discovery 不泄漏到 CLI command handler。
 

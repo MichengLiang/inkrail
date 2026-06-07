@@ -5,7 +5,7 @@
 
 上游门槛:: xref:wp-04-config-schema-and-project-context[WP-04, rel=blocks-on] 通过。
 
-上下文闭包:: 10 号 `book-path-derivation`、`query-modes` book selection；11 号 `book-selection`、`path-model`、`project-and-book-model`。
+上下文闭包:: xref:{book-10}#book-path-derivation[10 号 book path derivation] 与 xref:{book-10}#query-modes[query modes 中的 book selection]；xref:{book-11}#path-model[11 号 path model] 与 xref:{book-11}#project-and-book-model[project/book model]。
 
 文件边界::
 
@@ -20,7 +20,7 @@ packages/inkrail/src/**/*.{test,spec}.ts
 
 实施任务:: 实现 `selectTargetBook`，优先级为 explicit book、default_book、single book fallback。实现 `deriveBookPaths`，标准 profile 派生 book entry、documentRoot、RDF12 TTL、RDF12 JSON-LD、HTML、expanded ADOC 和 watch globs。Custom profile 只使用 config 声明路径。
 
-测试任务:: 覆盖 explicit book override、default book、single book fallback、multi book `BOOK_REQUIRED`、unknown book `BOOK_NOT_FOUND`。验证 standard profile 的所有派生路径和 display/operation path 分离。
+测试任务:: 覆盖 explicit book override、default book、single book fallback、multi book `BOOK_REQUIRED`、未知 book `BOOK_NOT_FOUND`。验证 standard profile 的所有派生路径和 display/operation path 分离。
 
 验证命令::
 
@@ -30,8 +30,12 @@ pnpm --filter inkrail test
 pnpm --filter inkrail typecheck
 ----
 
+提交规则:: 实现提交只包含本工作包文件边界内的源码、测试、文档、fixture 或配置修改。审核证据提交只包含本工作包 review package、状态台账和必要的计划书记录更新。文件边界外修改必须写入审核包的受审例外。
+
+审核规则:: 审核者必须核对目标依据、文件边界、实际命令、命令结果、未处理对象去向、全局打回条件和解锁关系。缺少提交 hash、review package 或实际命令结果时，本工作包不得进入 `通过`。
+
 验收标准:: Book selection 是 domain rule。Watch globs 不等同 source set。HTML 和 expanded ADOC 不进入 query freshness。
 
 打回条件:: Book selection 写在 CLI command handler；watch globs 被当作 source set；custom profile 被强行推导；standard path 派生遗漏 RDF12 JSON-LD 或 expanded ADOC。
 
-解锁关系:: 本工作包通过后解锁 xref:wp-07-workspace-initializer-adapter-and-bookshelf-init[WP-07, rel=unlocks]、xref:wp-08-bookshelf-runtime-dispatch[WP-08, rel=unlocks] 和 projection 相关工作包。
+解锁关系:: 本工作包通过后解锁 xref:wp-07-workspace-initializer-adapter-and-bookshelf-init[WP-07, rel=unlocks]、xref:wp-08-bookshelf-runtime-dispatch[WP-08, rel=unlocks] 和 xref:wp-09-abundant-tree-adapter-capability-lock[WP-09, rel=unlocks]。
