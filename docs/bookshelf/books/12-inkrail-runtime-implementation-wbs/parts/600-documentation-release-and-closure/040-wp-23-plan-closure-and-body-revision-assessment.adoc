@@ -1,0 +1,36 @@
+[#wp-23-plan-closure-and-body-revision-assessment.work-package, owner=governance, wp=WP-23, status=未开始]
+== WP-23：Plan Closure and Body Revision Assessment
+
+目标:: 关闭本 implementation WBS，并判断实现结果是否需要修订 10 号或 11 号 body。
+
+上游门槛:: xref:wp-22-build-lint-package-and-final-gates[WP-22, rel=blocks-on] 通过。
+
+上下文闭包:: 材料体系 `closure-record`、`entry-rules`、`migration-cleanup`；本书 closure record template；10/11 号 body。
+
+文件边界::
+
+[source,text]
+----
+docs/bookshelf/books/12-inkrail-runtime-implementation-wbs/backmatter/closure-record.adoc
+docs/bookshelf/books/12-inkrail-runtime-implementation-wbs/book.adoc
+docs/bookshelf/catalog.adoc
+docs/bookshelf/books/10-inkrail-cli-design/**
+docs/bookshelf/books/11-inkrail-software-architecture-and-quality-design/**
+----
+
+实施任务:: 创建实际 closure record。记录最终提交、最终命令结果、package boundary、已进入当前事实对象、未处理对象去向、body revision 判断、当前对象入口、治理追溯入口和后续治理入口。若实现发现需求或架构缺口，开启新的 lab object 或修订相应 body。
+
+测试任务:: 验证 closure record 被 `book.adoc` include，状态台账所有 WP 为 `通过` 或有明确关闭/打回记录。Docs build 通过。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --dir docs/bookshelf test
+pnpm --dir docs/bookshelf build
+pnpm check
+----
+
+验收标准:: 本计划有关闭记录。未处理对象没有悬空项。10/11 号修订判断有依据。Catalog 不让关闭计划抢占 current body。
+
+打回条件:: 关闭记录写“后续再说”；实现发现 body 缺口但不进入新 lab 或 body revision；状态台账仍有无去向的未开始/打回项；closure record 未进入 book public surface。

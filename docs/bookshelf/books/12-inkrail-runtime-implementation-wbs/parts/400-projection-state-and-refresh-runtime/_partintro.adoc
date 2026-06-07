@@ -1,0 +1,1 @@
+本部实现 projection runtime 的核心对象：`asciidoc-abundant-tree` adapter capability lock、source set fingerprint、projection fingerprint、state store、explicit projection service 和 project refresh state machine。

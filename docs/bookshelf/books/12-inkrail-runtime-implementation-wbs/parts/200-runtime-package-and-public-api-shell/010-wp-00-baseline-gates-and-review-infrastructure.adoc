@@ -1,0 +1,35 @@
+[#wp-00-baseline-gates-and-review-infrastructure.work-package, owner=governance, wp=WP-00, status=未开始]
+== WP-00：Baseline Gates and Review Infrastructure
+
+目标:: 创建本书、登记 catalog、建立审核包模板、状态台账和关闭记录模板。本工作包只修改治理材料，不写 runtime 业务代码。
+
+上游门槛:: 10 号需求契约、11 号架构基线、08 号查询语义和材料体系已经阅读。当前 `pnpm check` 通过。当前 `packages/inkrail` 仍是 specification package。
+
+上下文闭包:: xref:plan-identity[计划对象身份]、xref:target-body-basis[目标 Body 依据]、xref:current-source-state[当前源码状态]、材料体系 `chapters/04-lab.adoc`、implementation plan 示例的 execution contract、review template、status ledger 和 closure template。
+
+文件边界::
+
+[source,text]
+----
+docs/bookshelf/books/12-inkrail-runtime-implementation-wbs/**
+docs/bookshelf/catalog.adoc
+----
+
+实施任务:: 创建 12 号书完整源文件结构。第一部定义治理表面、对象身份、目标依据、当前源码基线、执行规则、质量契约、打回条件和 source-order notation。后置区创建 review package template、status ledger、closure record template、glossary、bibliography 和 index。Catalog 把 12 号登记为 implementation governance entry。
+
+测试任务:: 运行 docs bookshelf test/build/full check。验证 `book.adoc` include 全部存在，catalog xref 可解析，新增书不会破坏 workspace contract。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --dir docs/bookshelf test
+pnpm --dir docs/bookshelf build
+pnpm check
+----
+
+验收标准:: 12 号书可构建。状态台账中 WP-00 至 WP-23 均为 `未开始`，没有预写未来提交 hash。Catalog 不把 12 号写成 current body。
+
+打回条件:: 12 号重新定义 10 号需求或 11 号架构；状态台账写入愿望或估计；closure record template 写成已经完成的事实；catalog 让 12 号抢占 10/11 号入口。
+
+解锁关系:: 本工作包通过后解锁 xref:wp-01-runtime-package-shell[WP-01, rel=unlocks]。

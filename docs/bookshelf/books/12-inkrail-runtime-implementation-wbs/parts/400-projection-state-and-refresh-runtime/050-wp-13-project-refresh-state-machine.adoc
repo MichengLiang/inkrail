@@ -1,0 +1,34 @@
+[#wp-13-project-refresh-state-machine.work-package, owner=projection-runtime, wp=WP-13, status=未开始]
+== WP-13：Project Refresh State Machine
+
+目标:: 实现 project mode RDF12 refresh state machine 和 explicit `refresh` command。
+
+上游门槛:: xref:wp-10-source-set-and-projection-fingerprints[WP-10, rel=blocks-on] 与 xref:wp-11-state-store-and-refresh-decision[WP-11, rel=blocks-on] 通过。
+
+上下文闭包:: 10 号 `refresh-state-machine`；11 号 `refresh-state-machine-flow`、`project-mode-query-flow`、`state-store`。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/src/services/refresh.ts
+packages/inkrail/src/services/projection.ts
+packages/inkrail/src/commands/refresh.ts
+packages/inkrail/src/**/*.{test,spec}.ts
+----
+
+实施任务:: 按项目上下文、config、target book、path derivation、source set、fingerprint、state、artifact、freshness decision、projection、state write 的顺序执行。`refresh --projection rdf12/jsonld/all` 分别刷新对应 format。Project mode query 只要求 RDF12 freshness。
+
+测试任务:: 覆盖 book entry missing、source set failed、TTL missing、stale TTL、documentRoot/options/projector mismatch、projection failed、JSON-LD 独立 refresh、query only requires RDF12 freshness、no stale fallback。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail typecheck
+----
+
+验收标准:: Project mode 已知 stale 时只能刷新或失败。Refresh events 结构化返回。JSON-LD freshness 不阻塞 query。
+
+打回条件:: 刷新失败后旧 TTL 继续 query；JSON-LD freshness 成为 query 前置；查询失败回滚成功 projection；状态机步骤被 command handler 持有。

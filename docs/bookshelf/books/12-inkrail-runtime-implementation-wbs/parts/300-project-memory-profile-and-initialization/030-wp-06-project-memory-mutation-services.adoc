@@ -1,0 +1,39 @@
+[#wp-06-project-memory-mutation-services.work-package, owner=project-memory, wp=WP-06, status=未开始]
+== WP-06：Project Memory Mutation Services
+
+目标:: 实现项目记忆 mutation services 与基础命令：`init`、`bookshelves add`、`books add`、`books use`、`books list`、`config print`、`status` 和 `doctor`。
+
+上游门槛:: xref:wp-04-config-schema-and-project-context[WP-04, rel=blocks-on] 与 xref:wp-05-book-selection-and-path-derivation[WP-05, rel=blocks-on] 通过。
+
+上下文闭包:: 10 号 `initialization-contract`、`project-config-model`；11 号 `initialization-api`、`application-services`、`documentation-quality`；Rootward init/status/config print tests as fixture pattern。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/src/services/init-project.ts
+packages/inkrail/src/services/load-project.ts
+packages/inkrail/src/commands/init.ts
+packages/inkrail/src/commands/bookshelves.ts
+packages/inkrail/src/commands/books.ts
+packages/inkrail/src/commands/config-print.ts
+packages/inkrail/src/commands/status.ts
+packages/inkrail/src/commands/doctor.ts
+packages/inkrail/src/**/*.{test,spec}.ts
+----
+
+实施任务:: `initInkrailProject` 创建 `.inkrail/config.toml`、`.inkrail/cache/`、`.inkrail/state/` 和必要 ignore files。Registration services 修改 config 并保持 serializer roundtrip。Status/doctor 返回 project memory 与 diagnostics，不定义新的需求对象。
+
+测试任务:: 覆盖初次 init、重复 init、force、register bookshelf、register book、set default book、list books、config print roundtrip、status、doctor diagnostics。验证 init 不创建书架、不自动登记样本书。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail typecheck
+----
+
+验收标准:: Project memory mutation 由 services 承担，CLI 只映射参数。Config serializer 不丢字段。Doctor diagnostics 结构化返回。
+
+打回条件:: `init` 创建 bookshelf；`init` 自动登记样本书；serializer 丢失 unknown-but-supported fields；doctor 输出教学文本或扩大公共契约。

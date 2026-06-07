@@ -1,0 +1,5 @@
+== 摘要
+
+本书定义 `inkrail` runtime implementation WBS 与治理计划。它引用 10 号需求契约和 11 号架构基线，将当前 specification package 到 runtime package 的实现活动拆分为受控 work packages，并定义每个工作包的上下文闭包、文件边界、验证命令、提交规则、审核证据、状态台账和关闭条件。
+
+本书是 lab book。它不重新定义 `inkrail` 的需求对象，不重新定义软件架构，不替代 README、用户指南或 CLI help。它的职责是组织实现兑现过程，使执行者、审核者、协调者和后续维护者能够用同一组治理事实判断实现是否符合既有 body。

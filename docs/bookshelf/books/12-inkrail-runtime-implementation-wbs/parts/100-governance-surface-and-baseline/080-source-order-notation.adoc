@@ -1,0 +1,36 @@
+[#source-order-notation.boundary-rule, owner=governance]
+== 源文件编排与关系词表
+
+本书使用源文件编排号保持结构稳定。Part 目录使用 `100-`、`200-`、`300-`。Chapter 文件在所属 part 内使用 `010-`、`020-`、`030-`。中间插入新主题时使用相邻编号之间的空位。
+
+本书采用以下 role：
+
+[horizontal]
+governance-slice:: 治理切片。
+plan-object:: 计划对象身份或目标依据。
+source-baseline:: 当前源码基线。
+execution-rule:: 执行规则。
+quality-contract:: 全局质量契约。
+rejection-condition:: 全局打回条件。
+work-package:: 工作包。
+review-contract:: 审核包契约。
+status-ledger:: 状态台账。
+closure-contract:: 关闭记录契约。
+boundary-rule:: 源文件编排、关系词表或边界规则。
+
+本书采用以下 relation predicate：
+
+[horizontal]
+depends-on-body:: 当前计划对象依赖目标 body 事实。
+implements-architecture:: 当前工作包实现目标架构对象。
+implements-contract:: 当前工作包兑现目标需求契约。
+sources-query-from:: 当前工作包的查询语义来源于目标查询章节。
+uses-template-reference:: 当前工作包使用工程模板作为形态参考。
+uses-adapter-source:: 当前工作包使用上游包源码或 package export 作为 adapter 依据。
+verifies-contract:: 当前测试或门禁验证目标契约。
+unlocks:: 当前工作包通过后解锁目标工作包。
+blocks-on:: 当前工作包启动前受目标工作包阻塞。
+records-evidence:: 审核包或台账记录目标工作包证据。
+closes:: 关闭记录关闭目标治理对象。
+
+本书第一版使用 `owner`、`wp`、`status`、`surface` 和 `package` 五个 named attributes。新增字段必须先在本章登记。

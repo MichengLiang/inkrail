@@ -1,0 +1,36 @@
+[#wp-07-workspace-initializer-adapter-and-bookshelf-init.work-package, owner=bookshelf-runtime, wp=WP-07, package=create-asciidoc-multi-book-workspace, status=未开始]
+== WP-07：Workspace Initializer Adapter and Bookshelf Init
+
+目标:: 集成 `create-asciidoc-multi-book-workspace@0.1.5` formal export `initWorkspace`，实现 `inkrail bookshelf init` 与可选 `--register`。
+
+上游门槛:: xref:wp-05-book-selection-and-path-derivation[WP-05, rel=blocks-on] 与 xref:wp-06-project-memory-mutation-services[WP-06, rel=blocks-on] 通过。
+
+上下文闭包:: 10 号 `standard-bookshelf-template` 与 `initialization-contract`；11 号 `workspace-initializer-adapter`、`bookshelf-initialization-flow`；上游 `micheng-ts/projects/asciidoc-multi-book-workspace/package.json`、`src/index.ts`、`src/init-workspace.ts`。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/src/adapters/workspace-initializer.ts
+packages/inkrail/src/services/bookshelf-init.ts
+packages/inkrail/src/commands/bookshelf.ts
+packages/inkrail/src/**/*.{test,spec}.ts
+----
+
+实施任务:: Adapter 使用 formal export `initWorkspace`。Service 处理 target path、force、register id、project config update 和 upstream error mapping。`--register` 只写 `[[bookshelves]]`，profile 为 `inkrail-asciidoc-multi-book`，root 为 project-relative path。
+
+测试任务:: 覆盖 target missing、empty dir、target file、non-empty without force、force preservation、生成 `catalog.adoc`、`books/`、`shared/`、`package.json`、`.gitignore`、`tools/adoc-books.mjs`、不包含 maintainer-only files、`--register` 写 bookshelves、样本书不登记。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail typecheck
+----
+
+验收标准:: 上游 initializer import 只存在于 adapter。Inkrail 不 vendor 标准模板。Register 行为不污染 books list。
+
+打回条件:: 使用上游 deep import；复制标准模板到 `inkrail` core；force 删除未知用户文件；sample books 自动进入 `[[books]]`。
+
+解锁关系:: 本工作包通过后解锁 E2E 标准书架 fixture。

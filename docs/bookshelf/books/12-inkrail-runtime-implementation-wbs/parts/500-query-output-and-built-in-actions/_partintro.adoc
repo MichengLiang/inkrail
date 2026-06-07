@@ -1,0 +1,1 @@
+本部实现 Oxigraph query adapter、RDF term JSON、raw query modes、output projection、built-in action registry 和 CLI command mapping。

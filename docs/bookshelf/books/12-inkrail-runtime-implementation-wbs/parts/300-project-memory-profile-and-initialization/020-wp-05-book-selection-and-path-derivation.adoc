@@ -1,0 +1,37 @@
+[#wp-05-book-selection-and-path-derivation.work-package, owner=project-memory, wp=WP-05, status=未开始]
+== WP-05：Book Selection and Path Derivation
+
+目标:: 实现 target book selection 与 standard/custom profile path derivation。
+
+上游门槛:: xref:wp-04-config-schema-and-project-context[WP-04, rel=blocks-on] 通过。
+
+上下文闭包:: 10 号 `book-path-derivation`、`query-modes` book selection；11 号 `book-selection`、`path-model`、`project-and-book-model`。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/src/core/books.ts
+packages/inkrail/src/core/profiles.ts
+packages/inkrail/src/core/paths.ts
+packages/inkrail/src/services/load-project.ts
+packages/inkrail/src/**/*.{test,spec}.ts
+----
+
+实施任务:: 实现 `selectTargetBook`，优先级为 explicit book、default_book、single book fallback。实现 `deriveBookPaths`，标准 profile 派生 book entry、documentRoot、RDF12 TTL、RDF12 JSON-LD、HTML、expanded ADOC 和 watch globs。Custom profile 只使用 config 声明路径。
+
+测试任务:: 覆盖 explicit book override、default book、single book fallback、multi book `BOOK_REQUIRED`、unknown book `BOOK_NOT_FOUND`。验证 standard profile 的所有派生路径和 display/operation path 分离。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail typecheck
+----
+
+验收标准:: Book selection 是 domain rule。Watch globs 不等同 source set。HTML 和 expanded ADOC 不进入 query freshness。
+
+打回条件:: Book selection 写在 CLI command handler；watch globs 被当作 source set；custom profile 被强行推导；standard path 派生遗漏 RDF12 JSON-LD 或 expanded ADOC。
+
+解锁关系:: 本工作包通过后解锁 xref:wp-07-workspace-initializer-adapter-and-bookshelf-init[WP-07, rel=unlocks]、xref:wp-08-bookshelf-runtime-dispatch[WP-08, rel=unlocks] 和 projection 相关工作包。

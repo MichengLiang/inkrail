@@ -1,0 +1,37 @@
+[#wp-11-state-store-and-refresh-decision.work-package, owner=projection-runtime, wp=WP-11, status=未开始]
+== WP-11：State Store and Refresh Decision
+
+目标:: 实现 `.inkrail/state/books/<book-id>/rdf12.json` 与 `rdf12-json-ld.json` state records，以及 refresh decision。
+
+上游门槛:: xref:wp-10-source-set-and-projection-fingerprints[WP-10, rel=blocks-on] 通过。
+
+上下文闭包:: 10 号 `refresh-state-machine`；11 号 `state-store`、`refresh-state-machine-flow`、`projection-fingerprint`。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/src/core/freshness.ts
+packages/inkrail/src/services/refresh.ts
+packages/inkrail/src/services/projection.ts
+packages/inkrail/src/adapters/filesystem.ts
+packages/inkrail/src/**/*.{test,spec}.ts
+----
+
+实施任务:: 读取、验证、写入 projection state record。State record 包含 schemaVersion、book identity、sourceSet、projection 和 updatedAt。Refresh decision 检查 state missing、schema unsupported、parse failed、artifact missing、hash mismatch、documentRoot mismatch、options mismatch、projector mismatch。
+
+测试任务:: 覆盖 state missing、parse failed、unsupported schema、artifact missing、hash mismatch、projector mismatch、successful state write ordering、query failure 不回滚 projection state。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail typecheck
+----
+
+验收标准:: State file 不替代 projection artifact。TTL 与 JSON-LD state 独立。State write 在 artifact 写入和 outputHash 计算后发生。
+
+打回条件:: State 替代 artifact；RDF12 和 JSON-LD 共用 state；query failure 回滚已成功 projection；book identity 与 config 唯一性冲突未处理。
+
+解锁关系:: 本工作包通过后解锁 xref:wp-13-project-refresh-state-machine[WP-13, rel=unlocks]。

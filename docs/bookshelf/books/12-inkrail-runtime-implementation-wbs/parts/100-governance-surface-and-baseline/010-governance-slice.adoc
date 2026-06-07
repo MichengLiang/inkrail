@@ -1,0 +1,34 @@
+[#governance-slice.governance-slice, owner=governance]
+== 治理切片
+
+本章用一个 runtime 工作包展示本书的最小完整治理切片。该切片从 11 号架构对象进入 work package，经由文件边界、测试边界、验证命令、实现提交、审核包和状态台账，形成可关闭的治理事实。
+
+[source,text]
+----
+11 号架构对象：Oxigraph adapter 与 Query result model
+  -> WP-14：Oxigraph Adapter and Query Classifier
+  -> 文件边界：packages/inkrail/src/adapters/oxigraph.ts 等
+  -> 测试边界：adapter contract tests 与 RDF term fixture
+  -> 验证命令：pnpm --filter inkrail test
+  -> 实现提交 hash
+  -> review package
+  -> status ledger: WP-14 通过
+  -> 解锁：WP-15 RDF Term JSON Model 与 WP-16 Raw Query Modes
+----
+
+该切片说明本书的对象不是时间排期。Work package 是 body fact 的治理投影。它必须指出目标依据、上下文闭包、文件边界、验证方式、提交证据、审核结论和下游解锁关系。
+
+本书中的工作包使用稳定 ID、role 和附加字段标明身份：
+
+[source,asciidoc]
+----
+[#wp-14-oxigraph-adapter-and-query-classifier.work-package, owner=query-runtime, wp=WP-14]
+== WP-14：Oxigraph Adapter and Query Classifier
+
+本工作包实现 xref:../11-inkrail-software-architecture-and-quality-design/book.adoc[11 号书中的 Oxigraph 适配器, rel=implements-architecture]。
+本工作包验证 xref:../11-inkrail-software-architecture-and-quality-design/book.adoc[11 号书中的 Query Result 模型, rel=verifies-contract]。
+----
+
+`wp` 标明工作包编号。`owner` 标明责任域。`.work-package` 标明章节身份。`rel=implements-architecture` 与 `rel=verifies-contract` 标明当前章节和目标 body 之间的治理边。
+
+执行者读取工作包以确定可修改事实承载物。审核者读取工作包以判断提交是否符合目标。协调者读取状态台账以判断治理状态。后续维护者读取审核包和关闭记录以追溯 runtime 如何进入当前事实。

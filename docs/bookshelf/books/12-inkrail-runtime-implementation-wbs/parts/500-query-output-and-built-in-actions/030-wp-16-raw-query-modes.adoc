@@ -1,0 +1,35 @@
+[#wp-16-raw-query-modes.work-package, owner=query-runtime, wp=WP-16, status=未开始]
+== WP-16：Raw Query Modes
+
+目标:: 实现 project mode raw query 与 TTL-only raw query。
+
+上游门槛:: xref:wp-13-project-refresh-state-machine[WP-13, rel=blocks-on] 与 xref:wp-14-oxigraph-adapter-and-query-classifier[WP-14, rel=blocks-on] 通过。
+
+上下文闭包:: 10 号 `query-modes`；11 号 `project-mode-query-flow`、`ttl-only-query-flow`、`query-api`。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/src/services/query.ts
+packages/inkrail/src/commands/query.ts
+packages/inkrail/src/**/*.{test,spec}.ts
+----
+
+实施任务:: Project mode 支持 query argument、`--file` 和 `--stdin`，并在 query 前执行 RDF12 refresh state machine。TTL-only mode 支持 `--ttl` 加 query argument、file 或 stdin，不查 project，不 refresh，不 state，不声明 freshness。
+
+测试任务:: 覆盖三种 query input surface、query read failure、project mode refresh before query、TTL-only no project lookup、TTL-only failure surfaces、mode-specific envelope。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail typecheck
+----
+
+验收标准:: Project result 包含 book/projection/freshness。TTL-only result 不包含 book/freshness。Query input priority 和错误码稳定。
+
+打回条件:: TTL-only 查找 `.inkrail/config`；project mode 不执行 refresh；raw query text handling 由 CLI command handler 即兴处理；TTL-only 声称 freshness。
+
+解锁关系:: 本工作包通过后解锁 xref:wp-18-built-in-action-registry[WP-18, rel=unlocks]。

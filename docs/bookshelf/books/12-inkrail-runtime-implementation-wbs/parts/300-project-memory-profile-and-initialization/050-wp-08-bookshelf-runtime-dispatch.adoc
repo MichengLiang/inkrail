@@ -1,0 +1,34 @@
+[#wp-08-bookshelf-runtime-dispatch.work-package, owner=bookshelf-runtime, wp=WP-08, status=未开始]
+== WP-08：Bookshelf Runtime Dispatch
+
+目标:: 实现已登记 standard bookshelf 的 local `build`、`check` 和 `clean` script 调度。
+
+上游门槛:: xref:wp-05-book-selection-and-path-derivation[WP-05, rel=blocks-on]、xref:wp-06-project-memory-mutation-services[WP-06, rel=blocks-on] 和 xref:wp-07-workspace-initializer-adapter-and-bookshelf-init[WP-07, rel=blocks-on] 通过。
+
+上下文闭包:: 10 号 `bookshelf-build-dispatch`；11 号 `bookshelf-runtime-dispatch-flow`、`filesystem-and-process-adapters`；standard workspace package scripts。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/src/adapters/process-runner.ts
+packages/inkrail/src/services/bookshelf-runtime.ts
+packages/inkrail/src/commands/bookshelf.ts
+packages/inkrail/src/**/*.{test,spec}.ts
+----
+
+实施任务:: Load project，resolve bookshelf，require standard profile，validate package script，validate `tools/adoc-books.mjs`，run script in bookshelf root，forward stdout/stderr/status into structured result。
+
+测试任务:: 覆盖 registered standard profile dispatch、unknown bookshelf、custom profile unsupported、missing package script、missing runtime script、non-zero status、stdout/stderr forwarding、dispatch 不写 RDF state、project query 不隐式 build/check/clean。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail typecheck
+----
+
+验收标准:: Dispatch 只服务 standard profile。Process runner 是 adapter。Dispatch result 保留 stdout/stderr/status。RDF projection state 不受影响。
+
+打回条件:: Dispatch 写 `.inkrail/state`；query 隐式执行 bookshelf build；custom profile 被强行调度；non-zero local runtime status 被吞掉。

@@ -1,0 +1,36 @@
+[#batch-status-ledger.status-ledger]
+= 工作包状态台账
+
+本台账记录工作包治理事实。状态字段只使用 `未开始`、`执行中`、`待审核`、`打回` 和 `通过`。
+
+[cols="1,3,1,2,3", options="header"]
+|===
+|工作包 |名称 |状态 |提交 hash |审核记录
+
+|WP-00 |Baseline Gates and Review Infrastructure |未开始 | |待创建
+|WP-01 |Runtime Package Shell |未开始 | |待创建
+|WP-02 |Result, Failure, and Output Foundation |未开始 | |待创建
+|WP-03 |Public API Export Surface |未开始 | |待创建
+|WP-04 |Config Schema and Project Context |未开始 | |待创建
+|WP-05 |Book Selection and Path Derivation |未开始 | |待创建
+|WP-06 |Project Memory Mutation Services |未开始 | |待创建
+|WP-07 |Workspace Initializer Adapter and Bookshelf Init |未开始 | |待创建
+|WP-08 |Bookshelf Runtime Dispatch |未开始 | |待创建
+|WP-09 |Abundant-tree Adapter Capability Lock |未开始 | |待创建
+|WP-10 |Source Set and Projection Fingerprints |未开始 | |待创建
+|WP-11 |State Store and Refresh Decision |未开始 | |待创建
+|WP-12 |Explicit Projection Service |未开始 | |待创建
+|WP-13 |Project Refresh State Machine |未开始 | |待创建
+|WP-14 |Oxigraph Adapter and Query Classifier |未开始 | |待创建
+|WP-15 |RDF Term JSON Model |未开始 | |待创建
+|WP-16 |Raw Query Modes |未开始 | |待创建
+|WP-17 |Output Projection Surface |未开始 | |待创建
+|WP-18 |Built-in Action Registry |未开始 | |待创建
+|WP-19 |Built-in CLI Command Mapping |未开始 | |待创建
+|WP-20 |End-to-end Fixture and Contract Closure |未开始 | |待创建
+|WP-21 |README, User Guide, and Docs Sync |未开始 | |待创建
+|WP-22 |Build, Lint, Package, and Final Gates |未开始 | |待创建
+|WP-23 |Plan Closure and Body Revision Assessment |未开始 | |待创建
+|===
+
+提交产生后，提交 hash 必须写入本表。审核包路径必须写入审核记录。台账备注不得记录愿望、估计、口头进度或情绪判断。

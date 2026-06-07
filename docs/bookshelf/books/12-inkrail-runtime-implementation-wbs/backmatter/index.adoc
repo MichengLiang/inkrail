@@ -1,0 +1,20 @@
+= 索引
+
+本索引 section 位于书籍后置区域。正文中的显式 heading ID、role、relation predicate 和 index terms 是后续结构查询入口。
+
+核心索引词：
+
+[source,asciidoc]
+----
+indexterm:[implementation WBS]
+indexterm:[work package]
+indexterm:[review package]
+indexterm:[status ledger]
+indexterm:[closure record]
+indexterm:[public API shell]
+indexterm:[state store]
+indexterm:[refresh state machine]
+indexterm:[query action registry]
+indexterm:[RDF term JSON]
+indexterm:[package boundary]
+----

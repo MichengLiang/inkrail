@@ -1,0 +1,1 @@
+本部将 `packages/inkrail` 从 specification package 转为可构建的 runtime package shell，并建立 public API、result、failure 和 output projection 的基础边界。

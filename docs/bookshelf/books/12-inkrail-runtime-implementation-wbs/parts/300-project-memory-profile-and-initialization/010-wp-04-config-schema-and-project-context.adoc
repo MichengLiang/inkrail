@@ -1,0 +1,38 @@
+[#wp-04-config-schema-and-project-context.work-package, owner=project-memory, wp=WP-04, status=未开始]
+== WP-04：Config Schema and Project Context
+
+目标:: 实现 `.inkrail/config.toml` raw schema、normalized config、parse/serialize、project discovery 和 project context model。
+
+上游门槛:: xref:wp-02-result-failure-and-output-foundation[WP-02, rel=blocks-on] 与 xref:wp-03-public-api-export-surface[WP-03, rel=blocks-on] 通过。
+
+上下文闭包:: 10 号 `project-config-model`；11 号 `config-model`、`project-and-book-model`、`path-model`、`project-api`；Rootward config/project discovery tests as shape reference。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/src/core/config.ts
+packages/inkrail/src/core/project.ts
+packages/inkrail/src/core/paths.ts
+packages/inkrail/src/adapters/toml.ts
+packages/inkrail/src/services/load-project.ts
+packages/inkrail/src/**/*.{test,spec}.ts
+----
+
+实施任务:: 定义 raw TOML shape 与 normalized config。实现 CLI identifier validation、path validation、standard/custom profile validation、default book validation。实现 explicit project 与 cwd-upward discovery。实现 config parse failure、schema failure 和 project not found failure。
+
+测试任务:: 覆盖非法 id、重复 bookshelf id、重复 book id、绝对路径、反斜杠、`..`、default_book 指向缺失 book、standard profile 声明派生字段、custom profile 缺必填字段、TOML parse failure、explicit project missing config、cwd upward missing project。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail typecheck
+----
+
+验收标准:: Config model 与 10/11 号一致。Path validation 是 core rule。Project discovery 不泄漏到 CLI command handler。
+
+打回条件:: Config 保留 Rootward `sources/scanners`；custom profile 猜测标准路径；standard profile 允许手写派生字段；路径用 ad hoc string 拼接绕过 path model。
+
+解锁关系:: 本工作包通过后解锁 xref:wp-05-book-selection-and-path-derivation[WP-05, rel=unlocks] 和 xref:wp-06-project-memory-mutation-services[WP-06, rel=unlocks]。

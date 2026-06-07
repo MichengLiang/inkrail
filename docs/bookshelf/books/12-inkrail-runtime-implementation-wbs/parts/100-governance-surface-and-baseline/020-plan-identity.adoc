@@ -1,0 +1,10 @@
+[#plan-identity.plan-object, owner=governance]
+== 计划对象身份
+
+本书是 `inkrail Runtime 实现工作分解与治理计划书`。英文对象名是 `inkrail Runtime Implementation WBS and Governance Plan`。
+
+本书是 lab book。它治理从当前 specification package 到 runtime package 的受控实现过程。它不重新定义 `inkrail` 人工制品，不重新定义 11 号架构，不替代用户文档，不记录尚未发生的实现事实。
+
+本书的直接消费者包括执行者、审核者、协调者和后续维护者。执行者使用工作包确定上下文闭包、文件边界和验证命令。审核者使用工作包和审核包连接 Git diff、命令结果和审核结论。协调者使用状态台账判断工作包位置。维护者使用关闭记录追溯实现结果进入当前事实的路径。
+
+本书的完成条件是治理结构成立：每个工作包都有目标依据、文件边界、实施任务、测试任务、验收标准、验证命令、提交规则、审核规则和打回条件；后置区提供审核包模板、初始状态台账和关闭记录模板；catalog 明确本书是实现治理入口。

@@ -1,0 +1,37 @@
+[#wp-22-build-lint-package-and-final-gates.work-package, owner=quality, wp=WP-22, status=未开始]
+== WP-22：Build, Lint, Package, and Final Gates
+
+目标:: 执行 runtime final gates、docs gates 和 package boundary checks。
+
+上游门槛:: xref:wp-21-readme-user-guide-and-docs-sync[WP-21, rel=blocks-on] 通过。
+
+上下文闭包:: 11 号 `build-lint-package-gates`、`architecture-acceptance`；package manifest scripts；docs bookshelf build/test commands。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/package.json
+packages/inkrail/**
+docs/bookshelf/**
+----
+
+实施任务:: 确认 scripts 稳定：typecheck、test、lint、build、pack:check、full check。验证 package exports、bin、types、dist、README、LICENSE、package.json。记录 pack dry-run required/forbidden files。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail typecheck
+pnpm --filter inkrail test
+pnpm --filter inkrail lint
+pnpm --filter inkrail build
+pnpm --filter inkrail pack:check
+pnpm check
+----
+
+验收标准:: 全部命令通过。Package dry-run 只包含允许发布文件。Bin 指向 built file。Exports 可解析。Docs build 与 runtime checks 同时通过。
+
+打回条件:: 任一最终命令失败且未登记阻塞；pack 包含 forbidden files；bin 指向不存在文件；types 缺失；lint/typecheck/test/build 任一被跳过却写成通过。
+
+解锁关系:: 本工作包通过后解锁 xref:wp-23-plan-closure-and-body-revision-assessment[WP-23, rel=unlocks]。

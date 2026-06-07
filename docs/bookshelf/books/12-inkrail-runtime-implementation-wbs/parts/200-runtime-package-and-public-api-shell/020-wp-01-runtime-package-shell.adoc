@@ -1,0 +1,49 @@
+[#wp-01-runtime-package-shell.work-package, owner=package-runtime, wp=WP-01, status=未开始]
+== WP-01：Runtime Package Shell
+
+目标:: 建立 TypeScript runtime package 外壳，使 `packages/inkrail` 具备 ESM library entry、CLI bin entry、build/typecheck/test/lint/pack gates 和基础目录。
+
+上游门槛:: xref:wp-00-baseline-gates-and-review-infrastructure[WP-00, rel=blocks-on] 通过。当前 package 只有 metadata files。
+
+上下文闭包:: 11 号 `source-tree`、`package-boundary`、`public-exports`、`cli-consumer`、`build-lint-package-gates`；Rootward template `package.json`、`tsconfig.json`、`tsdown.config.ts`、`vitest.config.ts`、`src/bin.ts`、`src/cli.ts`；当前 `packages/inkrail/package.json`。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/package.json
+packages/inkrail/tsconfig.json
+packages/inkrail/tsdown.config.ts
+packages/inkrail/vitest.config.ts
+packages/inkrail/src/index.ts
+packages/inkrail/src/bin.ts
+packages/inkrail/src/cli.ts
+packages/inkrail/src/core/
+packages/inkrail/src/services/
+packages/inkrail/src/adapters/
+packages/inkrail/src/commands/
+packages/inkrail/src/io/
+packages/inkrail/src/test-support/
+----
+
+实施任务:: 将 package 描述从 specification package 转为 runtime package shell。添加 `exports "."` 与 `./package.json`。添加 `bin` 指向 built CLI entry。添加 `files: ["dist", "README.md", "LICENSE"]`。引入 tsdown、Vitest、TypeScript、Biome 和 runtime dependencies 的最小 manifest。创建 source tree skeleton。`bin.ts` 只调用 `runCli(process.argv.slice(2), { cwd })` 并写 stdout/stderr/exitCode。
+
+测试任务:: 添加最小 smoke test，证明 public entry 可 import，`runCli([])` 能返回 usage failure，build 输出 index/bin entry。Package dry-run 不包含 `src/`、tests、coverage、tmp 或 docs build。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail typecheck
+pnpm --filter inkrail test
+pnpm --filter inkrail lint
+pnpm --filter inkrail build
+pnpm --filter inkrail pack:check
+pnpm check
+----
+
+验收标准:: Runtime shell 可构建、可测试、可 dry-run pack。Public exports 不再只有 `./package.json`。CLI bin 不包含业务逻辑。
+
+打回条件:: Rootward `sources/scanners/discover/scan` 语义残留；package exports 不含 `"."`；bin 直接实现业务规则；pack dry-run 发布 forbidden files。
+
+解锁关系:: 本工作包通过后解锁 xref:wp-02-result-failure-and-output-foundation[WP-02, rel=unlocks] 和 xref:wp-03-public-api-export-surface[WP-03, rel=unlocks]。

@@ -1,0 +1,36 @@
+[#wp-09-abundant-tree-adapter-capability-lock.work-package, owner=projection-runtime, wp=WP-09, package=asciidoc-abundant-tree, status=未开始]
+== WP-09：Abundant-tree Adapter Capability Lock
+
+目标:: 建立 `asciidoc-abundant-tree@0.1.12` adapter，并用 contract tests 锁定 book-entry parse、source files、RDF12 TTL 和 RDF12 JSON-LD 能力。
+
+上游门槛:: xref:wp-05-book-selection-and-path-derivation[WP-05, rel=blocks-on] 通过。
+
+上下文闭包:: 11 号 `abundant-tree-adapter`、`explicit-projection-flow`、`version-and-capability-locks`；上游 `src/index.ts` public exports；08 号 book-entry projection workflow。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/src/adapters/abundant-tree.ts
+packages/inkrail/src/services/projection.ts
+packages/inkrail/src/**/*.{test,spec}.ts
+packages/inkrail/test/fixtures/**
+----
+
+实施任务:: Adapter 只使用 `parseAbundantTree` 和 `rdf12` public API。Project mode projection 使用 `mode: "book-entry"` 和 documentRoot。Explicit single-file projection 保持 single-file semantics。Adapter 返回 source files、TTL、JSON-LD、projector identity 和 structured failure。
+
+测试任务:: 使用真实上游依赖验证 book-entry source files、shared attributes inclusion、TTL output、JSON-LD output、source coordinate preservation、single-file mode 不展开 include。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail typecheck
+----
+
+验收标准:: Adapter capability 由 fixture test 锁定。上游 internals 不进入 Inkrail。Parser、include resolver、payload interpreter 不在 Inkrail 中实现。
+
+打回条件:: Import 上游内部 source modules；在 Inkrail 复制 parser/include resolver；adapter 解释 payload raw；single-file mode 展开 include。
+
+解锁关系:: 本工作包通过后解锁 xref:wp-10-source-set-and-projection-fingerprints[WP-10, rel=unlocks]、xref:wp-12-explicit-projection-service[WP-12, rel=unlocks] 和 xref:wp-13-project-refresh-state-machine[WP-13, rel=unlocks]。

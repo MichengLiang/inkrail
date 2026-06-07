@@ -1,0 +1,33 @@
+[#wp-20-end-to-end-fixture-and-contract-closure.work-package, owner=quality, wp=WP-20, status=未开始]
+== WP-20：End-to-end Fixture and Contract Closure
+
+目标:: 建立最小标准书架 E2E fixture，验证 init -> bookshelf init/register -> books add/use -> refresh -> query -> built-in action JSON 的完整 runtime path。
+
+上游门槛:: xref:wp-19-built-in-cli-command-mapping[WP-19, rel=blocks-on] 通过。
+
+上下文闭包:: 11 号 `fixture-strategy`、`test-layering`、`contract-test-matrix`；10 号 initialization、refresh、query 和 built-in action contracts。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/test/fixtures/**
+packages/inkrail/src/**/*.{test,spec}.ts
+packages/inkrail/src/test-support/**
+----
+
+实施任务:: 创建最小 standard bookshelf fixture 或 fixture builder。覆盖 project memory、standard profile、book-entry projection、RDF12 TTL freshness、Oxigraph query、built-in JSON output。E2E 不覆盖所有 built-ins；它证明完整 runtime chain 成立。
+
+测试任务:: 验证 source coordinate、freshness、JSON envelope、RDF term JSON 和 command exit code。确保 fixture 不依赖 previous run build output。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail typecheck
+----
+
+验收标准:: E2E fixture 连接主要模块，而不替代 core/service/adapter tests。Fixture 位于 package 或 project-local test area。
+
+打回条件:: E2E 只证明命令能跑；未验证 freshness/source coordinate/RDF term；fixture 依赖旧 build output。

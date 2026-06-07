@@ -1,0 +1,36 @@
+[#wp-10-source-set-and-projection-fingerprints.work-package, owner=projection-runtime, wp=WP-10, status=未开始]
+== WP-10：Source Set and Projection Fingerprints
+
+目标:: 实现 source file fingerprint、source set fingerprint 和 projection fingerprint。
+
+上游门槛:: xref:wp-09-abundant-tree-adapter-capability-lock[WP-09, rel=blocks-on] 通过。
+
+上下文闭包:: 10 号 `fingerprint-model`；11 号 `source-set-fingerprint`、`projection-fingerprint`、`path-model`；adapter source files contract。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/src/core/fingerprint.ts
+packages/inkrail/src/core/freshness.ts
+packages/inkrail/src/services/projection.ts
+packages/inkrail/src/**/*.{test,spec}.ts
+----
+
+实施任务:: Source file fingerprint 包含 documentRoot-relative path、size、mtimeMs 和 contentHash。Source set hash 按 relativePath 稳定排序。Projection fingerprint 包含 format、outputPath、outputHash、projectedFromSourceSetHash、documentRoot、projector identity 和 options。
+
+测试任务:: 覆盖 traversal order 不影响 hash、content change 改变 hash、shared attributes 进入 source set、mtimeMs 只是快速线索、outputHash 改变、documentRoot/options/projector mismatch 触发 stale decision。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail typecheck
+----
+
+验收标准:: Fingerprint 输入序列稳定。Watch globs 不定义 source set membership。Projection fingerprint 不替代 artifact existence check。
+
+打回条件:: 只用 mtime 判断 freshness；hash 受 filesystem/list traversal order 影响；projection fingerprint 不含 projector identity；shared attributes 被排除。
+
+解锁关系:: 本工作包通过后解锁 xref:wp-11-state-store-and-refresh-decision[WP-11, rel=unlocks]。

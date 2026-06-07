@@ -1,0 +1,1 @@
+本部实现项目记忆、profile、路径推导、项目配置 mutation、标准书架 initializer adapter 和书架本地 runtime dispatch。它把 10 号第二部契约落入 11 号 project-memory 架构对象。

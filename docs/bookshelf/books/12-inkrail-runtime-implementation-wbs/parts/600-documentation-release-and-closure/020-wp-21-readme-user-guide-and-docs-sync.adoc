@@ -1,0 +1,37 @@
+[#wp-21-readme-user-guide-and-docs-sync.work-package, owner=docs, wp=WP-21, status=未开始]
+== WP-21：README, User Guide, and Docs Sync
+
+目标:: 将 runtime 完成后的用户表面同步到 root README、package README 和用户指南。
+
+上游门槛:: xref:wp-20-end-to-end-fixture-and-contract-closure[WP-20, rel=blocks-on] 通过。
+
+上下文闭包:: 10 号 `readme-and-guide-contract`；11 号 `documentation-quality`；当前 `README.md`、`packages/inkrail/README.md` 和 docs catalog。
+
+文件边界::
+
+[source,text]
+----
+README.md
+packages/inkrail/README.md
+docs/bookshelf/catalog.adoc
+docs/bookshelf/books/12-inkrail-runtime-implementation-wbs/**
+docs/**/user-guide*.adoc
+CHANGELOG.md
+----
+
+实施任务:: README 说明 install、project init、bookshelf init/register、book register/default、refresh、query、built-ins、TTL-only、explicit projection、source-aware output 和边界。Package README 不再声明无 runtime。User guide 承担 source coordinate 与 reading/editing loop 说明。
+
+测试任务:: 文档示例命令对应 supported commands。Docs 不承诺跨书联合查询、payload 业务解释、remote federation 或 stale TTL fallback。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --dir docs/bookshelf test
+pnpm --dir docs/bookshelf build
+pnpm check
+----
+
+验收标准:: 用户入口与 runtime surface 一致。Command output 不承担教学文本。10/11 号 body 只在发现契约变化时通过新的受控修订修改。
+
+打回条件:: README 仍说 package 没有 runtime；文档承诺非目标；用户指南把 stale TTL 当可用 fallback；示例命令不受测试或契约支持。

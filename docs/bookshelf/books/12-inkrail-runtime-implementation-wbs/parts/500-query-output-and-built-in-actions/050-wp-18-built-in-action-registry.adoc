@@ -1,0 +1,35 @@
+[#wp-18-built-in-action-registry.work-package, owner=query-runtime, wp=WP-18, status=未开始]
+== WP-18：Built-in Action Registry
+
+目标:: 建立内置查询动作 registry。Registry 保存 action id、CLI path、query kind、parameter schema、SPARQL template、variables、sort contract 和 source workflow reference。
+
+上游门槛:: xref:wp-16-raw-query-modes[WP-16, rel=blocks-on] 通过。
+
+上下文闭包:: 10 号 `query-template-contract`、`appendix-c-query-action-map`；08 号 `query-library`、标题查询、结构查询、xref 查询、degree/neighborhood 查询、audit 查询；11 号 `built-in-action-flow`。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/src/core/query-actions.ts
+packages/inkrail/src/services/built-in-actions.ts
+packages/inkrail/src/**/*.{test,spec}.ts
+----
+
+实施任务:: 定义 source、outline、heading locate/raw、labels、structure、xrefs、degree、neighborhood、audit action definitions。每个 definition 保留 query source reference 和 exact variables/sort contract。实现 SPARQL rendering 和 `printQuery` result。
+
+测试任务:: 用 fixture 或 snapshots 锁定 SPARQL templates、SELECT variables、ORDER BY、OPTIONAL、FILTER NOT EXISTS、GROUP BY、HAVING、property path、parameter interpolation 和 source reference。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail typecheck
+----
+
+验收标准:: Registry 是 built-in action 语义唯一来源。CLI command mapping 只消费 registry。`--print-query` 在 render 后停止。
+
+打回条件:: SPARQL 凭记忆改写；registry 缺 source workflow reference；action 改变事实边界；parameter interpolation 可注入 arbitrary SPARQL structure。
+
+解锁关系:: 本工作包通过后解锁 xref:wp-19-built-in-cli-command-mapping[WP-19, rel=unlocks]。

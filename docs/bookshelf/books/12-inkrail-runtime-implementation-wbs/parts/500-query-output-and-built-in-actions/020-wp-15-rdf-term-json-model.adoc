@@ -1,0 +1,35 @@
+[#wp-15-rdf-term-json-model.work-package, owner=query-runtime, wp=WP-15, status=未开始]
+== WP-15：RDF Term JSON Model
+
+目标:: 实现 public API 和 CLI JSON 共用的 RDF term JSON serializer。
+
+上游门槛:: xref:wp-14-oxigraph-adapter-and-query-classifier[WP-14, rel=blocks-on] 通过。
+
+上下文闭包:: 10 号 `output-surfaces` RDF term 规则；11 号 `rdf-term-json`、`query-result-model`、`output-test-contract`。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/src/core/rdf-terms.ts
+packages/inkrail/src/adapters/oxigraph.ts
+packages/inkrail/src/**/*.{test,spec}.ts
+----
+
+实施任务:: Serialize NamedNode、Literal、BlankNode、DefaultGraph、Variable 和 Quad term。Literal 保留 datatype、language 和 direction 字段。Quad term 保留 subject、predicate、object、graph。Unknown term shape 返回 structured failure。
+
+测试任务:: 覆盖所有 supported term classes、nested quad term、literal language/datatype、unknown term failure、pretty output 不改变 JSON contract。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail typecheck
+----
+
+验收标准:: JSON output 保留 RDF/JS-compatible structure。Pretty renderer 可以短文本化，但机器 JSON 不丢结构。
+
+打回条件:: RDF term 压成 string；literal 丢 datatype/language；quad term 拆坏；unknown term 输出部分结果。
+
+解锁关系:: 本工作包通过后解锁 xref:wp-17-output-projection-surface[WP-17, rel=unlocks]。

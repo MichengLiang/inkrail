@@ -1,0 +1,134 @@
+= inkrail Runtime 实现工作分解与治理计划书
+弥澄亮 <t103ooooo@stu.mju.edu.cn>
+v0.1.0, 2026-06
+:doctype: book
+:toc: left
+:toclevels: 3
+:sectnums:
+:icons: font
+:experimental:
+:idprefix:
+:idseparator: -
+
+include::../../shared/attributes.adoc[]
+
+[abstract]
+include::frontmatter/abstract.adoc[]
+
+[colophon]
+include::frontmatter/colophon.adoc[]
+
+[preface]
+include::frontmatter/preface.adoc[]
+
+= 第一部：治理表面与当前基线
+
+[partintro]
+include::parts/100-governance-surface-and-baseline/_partintro.adoc[]
+
+include::parts/100-governance-surface-and-baseline/010-governance-slice.adoc[]
+
+include::parts/100-governance-surface-and-baseline/020-plan-identity.adoc[]
+
+include::parts/100-governance-surface-and-baseline/030-target-body-basis.adoc[]
+
+include::parts/100-governance-surface-and-baseline/040-current-source-state.adoc[]
+
+include::parts/100-governance-surface-and-baseline/050-execution-rules.adoc[]
+
+include::parts/100-governance-surface-and-baseline/060-global-quality-contract.adoc[]
+
+include::parts/100-governance-surface-and-baseline/070-global-rejection-conditions.adoc[]
+
+include::parts/100-governance-surface-and-baseline/080-source-order-notation.adoc[]
+
+= 第二部：Runtime Package 与 Public API 外壳
+
+[partintro]
+include::parts/200-runtime-package-and-public-api-shell/_partintro.adoc[]
+
+include::parts/200-runtime-package-and-public-api-shell/010-wp-00-baseline-gates-and-review-infrastructure.adoc[]
+
+include::parts/200-runtime-package-and-public-api-shell/020-wp-01-runtime-package-shell.adoc[]
+
+include::parts/200-runtime-package-and-public-api-shell/030-wp-02-result-failure-and-output-foundation.adoc[]
+
+include::parts/200-runtime-package-and-public-api-shell/040-wp-03-public-api-export-surface.adoc[]
+
+= 第三部：项目记忆、Profile 与初始化
+
+[partintro]
+include::parts/300-project-memory-profile-and-initialization/_partintro.adoc[]
+
+include::parts/300-project-memory-profile-and-initialization/010-wp-04-config-schema-and-project-context.adoc[]
+
+include::parts/300-project-memory-profile-and-initialization/020-wp-05-book-selection-and-path-derivation.adoc[]
+
+include::parts/300-project-memory-profile-and-initialization/030-wp-06-project-memory-mutation-services.adoc[]
+
+include::parts/300-project-memory-profile-and-initialization/040-wp-07-workspace-initializer-adapter-and-bookshelf-init.adoc[]
+
+include::parts/300-project-memory-profile-and-initialization/050-wp-08-bookshelf-runtime-dispatch.adoc[]
+
+= 第四部：投影、状态与刷新 Runtime
+
+[partintro]
+include::parts/400-projection-state-and-refresh-runtime/_partintro.adoc[]
+
+include::parts/400-projection-state-and-refresh-runtime/010-wp-09-abundant-tree-adapter-capability-lock.adoc[]
+
+include::parts/400-projection-state-and-refresh-runtime/020-wp-10-source-set-and-projection-fingerprints.adoc[]
+
+include::parts/400-projection-state-and-refresh-runtime/030-wp-11-state-store-and-refresh-decision.adoc[]
+
+include::parts/400-projection-state-and-refresh-runtime/040-wp-12-explicit-projection-service.adoc[]
+
+include::parts/400-projection-state-and-refresh-runtime/050-wp-13-project-refresh-state-machine.adoc[]
+
+= 第五部：查询、输出与内置动作
+
+[partintro]
+include::parts/500-query-output-and-built-in-actions/_partintro.adoc[]
+
+include::parts/500-query-output-and-built-in-actions/010-wp-14-oxigraph-adapter-and-query-classifier.adoc[]
+
+include::parts/500-query-output-and-built-in-actions/020-wp-15-rdf-term-json-model.adoc[]
+
+include::parts/500-query-output-and-built-in-actions/030-wp-16-raw-query-modes.adoc[]
+
+include::parts/500-query-output-and-built-in-actions/040-wp-17-output-projection-surface.adoc[]
+
+include::parts/500-query-output-and-built-in-actions/050-wp-18-built-in-action-registry.adoc[]
+
+include::parts/500-query-output-and-built-in-actions/060-wp-19-built-in-cli-command-mapping.adoc[]
+
+= 第六部：文档、发布与关闭
+
+[partintro]
+include::parts/600-documentation-release-and-closure/_partintro.adoc[]
+
+include::parts/600-documentation-release-and-closure/010-wp-20-end-to-end-fixture-and-contract-closure.adoc[]
+
+include::parts/600-documentation-release-and-closure/020-wp-21-readme-user-guide-and-docs-sync.adoc[]
+
+include::parts/600-documentation-release-and-closure/030-wp-22-build-lint-package-and-final-gates.adoc[]
+
+include::parts/600-documentation-release-and-closure/040-wp-23-plan-closure-and-body-revision-assessment.adoc[]
+
+[appendix]
+include::backmatter/review-package-template.adoc[]
+
+[appendix]
+include::backmatter/batch-status-ledger.adoc[]
+
+[appendix]
+include::backmatter/closure-record-template.adoc[]
+
+[glossary]
+include::backmatter/glossary.adoc[]
+
+[bibliography]
+include::backmatter/bibliography.adoc[]
+
+[index]
+include::backmatter/index.adoc[]

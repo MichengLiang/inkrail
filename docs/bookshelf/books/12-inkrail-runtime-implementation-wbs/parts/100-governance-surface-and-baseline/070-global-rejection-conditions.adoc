@@ -1,0 +1,22 @@
+[#global-rejection-conditions.rejection-condition, owner=quality]
+== 全局打回条件
+
+出现以下任一情况，当前工作包必须打回：
+
+* CLI command handler 持有 domain rule、freshness rule、SPARQL semantics 或 RDF term serialization。
+* Library consumer 必须构造 CLI args 才能执行项目查询、TTL-only 查询或内置动作。
+* Domain core import filesystem、process、Oxigraph、commands、io 或上游 parser internal modules。
+* Adapter deep import 扩散到 services、core、commands 或 public API。
+* Project mode 使用 stale TTL fallback。
+* TTL-only mode 声称 project freshness。
+* Explicit projection 写 `.inkrail/state/`。
+* RDF term JSON 把 NamedNode、Literal、BlankNode、DefaultGraph、Variable 或 Quad term 压成字符串。
+* Oxigraph Store 暴露给 public API。
+* Built-in action 改写 08 号查询语义中的 variables、sorting、`OPTIONAL`、`FILTER NOT EXISTS`、`GROUP BY`、`HAVING` 或 property path。
+* `--print-query` 触发 project resolution、TTL read、refresh state machine 或 SPARQL execution。
+* Review package 把未运行命令写成 PASS。
+* Status ledger 写入愿望、估计、口头进度或未授权目标。
+* 工作包修改文件边界外对象且未记录受审例外。
+* README、user guide 或 CLI output 承诺 cross-book union query、payload business interpretation、remote federation 或 stale TTL fallback。
+
+打回记录必须说明打回对象、依据、需要补充的事实和返工入口。

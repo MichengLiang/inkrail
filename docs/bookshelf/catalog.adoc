@@ -51,6 +51,10 @@ v0.1.0, 2026-05
 |理解 inkrail runtime 的架构与工程质量基线
 |xref:books/11-inkrail-software-architecture-and-quality-design/book.adoc[11 inkrail 软件架构与工程质量设计书]
 |它定义公共库 API、CLI 消费者、模块边界、状态模型、运行流、依赖适配器和质量门禁。
+
+|执行 inkrail runtime 的实现治理计划
+|xref:books/12-inkrail-runtime-implementation-wbs/book.adoc[12 inkrail Runtime 实现工作分解与治理计划书]
+|它引用 10 号需求契约和 11 号架构基线，将 runtime 实现拆成可执行、可审核、可关闭的 work packages。
 |===
 
 == 样本书
@@ -68,6 +72,7 @@ v0.1.0, 2026-05
 * xref:books/08-rdf12-heading-projection-query-workflow/book.adoc[08 AsciiDoc 书稿 RDF 投影查询工作流]：定义书稿 RDF 投影查询工作流、查询语句集和写作回源闭环。
 * xref:books/10-inkrail-cli-design/book.adoc[10 inkrail CLI 设计书]：定义 inkrail 的对象边界、项目记忆、投影新鲜度和查询契约。
 * xref:books/11-inkrail-software-architecture-and-quality-design/book.adoc[11 inkrail 软件架构与工程质量设计书]：定义 inkrail runtime 的公共库 API、模块结构、运行流、适配器和工程质量基线。
+* xref:books/12-inkrail-runtime-implementation-wbs/book.adoc[12 inkrail Runtime 实现工作分解与治理计划书]：定义 inkrail runtime 实现的工作包、审核包、状态台账和关闭条件。
 
 == 工作区地图
 

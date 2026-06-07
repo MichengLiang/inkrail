@@ -1,0 +1,36 @@
+[#wp-17-output-projection-surface.work-package, owner=cli-surface, wp=WP-17, status=未开始]
+== WP-17：Output Projection Surface
+
+目标:: 实现 CLI pretty、JSON、stdout/stderr 和 exit code projection。
+
+上游门槛:: xref:wp-15-rdf-term-json-model[WP-15, rel=blocks-on] 与 xref:wp-16-raw-query-modes[WP-16, rel=blocks-on] 通过。
+
+上下文闭包:: 10 号 `output-surfaces`；11 号 `output-projection-flow`、`output-test-contract`；Rootward `io/output.ts` as shape reference。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/src/io/json-output.ts
+packages/inkrail/src/io/pretty-output.ts
+packages/inkrail/src/io/table.ts
+packages/inkrail/src/io/diagnostics.ts
+packages/inkrail/src/cli.ts
+packages/inkrail/src/**/*.{test,spec}.ts
+----
+
+实施任务:: Success pretty 写 stdout；success JSON 写 stdout；refresh events/diagnostics/failure 写 stderr；failure JSON 写 stderr；SELECT 使用 variables/rows；ASK 使用 `ask` 或 JSON value；graph result 使用 quads。Exit code 来自 CLI projection。
+
+测试任务:: 覆盖 stdout/stderr 分离、refresh stderr、failure stderr、JSON envelope、RDF term JSON preservation、TTL-only no freshness field、no tutorial text、usage failure no stack trace。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail typecheck
+----
+
+验收标准:: Output projection 不执行 query，不读 config，不 refresh。字段名保留 SPARQL variables。JSON machine surface 保持稳定。
+
+打回条件:: Diagnostics 混入 stdout；failure JSON 写 stdout；field names 被友好化而脱离 SPARQL variables；command output 写 source coordinate 教程。

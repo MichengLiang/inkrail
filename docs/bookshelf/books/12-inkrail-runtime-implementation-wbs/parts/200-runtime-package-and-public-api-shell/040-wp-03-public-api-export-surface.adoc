@@ -1,0 +1,36 @@
+[#wp-03-public-api-export-surface.work-package, owner=public-api, wp=WP-03, status=未开始]
+== WP-03：Public API Export Surface
+
+目标:: 建立 `src/index.ts` 的 public API surface，使 library consumer 能直接消费 project、mutation、projection、query、model 和 action registry 类型。
+
+上游门槛:: xref:wp-01-runtime-package-shell[WP-01, rel=blocks-on] 与 xref:wp-02-result-failure-and-output-foundation[WP-02, rel=blocks-on] 通过。
+
+上下文闭包:: 11 号 `public-exports`、`api-surface` appendix、`consumer-roles`；10 号 query modes 与 initialization contract；Rootward `src/index.ts` 的局限性。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/src/index.ts
+packages/inkrail/src/core/**
+packages/inkrail/src/services/**
+packages/inkrail/src/cli.ts
+packages/inkrail/src/**/*.{test,spec}.ts
+----
+
+实施任务:: 导出 project API、mutation API、projection API、query API、model API 和 built-in action registry 类型。`runCli` 可以导出为 CLI consumer 表面，但不得成为 library consumer 的唯一入口。禁止导出 commands、io internals、test-support、Oxigraph Store 和 workspace initializer import path。
+
+测试任务:: 使用 import tests 锁定 export names。验证 library consumer 可以 import result/error/config/book/path/query/RDF term/action types，而不构造 CLI args。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail build
+pnpm --filter inkrail pack:check
+----
+
+验收标准:: Package export `"."` 解析到 built index。Type declarations 包含 public API names。Public surface 与 11 号 appendix A 一致。
+
+打回条件:: Public API 只导出 `runCli`；commands/io/test-support 公开导出；Oxigraph Store 暴露；adapter deep import path 进入 public API。

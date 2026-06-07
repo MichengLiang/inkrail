@@ -1,0 +1,1 @@
+本部完成 runtime 闭环：最小 E2E fixture、用户文档同步、build/lint/package/final gates 和计划关闭判断。

@@ -1,0 +1,34 @@
+[#wp-19-built-in-cli-command-mapping.work-package, owner=cli-surface, wp=WP-19, status=未开始]
+== WP-19：Built-in CLI Command Mapping
+
+目标:: 把 built-in action registry 映射到 CLI command surface。
+
+上游门槛:: xref:wp-18-built-in-action-registry[WP-18, rel=blocks-on] 与 xref:wp-17-output-projection-surface[WP-17, rel=blocks-on] 通过。
+
+上下文闭包:: 10 号第五部内置查询动作与 appendix C；11 号 `built-in-action-flow`、`cli-consumer`；WP-18 registry。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/src/commands/builtins.ts
+packages/inkrail/src/services/built-in-actions.ts
+packages/inkrail/src/cli.ts
+packages/inkrail/src/**/*.{test,spec}.ts
+----
+
+实施任务:: 注册 source、outline、heading、labels、structure、xrefs、degree、neighborhood、audit commands。CLI parameters 映射到 registry parameter schema。支持 project mode 与适用的 TTL-only mode。`--print-query` 直接输出 rendered SPARQL。
+
+测试任务:: 覆盖每个 command path、参数映射、JSON/pretty mode、`--print-query` no project/read TTL/refresh/query、variables 与 registry 一致、unknown/invalid parameter failure。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail typecheck
+----
+
+验收标准:: Command handler 不拼 SPARQL。Command output 使用 WP-17 projection。Command set 与 10 号 appendix C 一致。
+
+打回条件:: CLI command 自己拥有 query semantics；`--print-query` 触发 refresh；command output variables 与 registry SELECT variables 不一致。

@@ -1,0 +1,12 @@
+= 术语表
+
+implementation WBS:: 将目标 body 事实拆成可执行、可审核、可关闭工作包的工作分解结构。
+work package:: 受控变更的工作单元，必须有目标、文件边界、验证命令、审核规则和打回条件。
+review package:: 工作包状态转移的证据记录。
+status ledger:: 记录工作包当前治理状态的台账。
+closure record:: 记录治理对象结束方式和结果去向的关闭材料。
+target body basis:: 工作包所依赖的当前 body 或已核验事实。
+context closure:: 工作包启动前必须阅读的规格、架构、源码、测试、模板、依赖和治理上下文。
+global rejection condition:: 触发工作包打回的全局对象错误。
+package boundary:: npm publish artifact 的文件边界。
+capability lock:: 用 adapter contract test 锁定的依赖能力事实。

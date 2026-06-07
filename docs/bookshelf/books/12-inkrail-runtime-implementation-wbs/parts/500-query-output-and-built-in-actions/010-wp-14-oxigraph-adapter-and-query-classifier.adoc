@@ -1,0 +1,36 @@
+[#wp-14-oxigraph-adapter-and-query-classifier.work-package, owner=query-runtime, wp=WP-14, package=oxigraph, status=未开始]
+== WP-14：Oxigraph Adapter and Query Classifier
+
+目标:: 封装 Oxigraph Store，加载 TTL，执行 SPARQL，并把 union return type 分类为 Inkrail query result model。
+
+上游门槛:: xref:wp-13-project-refresh-state-machine[WP-13, rel=blocks-on] 通过。
+
+上下文闭包:: 10 号 `query-engine`；11 号 `oxigraph-adapter`、`query-result-model`、`version-and-capability-locks`；Oxigraph binding types。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/src/adapters/oxigraph.ts
+packages/inkrail/src/services/query.ts
+packages/inkrail/src/core/query-result.ts
+packages/inkrail/src/**/*.{test,spec}.ts
+----
+
+实施任务:: Adapter 创建 in-memory store，加载 Turtle，执行 SELECT/ASK/CONSTRUCT/DESCRIBE/property path。Classifier 把 boolean、Map rows 和 Quad[] 转换为 Inkrail result model。默认不请求 string results_format。
+
+测试任务:: 覆盖 TTL load success/failure、SELECT rows、ASK boolean、CONSTRUCT/DESCRIBE quads、property path、RDF 1.2 / RDF-star quad term fixture、SPARQL failure。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail typecheck
+----
+
+验收标准:: Public API 不暴露 Oxigraph Store。Query classifier 与 11 号模型一致。TTL load failure 映射 `TTL_LOAD_FAILED`，SPARQL failure 映射 `QUERY_FAILED`。
+
+打回条件:: Store 暴露 public API；string results 成为默认；adapter 定义 built-in action；quad term 被丢失或字符串化。
+
+解锁关系:: 本工作包通过后解锁 xref:wp-15-rdf-term-json-model[WP-15, rel=unlocks] 和 xref:wp-16-raw-query-modes[WP-16, rel=unlocks]。

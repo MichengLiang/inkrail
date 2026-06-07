@@ -1,0 +1,41 @@
+[#wp-02-result-failure-and-output-foundation.work-package, owner=package-runtime, wp=WP-02, status=未开始]
+== WP-02：Result, Failure, and Output Foundation
+
+目标:: 建立 Inkrail 命名的 result、failure、diagnostic 和 CLI output projection 基础。CLI exit code 是投影，不是 domain 本体。
+
+上游门槛:: xref:wp-01-runtime-package-shell[WP-01, rel=blocks-on] 通过。
+
+上下文闭包:: 10 号 `error-semantics` 与 `output-surfaces`；11 号 `result-and-error-api`、`output-projection-flow`、`output-test-contract`；Rootward `src/core/errors.ts`、`src/core/result.ts`、`src/io/output.ts`。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/src/core/errors.ts
+packages/inkrail/src/core/result.ts
+packages/inkrail/src/core/diagnostics.ts
+packages/inkrail/src/io/json-output.ts
+packages/inkrail/src/io/pretty-output.ts
+packages/inkrail/src/io/diagnostics.ts
+packages/inkrail/src/cli.ts
+packages/inkrail/src/**/*.{test,spec}.ts
+----
+
+实施任务:: 定义 `InkrailErrorCode`、`InkrailFailure`、`InkrailDiagnostic`、`InkrailResult<T>`。覆盖 10 号错误码。定义 CLI projection 中的 exit code mapping。实现 JSON success stdout、JSON failure stderr、pretty failure stderr 和 stack trace exclusion。
+
+测试任务:: 验证 success JSON 写 stdout，failure JSON 写 stderr，pretty failure 包含 stable error code 和 details，usage failure 不输出 stack trace。测试 domain failure 进入 CLI projection 时不丢失 code/details。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail typecheck
+pnpm --filter inkrail lint
+----
+
+验收标准:: Public failure object 不使用 `CliError` 作为 domain 类型名。Exit code 只存在于 CLI projection。所有 10 号错误码有稳定 code surface。
+
+打回条件:: Failure object 命名为 CLI-only domain；failure JSON 写 stdout；pretty failure 输出 stack trace；error code 覆盖不全；output projector 执行 query 或 project loading。
+
+解锁关系:: 本工作包通过后解锁后续 CLI surface tests 与所有 service failure propagation tests。

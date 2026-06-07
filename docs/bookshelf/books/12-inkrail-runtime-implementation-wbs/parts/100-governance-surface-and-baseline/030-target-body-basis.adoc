@@ -1,0 +1,43 @@
+[#target-body-basis.plan-object, owner=governance]
+== 目标 Body 依据
+
+本书的目标对象来自 current body 与已核验依赖事实。
+
+[cols="1,2,3", options="header"]
+|===
+|依据 |路径或对象 |进入本书的位置
+
+|需求契约
+|xref:../10-inkrail-cli-design/book.adoc[10 号 inkrail CLI 设计书, rel=depends-on-body]
+|项目记忆、标准书架、路径推导、新鲜度、查询模式、输出表面、错误语义、内置动作和测试合同。
+
+|架构基线
+|xref:../11-inkrail-software-architecture-and-quality-design/book.adoc[11 号软件架构与工程质量设计书, rel=depends-on-body]
+|Public API、module roles、data models、runtime flows、adapter contracts 和 quality gates。
+
+|查询语义来源
+|xref:../08-rdf12-heading-projection-query-workflow/book.adoc[08 号 RDF 投影查询工作流, rel=sources-query-from]
+|Built-in action registry 的 SPARQL templates、variables、sorting、source coordinate 和审计事实边界。
+
+|材料治理规则
+|`micheng-ts/projects/asciidoc-abundant-tree/docs/bookshelf/books/08-body-lab-material-system/`
+|Lab object、work package、review package、status ledger、closure record、进入 body 规则和检查清单。
+
+|Implementation plan 形态
+|`micheng-ts/projects/asciidoc-abundant-tree/docs/bookshelf/books/11-book-entry-source-mapped-logical-document-implementation-plan/`
+|执行契约、当前源码状态、审核包模板、状态台账和关闭记录模板。
+
+|工程骨架参考
+|`projects/rootward/templates/typescript`
+|ESM package、bin entry、`runCli(args,{cwd})`、output projection、filesystem abstraction 和 test fixture pattern。
+
+|Projection dependency
+|`asciidoc-abundant-tree@0.1.12`
+|Book-entry parse、source files、RDF12 TTL、RDF12 JSON-LD 和 projector identity。
+
+|Workspace initializer dependency
+|`create-asciidoc-multi-book-workspace@0.1.5`
+|Formal export `initWorkspace`、标准书架生成、fixed template outputs 和 runtime script。
+|===
+
+Rootward template 只提供工程形态参考。其 `sources`、`scanners`、`discover` 和 `scan` 业务语义不得进入 `inkrail` config、API、tests 或 documentation。

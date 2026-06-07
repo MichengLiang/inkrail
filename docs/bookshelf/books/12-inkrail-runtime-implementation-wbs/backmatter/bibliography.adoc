@@ -1,0 +1,16 @@
+= 参考坐标
+
+* [[[inkrail-cli-design]]] xref:../10-inkrail-cli-design/book.adoc[inkrail CLI 设计书]。
+* [[[inkrail-architecture]]] xref:../11-inkrail-software-architecture-and-quality-design/book.adoc[inkrail 软件架构与工程质量设计书]。
+* [[[rdf12-query-workflow]]] xref:../08-rdf12-heading-projection-query-workflow/book.adoc[AsciiDoc 书稿 RDF 投影查询工作流]。
+* [[[body-lab-material-system]]] `micheng-ts/projects/asciidoc-abundant-tree/docs/bookshelf/books/08-body-lab-material-system/`。
+* [[[implementation-plan-reference]]] `micheng-ts/projects/asciidoc-abundant-tree/docs/bookshelf/books/11-book-entry-source-mapped-logical-document-implementation-plan/`。
+* [[[structured-writing-conventions]]] `micheng-ts/projects/asciidoc-multi-book-workspace/docs/07-structured-writing-conventions.md`。
+* [[[rootward-typescript-template]]] `projects/rootward/templates/typescript`。
+* [[[asciidoc-abundant-tree]]] `asciidoc-abundant-tree`。
+* [[[asciidoc-multi-book-workspace]]] `create-asciidoc-multi-book-workspace`。
+* [[[oxigraph]]] Oxigraph RDF store and SPARQL engine。
+* [[[rdfjs]]] RDF/JS data model。
+* [[[rdf12-concepts]]] W3C, _RDF 1.2 Concepts and Abstract Data Model_。
+* [[[sparql12-query]]] W3C, _SPARQL 1.2 Query Language_。
+* [[[configuration-management]]] ISO/IEC/IEEE 828, _Systems and software engineering -- Configuration management_。

@@ -1,0 +1,18 @@
+[#global-quality-contract.quality-contract, owner=quality]
+== 全局质量契约
+
+所有 runtime 工作包遵守 11 号架构基线定义的 module role。
+
+Domain core 保存纯对象、规则、类型和可确定函数。Domain core 不 import filesystem、process、Oxigraph、commands、io 或上游 parser 内部模块。
+
+Application services 组合 domain core 与 adapters。Services 返回结构化 result，不格式化 CLI 输出，不把 exit code 当作 domain 本体。
+
+Adapters 封装外部依赖和运行环境。`asciidoc-abundant-tree`、`create-asciidoc-multi-book-workspace`、Oxigraph、filesystem 和 process runner 的调用只能通过 adapter boundary 进入 runtime。
+
+Commands 映射 CLI arguments 到 service input。Command handler 不拥有 book selection、freshness decision、SPARQL semantics 或 RDF term serialization。
+
+Output projectors 把 structured result 投影为 stdout、stderr、pretty table 或 JSON envelope。Output projectors 不执行查询，不刷新 projection，不读取 project config。
+
+所有新增代码必须有相应测试层。Core tests 锁定纯规则。Service integration tests 锁定 use-case branching。Adapter contract tests 锁定真实依赖能力。CLI surface tests 锁定参数映射、stdout/stderr、exit code 和 `--print-query` stop point。Package boundary tests 锁定 publish artifact。
+
+TypeScript runtime 必须使用 strict TypeScript、Vitest、tsdown 和 Biome gate。新增注释只记录代码自身无法表达的 why、约束或不变量。

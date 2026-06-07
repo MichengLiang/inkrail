@@ -1,0 +1,47 @@
+[#closure-record-template.closure-contract]
+= 关闭记录模板
+
+关闭记录记录本计划书的结束方式。实际关闭记录应在 runtime implementation 完成后创建，并由本书 include。
+
+== 关闭对象
+
+[horizontal]
+关闭对象:: `12-inkrail-runtime-implementation-wbs`
+目标 body 依据:: xref:../10-inkrail-cli-design/book.adoc[10 号 inkrail CLI 设计书] 与 xref:../11-inkrail-software-architecture-and-quality-design/book.adoc[11 号软件架构与工程质量设计书]
+材料体系依据:: `100_body` 与 `200_lab` 材料体系设计
+
+== 最终提交
+
+[horizontal]
+最终提交 hash:: `<git commit hash>`
+最终审核状态:: `通过` 或 `打回`
+关闭结论:: `完成`、`打回`、`替代`、`废弃` 或 `归档`
+
+== 最终验证命令
+
+[source,bash]
+----
+pnpm --filter inkrail typecheck
+pnpm --filter inkrail test
+pnpm --filter inkrail lint
+pnpm --filter inkrail build
+pnpm --filter inkrail pack:check
+pnpm check
+----
+
+关闭记录必须写入实际运行结果。未运行命令不得写成通过。
+
+== 已进入当前事实的对象
+
+本节只列已经由代码、测试、文档和审核证据共同支撑的对象事实。
+
+== 未处理对象与去向
+
+未处理对象必须有去向。不得写“后续再说”。
+
+== Body 修订判断
+
+[horizontal]
+是否需要修订 10 号书:: `是` 或 `否`
+是否需要修订 11 号书:: `是` 或 `否`
+修订入口:: `<新 lab object 或非目标理由>`

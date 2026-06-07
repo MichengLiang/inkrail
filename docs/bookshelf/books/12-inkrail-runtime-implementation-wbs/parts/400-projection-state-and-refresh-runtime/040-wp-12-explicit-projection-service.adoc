@@ -1,0 +1,34 @@
+[#wp-12-explicit-projection-service.work-package, owner=projection-runtime, wp=WP-12, status=未开始]
+== WP-12：Explicit Projection Service
+
+目标:: 实现 `projectAdoc` service 和 CLI `inkrail project`，支持 `rdf12` 与 `rdf12-json-ld` 输出。
+
+上游门槛:: xref:wp-09-abundant-tree-adapter-capability-lock[WP-09, rel=blocks-on] 通过。
+
+上下文闭包:: 10 号 `rdf12-and-jsonld-projections`；11 号 `explicit-projection-flow`、`projection-api`、`abundant-tree-adapter`。
+
+文件边界::
+
+[source,text]
+----
+packages/inkrail/src/services/projection.ts
+packages/inkrail/src/commands/project.ts
+packages/inkrail/src/adapters/abundant-tree.ts
+packages/inkrail/src/**/*.{test,spec}.ts
+----
+
+实施任务:: Explicit projection 默认 single-file semantics。调用者可显式传 `--mode book-entry --document-root`。Service 生成指定 format 并写 out path。该 service 不读取 project memory，不写 `.inkrail/state/`，不登记 book。
+
+测试任务:: 覆盖 single-file default 不展开 include、book-entry mode 要求 documentRoot、rdf12 output、jsonld output、out path parent creation、不写 state、不读取 config。
+
+验证命令::
+
+[source,bash]
+----
+pnpm --filter inkrail test
+pnpm --filter inkrail typecheck
+----
+
+验收标准:: Explicit projection 是无项目状态的投影工具。Book-entry mode 是显式输入语义。State store 不受 explicit projection 影响。
+
+打回条件:: Explicit projection 写 `.inkrail/state`；根据 `:doctype: book` 隐式切换模式；未传 documentRoot 却执行 book-entry；读取 project config。
